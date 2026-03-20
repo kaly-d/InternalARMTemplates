@@ -57,6 +57,7 @@
             "type": "Bool"
         },
         "vnetPrivatePortsCount": {
+            "defaultValue": 2,
             "type": "Int"
         },
         "userAssignedIdentityName": {
