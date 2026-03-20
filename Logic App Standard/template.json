@@ -218,22 +218,24 @@
           ]
         },
         "subnets": [
-          "name": "[concat(parameters('virtualNetworkName'), '/', parameters('subnetName'))]",
-          "properties": {
-            "delegations": [
-              {
-                "name": "delegation",
-                "properties": {
-                  "serviceName": "Microsoft.Web/serverfarms"
+          {
+            "name": "[parameters('subnetName')]",
+            "properties": {
+              "addressPrefix": "10.0.0.0/24",
+               "serviceEndpoints": [
+                {
+                  "service": "Microsoft.Storage"
                 }
-              }
-            ],
-            "serviceEndpoints": [
-              {
-                "service": "Microsoft.Storage"
-              }
-            ],
-            "addressPrefix": "10.0.0.0/24"
+              ],
+              "delegations": [
+                {
+                  "name": "delegation",
+                  "properties": {
+                    "serviceName": "Microsoft.Web/serverfarms"
+                  }
+                }
+              ]
+            }
           }
         ]
       }
@@ -244,7 +246,7 @@
       "name": "[parameters('storageAccountName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
       ],
       "tags": {},
       "sku": {
