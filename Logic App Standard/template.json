@@ -14,10 +14,7 @@
             "defaultValue": "VNET",
             "type": "String"
         },
-        "virtualNetworks_VNET_externalid": {
-            "defaultValue": "/subscriptions/e60a2559-68d5-4df1-ba9f-6ea5e17e0cfb/resourceGroups/KalyaniRG/providers/Microsoft.Network/virtualNetworks/VNET",
-            "type": "String"
-        },
+
         "logicappName": {
             "defaultValue": "TestKaly",
             "type": "String"
