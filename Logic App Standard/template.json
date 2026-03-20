@@ -61,7 +61,6 @@
     "variables": {
         "contentShare": "testkaly80af",
         "inboundSubnetDeployment": "inboundSubnetDeployment",
-        "outboundSubnetDeployment": "outboundSubnetDeployment",
         "connectedServiceSubnetDeployment": "connectedServiceSubnetDeployment"
     },
     "resources": [
@@ -72,8 +71,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-                "[variables('outboundSubnetDeployment')]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
             ],
             "tags": {},
             "kind": "functionapp,workflowapp",
