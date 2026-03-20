@@ -26,6 +26,21 @@
             "defaultValue": "Canada Central",
             "type": "String"
         },
+        "workerSize": {
+            "type": "string"
+        },
+         "sku": {
+            "type": "string"
+        },
+        "skuCode": {
+            "type": "string"
+        },
+        "workerSizeId": {
+            "type": "string"
+        },
+        "numberOfWorkers": {
+            "type": "string"
+        },
         "storageAccountName": {
             "type": "String"
         },
@@ -54,6 +69,7 @@
             "name": "[parameters('logicappName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
                 "[variables('outboundSubnetDeployment')]"
             ],
@@ -161,6 +177,27 @@
                     }
                 }
             ]
+        },
+        {
+            "apiVersion": "2024-11-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "",
+            "tags": {},
+            "dependsOn": [],
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "[parameters('workerSize')]",
+                "workerSizeId": "[parameters('workerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]",
+                "maximumElasticWorkerCount": "20",
+                "zoneRedundant": false
+            },
+            "sku": {
+                "Tier": "[parameters('sku')]",
+                "Name": "[parameters('skuCode')]"
+            }
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
