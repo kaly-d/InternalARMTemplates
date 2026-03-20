@@ -110,7 +110,7 @@
                         },
                         {
                             "name": "AzureWebJobsStorage__managedIdentityResourceId",
-                            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'TestKaly-UserAssignedMI')]"
+                            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
                         },
                         {
                             "name": "AzureFunctionsJobHost__extensionBundle__id",
