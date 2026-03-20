@@ -11,6 +11,7 @@
             "type": "String"
         },
         "virtualNetworkName": {
+            "defaultValue": "VNET",
             "type": "String"
         },
         "virtualNetworks_VNET_externalid": {
