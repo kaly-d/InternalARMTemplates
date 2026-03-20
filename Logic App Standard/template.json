@@ -265,7 +265,7 @@
           "bypass": "AzureServices",
           "virtualNetworkRules": [
             {
-              "id": "[concat(parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
+              "id": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
               "action": "Allow",
               "state": "Succeeded"
             }
