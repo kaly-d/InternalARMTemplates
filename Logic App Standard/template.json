@@ -259,25 +259,6 @@
                 "defaultToOAuthAuthentication": true,
                 "allowBlobPublicAccess": false,
                 "allowSharedKeyAccess": true,
-                "networkAcls": {
-                    "ipv6Rules": [],
-                    "resourceAccessRules": [],
-                    "bypass": "AzureServices",
-                    "virtualNetworkRules": [
-                        {
-                            "id": "[concat(parameters('virtualNetworks_VNET_externalid'), '/subnets/LogicAppOutbound')]",
-                            "action": "Allow",
-                            "state": "Succeeded"
-                        }
-                    ],
-                    "ipRules": [
-                        {
-                            "value": "52.148.171.5",
-                            "action": "Allow"
-                        }
-                    ],
-                    "defaultAction": "Deny"
-                },
                 "publicNetworkAccess": "Enabled"
             }
         },
