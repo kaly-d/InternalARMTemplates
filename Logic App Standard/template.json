@@ -282,6 +282,21 @@
                 "defaultToOAuthAuthentication": true,
                 "allowBlobPublicAccess": false,
                 "allowSharedKeyAccess": true,
+                "networkAcls": {
+                    "ipv6Rules": [],
+                    "resourceAccessRules": [
+                    ],
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [
+                        {
+                            "id": "[concat(parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
+                            "action": "Allow",
+                            "state": "Succeeded"
+                        }
+                    ],
+                    "ipRules": [],
+                    "defaultAction": "Deny"
+                },
                 "publicNetworkAccess": "Enabled"
             }
         },
