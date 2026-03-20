@@ -27,18 +27,23 @@
             "type": "String"
         },
         "workerSize": {
+            "defaultValue": "3",
             "type": "string"
         },
          "sku": {
+             "defaultValue": "WorkflowStandard",
             "type": "string"
         },
         "skuCode": {
+            "defaultValue": "WS1",
             "type": "string"
         },
         "workerSizeId": {
+             "defaultValue": "3",
             "type": "string"
         },
         "numberOfWorkers": {
+            "defaultValue": "1",
             "type": "string"
         },
         "storageAccountName": {
