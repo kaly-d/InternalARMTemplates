@@ -3,7 +3,6 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "subscriptionId": {
-      "defaultValue": "e60a2559-68d5-4df1-ba9f-6ea5e17e0cfb",
       "type": "String"
     },
     "subnetName": {
@@ -21,26 +20,6 @@
     "location": {
       "defaultValue": "Canada Central",
       "type": "String"
-    },
-    "workerSize": {
-      "defaultValue": "3",
-      "type": "string"
-    },
-    "sku": {
-      "defaultValue": "WorkflowStandard",
-      "type": "string"
-    },
-    "skuCode": {
-      "defaultValue": "WS1",
-      "type": "string"
-    },
-    "workerSizeId": {
-      "defaultValue": "3",
-      "type": "string"
-    },
-    "numberOfWorkers": {
-      "defaultValue": "1",
-      "type": "string"
     },
     "storageAccountName": {
       "type": "String"
@@ -195,15 +174,15 @@
       "dependsOn": [],
       "properties": {
         "name": "[parameters('hostingPlanName')]",
-        "workerSize": "[parameters('workerSize')]",
-        "workerSizeId": "[parameters('workerSizeId')]",
-        "numberOfWorkers": "[parameters('numberOfWorkers')]",
+        "workerSize": "3",
+        "workerSizeId": "3",
+        "numberOfWorkers": "1",
         "maximumElasticWorkerCount": "20",
         "zoneRedundant": false
       },
       "sku": {
-        "Tier": "[parameters('sku')]",
-        "Name": "[parameters('skuCode')]"
+        "Tier": "WorkflowStandard",
+        "Name": "WS1"
       }
     },
     {
