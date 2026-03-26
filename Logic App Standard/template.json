@@ -5,10 +5,6 @@
     "subscriptionId": {
       "type": "String"
     },
-    "resourceGroup": {
-      "defaultValue": "[resourceGroup().name]",
-      "type": "String"
-    },
     "subnetName": {
       "type": "String"
     },
@@ -133,7 +129,7 @@
         "vnetContentShareEnabled": true,
         "vnetRouteAllEnabled": true,
         "httpsOnly": true,
-        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('resourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
       },
       "resources": [
         {
@@ -240,7 +236,7 @@
           "bypass": "AzureServices",
           "virtualNetworkRules": [
             {
-              "id": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourceGroup'), '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
+              "id": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', resourceGroup().id, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
               "action": "Allow",
               "state": "Succeeded"
             }
@@ -321,8 +317,7 @@
           ]
         }
       },
-      "subscriptionId": "[parameters('subscriptionId')]",
-      "resourceGroup": "[parameters('resourceGroup')]"
+      "subscriptionId": "[parameters('subscriptionId')]"
     }
   ]
 }
