@@ -9,15 +9,12 @@
       "type": "String"
     },
     "subnetName": {
-      "defaultValue": "LAOutbound",
       "type": "String"
     },
     "virtualNetworkName": {
-      "defaultValue": "VNET",
       "type": "String"
     },
     "logicappName": {
-      "defaultValue": "TestKaly",
       "type": "String"
     },
     "location": {
@@ -31,7 +28,6 @@
       "type": "String"
     },
     "userAssignedIdentityName": {
-      "defaultValue": "KalyTest-uami",
       "type": "String"
     }
   },
