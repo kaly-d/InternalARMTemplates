@@ -6,6 +6,7 @@
       "type": "String"
     },
     "resourceGroup": {
+      "defaultValue": "[resourceGroup().name]",
       "type": "String"
     },
     "subnetName": {
