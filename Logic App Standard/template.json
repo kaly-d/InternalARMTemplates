@@ -313,8 +313,7 @@
             }
           ]
         }
-      },
-      "subscriptionId": "[parameters('subscriptionId')]"
+      }
     }
   ]
 }
