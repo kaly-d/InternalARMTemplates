@@ -35,7 +35,7 @@
                 "serviceAssociationLinks": [
                   {
                     "name": "AppServiceLink",
-                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'), '/serviceAssociationLinks/AppServiceLink'))]",
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'), '/serviceAssociationLinks/AppServiceLink')]",
                     "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
                     "type": "Microsoft.Network/virtualNetworks/subnets/serviceAssociationLinks",
                     "properties": {
