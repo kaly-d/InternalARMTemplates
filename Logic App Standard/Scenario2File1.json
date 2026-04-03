@@ -5,57 +5,6 @@
         "natGatewayName": {
             "type": "String"
         },
-        "publicIpAddressesIPv6": {
-            "defaultValue": [],
-            "type": "Array",
-            "metadata": {
-                "description": "List of new and existing IPv6 public IP addresses to associate with the NAT Gateway. This array should contain objects in the form { id: <resourceId> }."
-            }
-        },
-
-        "tags": {
-            "defaultValue": {},
-            "type": "Object"
-        },
-        "deployNewPublicIp": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "publicIpName": {
-            "defaultValue": "nat-pip",
-            "type": "String"
-        },
-        "publicIpVersion": {
-            "defaultValue": "IPv4",
-            "allowedValues": [
-                "IPv4",
-                "IPv6"
-            ],
-            "type": "String"
-        },
-        "deployNewPublicIpPrefix": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "publicIpPrefixName": {
-            "defaultValue": "nat-prefix",
-            "type": "String"
-        },
-        "publicIpPrefixLength": {
-            "defaultValue": 28,
-            "type": "Int",
-            "metadata": {
-                "description": "The prefix length for the new public IP prefix (e.g., 28 for /28)"
-            }
-        },
-        "publicIpPrefixVersion": {
-            "defaultValue": "IPv4",
-            "allowedValues": [
-                "IPv4",
-                "IPv6"
-            ],
-            "type": "String"
-        },
         "sourceVirtualNetwork": {
             "defaultValue": "",
             "type": "String"
@@ -68,72 +17,376 @@
             "defaultValue": "",
             "type": "String"
         },
-        "publicIpAddressServiceTag": {
-            "defaultValue": [],
-            "type": "Array"
-        },
-        "publicIpPrefixServiceTag": {
-            "defaultValue": [],
-            "type": "Array"
-        }
+        "subnetName": {
+      "type": "String"
+    },
+    "virtualNetworkName": {
+      "type": "String"
+    },
+    "logicappName": {
+      "type": "String"
+    },
+    "location": {
+      "defaultValue": "Canada Central",
+      "type": "String"
+    },
+    "storageAccountName": {
+      "type": "String"
+    },
+    "hostingPlanName": {
+      "type": "String"
+    },
+    "userAssignedIdentityName": {
+      "type": "String"
+    }
     },
     "variables": {
-        "sourceVirtualNetworkObject": "[if(empty(parameters('sourceVirtualNetwork')), null(), createObject('id', parameters('sourceVirtualNetwork')))]"
+        "sourceVirtualNetworkObject": "[if(empty(parameters('sourceVirtualNetwork')), null(), createObject('id', parameters('sourceVirtualNetwork')))]",
+            "contentShare": "testkaly80af",
+    "inboundSubnetDeployment": "inboundSubnetDeployment",
+    "connectedServiceSubnetDeployment": "connectedServiceSubnetDeployment"
+
     },
     "resources": [
         {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('logicappName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+      ],
+      "tags": {},
+      "kind": "functionapp,workflowapp",
+      "identity": {
+        "type": "SystemAssigned, UserAssigned",
+        "userAssignedIdentities": {
+          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]": {}
+        }
+      },
+      "properties": {
+        "name": "[parameters('logicappName')]",
+        "outboundVnetRouting": {
+          "allTraffic": false,
+          "applicationTraffic": true,
+          "contentShareTraffic": true,
+          "imagePullTraffic": false,
+          "backupRestoreTraffic": false
+        },
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~4"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "~20"
+            },
+            {
+              "name": "AzureWebJobsStorage__credential",
+              "value": "managedidentity"
+            },
+            {
+              "name": "AzureWebJobsStorage__blobServiceUri",
+              "value": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__queueServiceUri",
+              "value": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__tableServiceUri",
+              "value": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__managedIdentityResourceId",
+              "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__id",
+              "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__version",
+              "value": "[1.*, 2.0.0)"
+            },
+            {
+              "name": "APP_KIND",
+              "value": "workflowApp"
+            },
+            {
+              "name": "FUNCTIONS_INPROC_NET8_ENABLED",
+              "value": 1
+            },
+            {
+              "name": "LOGIC_APPS_POWERSHELL_VERSION",
+              "value": 7.4
+            }
+          ],
+          "cors": {},
+          "use32BitWorkerProcess": false,
+          "ftpsState": "FtpsOnly",
+          "vnetPrivatePortsCount": 2,
+          "netFrameworkVersion": "v8.0"
+        },
+        "clientAffinityEnabled": false,
+        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+        "functionsRuntimeAdminIsolationEnabled": false,
+        "autoGeneratedDomainNameLabelScope": "TenantReuse",
+        "publicNetworkAccess": "Enabled",
+        "vnetContentShareEnabled": true,
+        "vnetRouteAllEnabled": true,
+        "httpsOnly": true,
+        "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+          "apiVersion": "2022-09-01",
+          "name": "[concat(parameters('logicappName'), '/scm')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+          ],
+          "properties": {
+            "allow": false
+          }
+        },
+        {
+          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+          "apiVersion": "2022-09-01",
+          "name": "[concat(parameters('logicappName'), '/ftp')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+          ],
+          "properties": {
+            "allow": false
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2024-11-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('location')]",
+      "kind": "",
+      "tags": {},
+      "dependsOn": [],
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "workerSize": "3",
+        "workerSizeId": "3",
+        "numberOfWorkers": "1",
+        "maximumElasticWorkerCount": "20",
+        "zoneRedundant": false
+      },
+      "sku": {
+        "Tier": "WorkflowStandard",
+        "Name": "WS1"
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-07-01",
+      "name": "[parameters('virtualNetworkName')]",
+      "location": "canadacentral",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName')]",
+            "properties": {
+              "addressPrefix": "10.0.0.0/24",
+               "serviceEndpoints": [
+                {
+                  "service": "Microsoft.Storage"
+                }
+              ],
+              "delegations": [
+                {
+                  "name": "delegation",
+                  "properties": {
+                    "serviceName": "Microsoft.Web/serverfarms"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2022-05-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+      ],
+      "tags": {},
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "defaultToOAuthAuthentication": true,
+        "allowBlobPublicAccess": false,
+        "allowSharedKeyAccess": true,
+        "networkAcls": {
+          "ipv6Rules": [],
+          "resourceAccessRules": [],
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [
+            {
+              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
+              "action": "Allow",
+              "state": "Succeeded"
+            }
+          ],
+          "ipRules": [],
+          "defaultAction": "Deny"
+        },
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "[parameters('userAssignedIdentityName')]",
+      "location": "[parameters('location')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "StorageBlobDataOwnerRoleAssignmentTemplate",
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
+          "resources": [
+            {
+              "apiVersion": "2022-04-01",
+              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
+              "type": "Microsoft.Authorization/roleAssignments",
+              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
+              "properties": {
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal"
+              }
+            },
+            {
+              "apiVersion": "2022-04-01",
+              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
+              "type": "Microsoft.Authorization/roleAssignments",
+              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
+              "properties": {
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal"
+              }
+            },
+            {
+              "apiVersion": "2022-04-01",
+              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
+              "type": "Microsoft.Authorization/roleAssignments",
+              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
+              "properties": {
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal"
+              }
+            },
+            {
+              "apiVersion": "2022-04-01",
+              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
+              "type": "Microsoft.Authorization/roleAssignments",
+              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
+              "properties": {
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+        
+        {
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "[parameters('publicIpAddressApiVersion')]",
-            "name": "[parameters('publicIpName')]",
+            "apiVersion": "2024-05-01",
+            "name": "nat-pip",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "[parameters('sku')]"
+                "name": "Standard"
             },
-            "zones": "[parameters('zones')]",
+            "zones": [],
             "properties": {
                 "publicIPAllocationMethod": "Static",
-                "publicIpAddressVersion": "[parameters('publicIpVersion')]",
-                "ipTags": "[parameters('publicIpAddressServiceTag')]"
+                "publicIpAddressVersion": "IPv4",
+                "ipTags": []
             },
-            "condition": "[parameters('deployNewPublicIp')]"
+            "condition": false
         },
         {
             "type": "Microsoft.Network/publicIPPrefixes",
-            "apiVersion": "[parameters('publicIpPrefixApiVersion')]",
-            "name": "[parameters('publicIpPrefixName')]",
+            "apiVersion": "2024-05-01",
+            "name": "nat-prefix",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "[parameters('sku')]",
+                "name": "Standard",
                 "tier": "Regional"
             },
-            "zones": "[parameters('zones')]",
+            "zones": [],
             "properties": {
-                "prefixLength": "[parameters('publicIpPrefixLength')]",
-                "publicIpAddressVersion": "[parameters('publicIpPrefixVersion')]",
-                "ipTags": "[parameters('publicIpPrefixServiceTag')]"
+                "prefixLength": 28,
+                "publicIpAddressVersion": "IPv4",
+                "ipTags": []"
             },
-            "condition": "[parameters('deployNewPublicIpPrefix')]"
+            "condition": false
         },
         {
             "type": "Microsoft.Network/natGateways",
-            "apiVersion": "[parameters('natGatewayApiVersion')]",
+            "apiVersion": "2024-05-01",
             "name": "[parameters('natGatewayName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]",
-                "[resourceId('Microsoft.Network/publicIPPrefixes', parameters('publicIpPrefixName'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', 'nat-pip')]",
+                "[resourceId('Microsoft.Network/publicIPPrefixes', 'nat-prefix')]"
             ],
-            "tags": "[parameters('tags')]",
+            "tags": {},
             "sku": {
-                "name": "[parameters('sku')]"
+                "name": "Standard"
             },
-            "zones": "[parameters('zones')]",
+            "zones": [],
             "properties": {
-                "publicIPAddresses": "[parameters('publicIpAddressesIPv4')]",
-                "publicIPAddressesV6": "[parameters('publicIpAddressesIPv6')]",
-                "publicIPPrefixes": "[parameters('publicIpPrefixesIPv4')]",
-                "publicIPPrefixesV6": "[parameters('publicIpPrefixesIPv6')]",
-                "idleTimeoutInMinutes": "[parameters('idleTimeout')]",
+                "publicIPAddresses": [],
+                "publicIPAddressesV6": []",
+                "publicIPPrefixes": [],
+                "publicIPPrefixesV6": [],
+                "idleTimeoutInMinutes": 4,
                 "sourceVirtualNetwork": "[variables('sourceVirtualNetworkObject')]"
             }
         },
