@@ -2,42 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "natGatewayApiVersion": {
-            "defaultValue": "2024-05-01",
-            "type": "String"
-        },
-        "publicIpAddressApiVersion": {
-            "defaultValue": "2024-05-01",
-            "type": "String"
-        },
-        "publicIpPrefixApiVersion": {
-            "defaultValue": "2024-05-01",
-            "type": "String"
-        },
         "natGatewayName": {
             "type": "String"
-        },
-        "location": {
-            "type": "String"
-        },
-        "idleTimeout": {
-            "defaultValue": 4,
-            "type": "Int"
-        },
-        "sku": {
-            "defaultValue": "Standard",
-            "type": "String"
-        },
-        "zones": {
-            "defaultValue": [],
-            "type": "Array"
-        },
-        "publicIpAddressesIPv4": {
-            "defaultValue": [],
-            "type": "Array",
-            "metadata": {
-                "description": "List of new and existing IPV4 public IP addresses to associate with the NAT Gateway. This array should contain objects in the form { id: <resourceId> }."
-            }
         },
         "publicIpAddressesIPv6": {
             "defaultValue": [],
@@ -46,20 +12,7 @@
                 "description": "List of new and existing IPv6 public IP addresses to associate with the NAT Gateway. This array should contain objects in the form { id: <resourceId> }."
             }
         },
-        "publicIpPrefixesIPv4": {
-            "defaultValue": [],
-            "type": "Array",
-            "metadata": {
-                "description": "List of new and existing IPv4 public IP prefixes to associate with the NAT Gateway. This array should contain objects in the form { id: <resourceId> }."
-            }
-        },
-        "publicIpPrefixesIPv6": {
-            "defaultValue": [],
-            "type": "Array",
-            "metadata": {
-                "description": "List of new and existing IPv6 public IP prefixes to associate with the NAT Gateway. This array should contain objects in the form { id: <resourceId> }."
-            }
-        },
+
         "tags": {
             "defaultValue": {},
             "type": "Object"
