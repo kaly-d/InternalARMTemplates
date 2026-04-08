@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "publicIpAddressName": {
+    "publicIPAddresses_public_ip_name": {
       "defaultValue": "myPublicIPAddress",
       "type": "String",
       "metadata": {
@@ -477,7 +477,7 @@
       "name": "[parameters('natGatewayName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', 'nat-pip')]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('userAssignedIdentityName'))]",
         "[resourceId('Microsoft.Network/publicIPPrefixes', 'nat-prefix')]"
       ],
       "tags": {},
@@ -486,7 +486,12 @@
       },
       "zones": [],
       "properties": {
-        "publicIPAddresses": [],
+        "publicIPAddresses": [
+                              {
+                        "id":  "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Network/publicIPAddresses/', parameters('publicIPAddresses_public_ip_name'))]"
+                    }
+
+        ],
         "publicIPAddressesV6": [],
         "publicIPPrefixes": [],
         "publicIPPrefixesV6": [],
