@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "publicIPAddresses_public_ip_name": {
+    "publicIpAddressName": {
       "defaultValue": "myPublicIPAddress",
       "type": "String",
       "metadata": {
@@ -21,7 +21,7 @@
         "name": "vnet",
         "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "type": "Microsoft.Network/virtualNetworks",
-        "location": "[parameters('location')]",
+        "location": "canadacentral",
         "properties": {
           "provisioningState": "Succeeded",
           "addressSpace": {
@@ -301,7 +301,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-07-01",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "[parameters('location')]",
+      "location": "canadacentral",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
