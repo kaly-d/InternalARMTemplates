@@ -21,7 +21,7 @@
         "name": "vnet",
         "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "type": "Microsoft.Network/virtualNetworks",
-        "location": "canadacentral",
+        "location": "[parameters('location')]",
         "properties": {
           "provisioningState": "Succeeded",
           "addressSpace": {
@@ -134,7 +134,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2025-05-01",
       "name": "[parameters('publicIPAddresses_public_ip_name')]",
-      "location": "eastus",
+      "location": "[parameters('location')]",
       "sku": {
         "name": "Standard",
         "tier": "Regional"
@@ -301,7 +301,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-07-01",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "canadacentral",
+      "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
