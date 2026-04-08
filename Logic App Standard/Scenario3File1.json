@@ -477,7 +477,7 @@
       "name": "[parameters('natGatewayName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('userAssignedIdentityName'))]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_public_ip_name'))]",
         "[resourceId('Microsoft.Network/publicIPPrefixes', 'nat-prefix')]"
       ],
       "tags": {},
@@ -487,10 +487,9 @@
       "zones": [],
       "properties": {
         "publicIPAddresses": [
-                              {
-                        "id":  "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Network/publicIPAddresses/', parameters('publicIPAddresses_public_ip_name'))]"
-                    }
-
+          {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Network/publicIPAddresses/', parameters('publicIPAddresses_public_ip_name'))]"
+          }
         ],
         "publicIPAddressesV6": [],
         "publicIPPrefixes": [],
