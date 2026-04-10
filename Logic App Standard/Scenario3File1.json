@@ -439,46 +439,12 @@
       }
     },
     {
-      "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2024-05-01",
-      "name": "nat-pip",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard"
-      },
-      "zones": [],
-      "properties": {
-        "publicIPAllocationMethod": "Static",
-        "publicIpAddressVersion": "IPv4",
-        "ipTags": []
-      },
-      "condition": false
-    },
-    {
-      "type": "Microsoft.Network/publicIPPrefixes",
-      "apiVersion": "2024-05-01",
-      "name": "nat-prefix",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      },
-      "zones": [],
-      "properties": {
-        "prefixLength": 28,
-        "publicIpAddressVersion": "IPv4",
-        "ipTags": []
-      },
-      "condition": false
-    },
-    {
       "type": "Microsoft.Network/natGateways",
       "apiVersion": "2024-05-01",
       "name": "[parameters('natGatewayName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_public_ip_name'))]",
-        "[resourceId('Microsoft.Network/publicIPPrefixes', 'nat-prefix')]"
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_public_ip_name'))]"
       ],
       "tags": {},
       "sku": {
