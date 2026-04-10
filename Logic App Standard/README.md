@@ -8,7 +8,9 @@ What this does/deploys:
   - App Service Plan (WS1 SKU)
   - Storage Account (Selected networks to VNET/Subnet)
   - [Grant UAMI permissions on Storage]
-  - Logic App Standard (hosted on WS1), integrated with VNET
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+
 
 ***
 
@@ -22,9 +24,12 @@ What this does/deploys:
   - App Service Plan (WS1 SKU)
   - Storage Account (Selected networks to VNET/Subnet)
   - [Grant UAMI permissions on Storage]
-  - Logic App Standard (hosted on WS1), integrated with VNET
+  - Logic App Standard (hosted on WS1) 
+  - [Associates Logic App Standard with VNET/subnet]
   - NAT Gateway
   - [Associates NAT Gateway with VNET/Subnet]
+
+***
 
 **Scenario3File1.json**
 
@@ -36,15 +41,39 @@ What this does/deploys:
   - App Service Plan (WS1 SKU)
   - Storage Account (Selected networks to VNET/Subnet)
   - [Grant UAMI permissions on Storage]
-  - Logic App Standard (hosted on WS1), integrated with VNET
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
   - NAT Gateway
   - [Associates NAT Gateway with VNET/Subnet]
   - Deploy a Public IP
-  - [Associated NAT Gateway with Public IP]
+  - [Associates NAT Gateway with Public IP]
+
+***
 
 **Scenario4File1.json**
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario4File1.json)
+
+What this does/deploys:
+  - Virtual Network + Subnet
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - NAT Gateway
+  - [Associates NAT Gateway with VNET/Subnet]
+  - Deploy a Public IP
+  - [Associates NAT Gateway with Public IP]
+  - Deploy a Public IP Prefix
+  - [Associates NAT Gateway with Public IP Prefix]
+
+***
+
+**Scenario5File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario5File1.json)
 
 
 
