@@ -460,7 +460,7 @@
       "condition": false
     },
     {
-      "type": "Microsoft.Network/publicIPPrefixes",
+      "type": "Microsoft.Network/publicipprefixes",
       "apiVersion": "2024-05-01",
       "name": "[parameters('publicIPPrefixes_nat_prefix1_externalid')]",
       "location": "[parameters('location')]",
