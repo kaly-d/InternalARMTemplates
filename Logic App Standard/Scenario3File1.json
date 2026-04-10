@@ -125,7 +125,6 @@
   },
   "variables": {
     "sourceVirtualNetworkObject": "[if(empty(parameters('sourceVirtualNetwork')), null(), createObject('id', parameters('sourceVirtualNetwork')))]",
-    "contentShare": "testkaly80af",
     "inboundSubnetDeployment": "inboundSubnetDeployment",
     "connectedServiceSubnetDeployment": "connectedServiceSubnetDeployment"
   },
