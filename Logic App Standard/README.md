@@ -88,6 +88,8 @@ What this does/deploys:
   - Storage Account #2 that acts as an SFTP Server
 
 **Step 2:** Finish setting up the SFTP server on the Storage Account and generating a password for the local user
+i. h
+ii. a
 a. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
 b. Click on SSH Password > Next > Add. Copy the generated password.
 
