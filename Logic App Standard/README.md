@@ -88,12 +88,12 @@ What this does/deploys:
   - Storage Account #2 that acts as an SFTP Server
 
 **Step 2:** Finish setting up the SFTP server on the Storage Account and generating a password for the local user
-1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
-2. Click on SSH Password > Next > Add. Copy the generated password.
+a. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
+b. Click on SSH Password > Next > Add. Copy the generated password.
 
 **Step 3:** Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
-1. In the Logic App Standard, navigate to **Environment Variables** and search for the Sftp_password setting and paste the value you copied from **Step 2.**
-2. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
-3. Download the **Scenario5File1Workflows.zip** file. This contains the workflow zip for this scenario.
-4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
+a. In the Logic App Standard, navigate to **Environment Variables** and search for the Sftp_password setting and paste the value you copied from **Step 2.**
+b. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+c. Download the **Scenario5File1Workflows.zip** file. This contains the workflow zip for this scenario.
+d. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+e. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
