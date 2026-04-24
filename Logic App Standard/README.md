@@ -77,15 +77,15 @@ What this does/deploys:
 
 **Step 1:** Deploy the above template
 
-  What this does/deploys:
-    - Virtual Network + Subnet
-    - User-Assigned Managed Identity
-    - App Service Plan (WS1 SKU)
-    - Storage Account #1 (Selected networks to VNET/Subnet)
-    - [Grant UAMI permissions on Storage #1]
-    - Logic App Standard (hosted on WS1)
-    - [Associates Logic App Standard with VNET/subnet]
-    - Storage Account #2 that acts as an SFTP Server
+What this does/deploys:
+  - Virtual Network + Subnet
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - Storage Account #2 that acts as an SFTP Server
 
 **Step 2:** Finish setting up the SFTP server on the Storage Account and generating a password for the local user
 1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
