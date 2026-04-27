@@ -92,7 +92,7 @@ What this does/deploys:
 2. Click on SSH Password > Next > Save. Copy the generated password.
 
 **Step 3:** Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
-1. In the Logic App Standard, navigate to **Environment Variables** and search for the Sftp_password setting and paste the value you copied from **Step 2.**
+1. In the Logic App Standard, navigate to **Environment Variables**, search for the **Sftp_password** app setting and paste the value you copied from **Step 2.**
 2. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
 3. Download the **Scenario5File1Workflows.zip** file. This contains the workflow zip for this scenario.
 4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
