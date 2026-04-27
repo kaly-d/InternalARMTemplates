@@ -26,6 +26,12 @@
     },
     "userAssignedIdentityName": {
       "type": "String"
+    },
+    "privateEndpointName": {
+      "type": "String"
+    },
+    "serviceBus-NamespaceName":{
+      "type": "String"
     }
   },
   "variables": {
@@ -33,6 +39,24 @@
     "connectedServiceSubnetDeployment": "connectedServiceSubnetDeployment"
   },
   "resources": [
+    {
+        "type": "Microsoft.ServiceBus/namespaces",
+        "apiVersion": "2025-05-01-preview",
+        "name": "[parameters('serviceBus-NamespaceName')]",
+        "location": "[parameters('location')]",
+        "tags": {},
+        "sku": {
+            "name": "Premium",
+            "tier": "Premium",
+            "capacity": 1
+        },
+        "properties": {
+            "zoneRedundant": false,
+            "minimumTlsVersion": "1.2",
+            "disableLocalAuth": true,
+            "publicNetworkAccess": "Disabled"
+        }
+    },
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2022-03-01",
