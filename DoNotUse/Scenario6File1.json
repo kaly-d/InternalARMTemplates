@@ -27,18 +27,55 @@
     "userAssignedIdentityName": {
       "type": "String"
     },
-    "privateEndpointName": {
-      "type": "String"
-    },
     "serviceBus-NamespaceName":{
       "type": "String"
+    },
+    "privateEndpointName": {
+        "defaultValue": "sb-private-endpoint",
+        "type": "String"
     }
   },
-  "variables": {
-    "inboundSubnetDeployment": "inboundSubnetDeployment",
-    "connectedServiceSubnetDeployment": "connectedServiceSubnetDeployment"
-  },
+  "variables": {},
   "resources": [
+    {
+        "type": "Microsoft.Network/privateEndpoints",
+        "apiVersion": "2025-05-01",
+        "name": "[parameters('privateEndpointName')]",
+        "location": "canadacentral",
+        "properties": {
+            "privateLinkServiceConnections": [
+                {
+                    "name": "[concat(parameters('privateEndpointName'), '_51b7088c-7f3b-45d4-b97a-2df2091e6310')]",
+                    "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), concat('/privateLinkServiceConnections/', parameters('privateEndpointName'), '_51b7088c-7f3b-45d4-b97a-2df2091e6310'))]",
+                    "properties": {
+                        "privateLinkServiceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.ServiceBus/namespaces/', parameters('serviceBus-NamespaceName'))]",
+                        "groupIds": [
+                            "namespace"
+                        ],
+                        "privateLinkServiceConnectionState": {
+                            "status": "Approved",
+                            "description": "Auto-Approved",
+                            "actionsRequired": "None"
+                        }
+                    }
+                }
+            ],
+            "manualPrivateLinkServiceConnections": [],
+            "subnet": {
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('servicebus-SubnetName'))]"
+            },
+            "ipConfigurations": [],
+            "customDnsConfigs": [
+                {
+                    "fqdn": "testkaly-pre.servicebus.windows.net",
+                    "ipAddresses": [
+                        "10.0.3.4"
+                    ]
+                }
+            ],
+            "ipVersionType": "IPv4"
+        }
+    },
     {
         "type": "Microsoft.ServiceBus/namespaces",
         "apiVersion": "2025-05-01-preview",
