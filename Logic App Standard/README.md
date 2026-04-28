@@ -97,3 +97,29 @@ What this does/deploys:
 3. Download the **Scenario5File1Workflows.zip** file. This contains the workflow zip for this scenario.
 4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
+
+***
+
+**Scenario6File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario6File1.json)
+
+**Step 1:** Deploy the above template
+
+What this does/deploys:
+  - Virtual Network + 2 Subnets (1 for Logic App, 1 for Service Bus)
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - Deploys a Service Bus Namespace and queue, set to Disabled Public Access
+  - Deploys a Private Endpoint, Private DNS Zone, and attaches it to the Service Bus subnet.
+
+**Step 2:** Finish setting up the Logic App
+
+1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+2. Download the **Scenario6File1Workflows.zip** file. This contains the workflow zip for this scenario.
+3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
