@@ -36,6 +36,9 @@
     },
     "guid":{
       "type": "String"
+    },
+    "queueName":{
+      "type": "String"
     }
   },
   "variables": {},
@@ -133,6 +136,24 @@
         }
     },
     {
+      "type": "Microsoft.ServiceBus/namespaces/queues",
+      "apiVersion": "2025-05-01-preview",
+      "name": "[format('{0}/{1}', parameters('serviceBus-NamespaceName'), parameters('queueName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
+      ],
+      "properties": {
+        "status": "Active",
+        "lockDuration": "PT5M",
+        "maxDeliveryCount": 10,
+        "maxSizeInMegabytes": 1024,
+        "requiresSession": false,
+        "deadLetteringOnMessageExpiration": true,
+        "defaultMessageTimeToLive": "P14D",
+        "enablePartitioning": true
+      }
+    },
+    {
         "type": "Microsoft.ServiceBus/namespaces",
         "apiVersion": "2025-05-01-preview",
         "name": "[parameters('serviceBus-NamespaceName')]",
@@ -221,6 +242,16 @@
             {
               "name": "APP_KIND",
               "value": "workflowApp"
+            },
+            {
+              "name": "serviceBus_fullyQualifiedNamespace",
+              "value": "[concat(parameters('serviceBus-NamespaceName'), '.servicebus.windows.net')]",
+              "slotSetting": false
+            },
+            {
+              "name": "ServiceBusQueueName",
+              "value": "[parameters('queueName')]",
+              "slotSetting": false
             },
             {
               "name": "FUNCTIONS_INPROC_NET8_ENABLED",
