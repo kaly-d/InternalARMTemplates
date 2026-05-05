@@ -24,6 +24,122 @@
     },
     "resources": [
         {
+            "type": "Microsoft.Web/customApis",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('customConnectorName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "displayName": "[parameters('customConnectorName')]",
+                "description": "Webhook.site custom connector",
+                "iconUri": "https://defaulticons.powerapps.com/defaulticons/api-dedicated.svg",
+
+                "apiType": "Rest",
+                "capabilities": [],
+
+                "backendService": {
+                    "serviceUrl": "https://webhook.site"
+                    },
+                "connectionParameters": {},
+                "supportedConnectionKinds": "V1,V2",
+                "swagger": {
+                    "swagger": "2.0",
+                    "info": {
+                        "title": "Default title",
+                        "description": "",
+                        "version": "1.0"
+                    },
+                    "host": "webhook.site",
+                    "schemes": ["https"],
+                    "consumes": [],
+                    "produces": [],
+                    "paths": {
+                        "[parameters('basePath')]": {
+                            "get": {
+                                "responses": {
+                                    "default": {
+                                        "description": "default",
+                                        "schema": {
+
+                                        }
+                                    }
+                                },
+                                "summary": "Get Invoke API",
+                                "operationId": "GetInvokeAPI",
+                                "parameters": []
+                            },
+                            "post": {
+                                "responses": {
+                                "default": {
+                                    "description": "default",
+                                    "schema": {
+
+                                    }
+                                }
+                                },
+                                "parameters": [
+                                {
+                                    "name": "body",
+                                    "in": "body",
+                                    "required": false,
+                                    "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hello": {
+                                        "type": "string",
+                                        "description": "hello"
+                                        }
+                                    }
+                                    }
+                                }
+                                ],
+                                "summary": "Post Invoke API",
+                                "operationId": "PostInvokeAPI"
+                            }
+                        }
+                    },
+                    "definitions": {},
+                    "parameters": {},
+                    "responses": {},
+                    "security": [],
+                    "tags": [],
+                    "securityDefinitions": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.web/connections",            
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/customApis', parameters('customConnectorName'))]"
+            ],
+            "apiVersion": "2018-07-01-preview",
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/', parameters('customConnectorName'))]",
+            "name": "[parameters('customConnectorName')]",
+            "kind": "V1",
+            "location": "[parameters('location')]",
+            "properties": {
+                "displayName": "[parameters('customConnectorName')]",
+                "authenticatedUser": {},
+                "overallStatus": "Connected",
+                "statuses": [
+                    {
+                        "status": "Connected"
+                    }
+                ],
+                "connectionState": "Enabled",
+                "parameterValues": {},
+                "customParameterValues": {},
+                "api": {
+                    "name": "[parameters('customConnectorName')]",
+                    "displayName": "[parameters('customConnectorName')]",
+                    "description": "",
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customConnectorName'))]",
+                    "type": "Microsoft.Web/customApis"
+                },
+                "testLinks": [],
+                "testRequests": []
+            }
+        },
+                {
             "apiVersion": "2016-10-01",
             "name": "[parameters('logicAppName')]",            
             "dependsOn": [
@@ -78,126 +194,6 @@
                     }
                 },
                 "state": "Enabled"
-            }
-        },  
-        {
-            "type": "Microsoft.Web/customApis",
-            "apiVersion": "2016-06-01",
-            "name": "[parameters('customConnectorName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "displayName": "[parameters('customConnectorName')]",
-                "description": "Webhook.site custom connector",
-                "iconUri": "https://defaulticons.powerapps.com/defaulticons/api-dedicated.svg",
-
-                "apiType": "Rest",
-                "capabilities": [],
-
-                "backendService": {
-                "serviceUrl": "https://webhook.site"
-                },
-
-                "connectionParameters": {},
-
-                "supportedConnectionKinds": "V1,V2",
-
-                "swagger": {
-                "swagger": "2.0",
-                "info": {
-                    "title": "Default title",
-                    "description": "",
-                    "version": "1.0"
-                },
-                "host": "webhook.site",
-                "basePath": "[parameters('basePath')]",
-                "schemes": ["https"],
-                "consumes": [],
-                "produces": [],
-                "paths": {
-                    "/": {
-                        "get": {
-                            "responses": {
-                            "default": {
-                                "description": "default",
-                                "schema": {
-
-                                }
-                            }
-                            },
-                            "summary": "Get Invoke API",
-                            "operationId": "GetInvokeAPI",
-                            "parameters": []
-                        },
-                        "post": {
-                            "responses": {
-                            "default": {
-                                "description": "default",
-                                "schema": {
-
-                                }
-                            }
-                            },
-                            "parameters": [
-                            {
-                                "name": "body",
-                                "in": "body",
-                                "required": false,
-                                "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "hello": {
-                                    "type": "string",
-                                    "description": "hello"
-                                    }
-                                }
-                                }
-                            }
-                            ],
-                            "summary": "Post Invoke API",
-                            "operationId": "PostInvokeAPI"
-                        }
-                    }
-                },
-                "definitions": {},
-                "parameters": {},
-                "responses": {},
-                "security": [],
-                "tags": [],
-                "securityDefinitions": {}
-                }
-            }
-        },
-        {
-            "type": "Microsoft.web/connections",            
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/customApis', parameters('customConnectorName'))]"
-            ],
-            "apiVersion": "2018-07-01-preview",
-            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/', parameters('customConnectorName'))]",
-            "name": "[parameters('customConnectorName')]",
-            "kind": "V1",
-            "location": "[parameters('location')]",
-            "properties": {
-                "displayName": "[parameters('customConnectorName')]",
-                "authenticatedUser": {},
-                "overallStatus": "Connected",
-                "statuses": [
-                    {
-                        "status": "Connected"
-                    }
-                ],
-                "connectionState": "Enabled",
-                "parameterValues": {},
-                "customParameterValues": {},
-                "api": {
-                    "name": "[parameters('customConnectorName')]",
-                    "displayName": "[parameters('customConnectorName')]",
-                    "description": "",
-                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customConnectorName'))]",
-                    "type": "Microsoft.Web/customApis"
-                },
-                "testLinks": [],
-                "testRequests": []
             }
         }
     ]
