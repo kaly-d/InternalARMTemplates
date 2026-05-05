@@ -5,7 +5,7 @@
         "customConnectorName": {
             "type": "string",
             "metadata": {
-            "description": "Name of the custom connector"
+                "description": "Name of the custom connector"
             }
         },
         "location": {
@@ -16,7 +16,10 @@
         },
         "basePath": {
             "defaultValue":"/13ce322a-6bba-43da-bb6a-4d5a48243770",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Fetch the unique ID from the webhook.site endpoint and enter it in this format: /ID"
+            }            
         }
     },
     "resources": [
