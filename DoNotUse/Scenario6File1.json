@@ -1,475 +1,195 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "outboundSubnetName": {
-      "type": "String"
-    },
-    "servicebus-SubnetName": {
-      "type": "String"
-    },
-    "virtualNetworkName": {
-      "type": "String"
-    },
-    "logicappName": {
-      "type": "String"
-    },
-    "location": {
-      "defaultValue": "Canada Central",
-      "type": "String"
-    },
-    "storageAccountName": {
-      "type": "String"
-    },
-    "hostingPlanName": {
-      "type": "String"
-    },
-    "userAssignedIdentityName": {
-      "type": "String"
-    },
-    "serviceBus-NamespaceName":{
-      "type": "String"
-    },
-    "privateEndpointName": {
-        "defaultValue": "sb-private-endpoint",
-        "type": "String"
-    },
-    "guid":{
-      "type": "String"
-    },
-    "queueName":{
-      "type": "String"
-    }
-  },
-  "variables": {},
-  "resources": [
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01",
-      "name": "[guid(resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName')), resourceId('Microsoft.Web/sites', parameters('logicappName')), 'SBDataOwner')]",
-      "scope": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]",
-        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
-      ],
-      "properties": {
-        "principalId": "[reference(resourceId('Microsoft.Web/sites', parameters('logicappName')), '2022-03-01', 'Full').identity.principalId]",
-        "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/090c5cfd-751d-490a-894a-3ce6f1109419')]",
-        "principalType": "ServicePrincipal"
-      }
-    },
-    {
-      "type": "Microsoft.Network/privateDnsZones",
-      "apiVersion": "2020-06-01",
-      "name": "privatelink.servicebus.windows.net",
-      "location": "global",
-      "properties": {}
-    },
-    {
-      "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
-      "apiVersion": "2020-06-01",
-      "name": "[format('privatelink.servicebus.windows.net/{0}-link', parameters('virtualNetworkName'))]",
-      "location": "global",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.servicebus.windows.net')]",
-        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "registrationEnabled": false,
-        "virtualNetwork": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-      "apiVersion": "2025-05-01",
-      "name": "[format('{0}/default', parameters('privateEndpointName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.servicebus.windows.net')]"
-      ],
-      "properties": {
-        "privateDnsZoneConfigs": [
-          {
-            "name": "servicebusDns",
-            "properties": {
-              "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.servicebus.windows.net')]"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "customConnectorName": {
+            "type": "string",
+            "metadata": {
+            "description": "Name of the custom connector"
             }
-          }
-        ]
-      }
+        },
+        "location": {
+            "type": "string"
+        },
+        "logicAppName": {
+            "type": "string"
+        },
+        "basePath": {
+            "defaultValue":"/13ce322a-6bba-43da-bb6a-4d5a48243770",
+            "type": "string"
+        }
     },
-    {
-        "type": "Microsoft.Network/privateEndpoints",
-        "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-          "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
-
-        ],
-        "apiVersion": "2025-05-01",
-        "name": "[parameters('privateEndpointName')]",
-        "location": "canadacentral",
-        "properties": {
-            "privateLinkServiceConnections": [
-                {
-                    "name": "[concat(parameters('privateEndpointName'), parameters('guid'))]",
-                    "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), concat('/privateLinkServiceConnections/', parameters('privateEndpointName'), parameters('guid')))]",
-                    "properties": {
-                        "privateLinkServiceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.ServiceBus/namespaces/', parameters('serviceBus-NamespaceName'))]",
-                        "groupIds": [
-                            "namespace"
-                        ],
-                        "privateLinkServiceConnectionState": {
-                            "status": "Approved",
-                            "description": "Auto-Approved",
-                            "actionsRequired": "None"
+    "resources": [
+        {
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('logicAppName')]",
+            "type": "Microsoft.Logic/workflows",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_an_HTTP_request_is_received": {
+                            "type": "Request",
+                            "kind": "Http"
+                        }
+                    },
+                    "actions": {
+                        "Invoke_the_Webhook.site_API": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['custom-connector']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "custom-connector": {
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customConnectorName'))]",
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/', parameters('customConnectorName'))]",
+                                "connectionName": "[parameters('customConnectorName')]",
+                                "connectionProperties": {}
+                            }
                         }
                     }
-                }
-            ],
-            "manualPrivateLinkServiceConnections": [],
-            "ipVersionType": "IPv4",
-            "subnet": {
-                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('servicebus-SubnetName'))]"
+                },
+                "state": "Enabled"
             }
-        }
-    },
-    {
-      "type": "Microsoft.ServiceBus/namespaces/queues",
-      "apiVersion": "2025-05-01-preview",
-      "name": "[format('{0}/{1}', parameters('serviceBus-NamespaceName'), parameters('queueName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
-      ],
-      "properties": {
-        "status": "Active",
-        "lockDuration": "PT5M",
-        "maxDeliveryCount": 10,
-        "maxSizeInMegabytes": 1024,
-        "requiresSession": false,
-        "deadLetteringOnMessageExpiration": true,
-        "defaultMessageTimeToLive": "P14D",
-        "enablePartitioning": true
-      }
-    },
-    {
-        "type": "Microsoft.ServiceBus/namespaces",
-        "apiVersion": "2025-05-01-preview",
-        "name": "[parameters('serviceBus-NamespaceName')]",
-        "location": "[parameters('location')]",
-        "tags": {},
-        "sku": {
-            "name": "Premium",
-            "tier": "Premium",
-            "capacity": 1
-        },
-        "properties": {
-            "zoneRedundant": false,
-            "minimumTlsVersion": "1.2",
-            "disableLocalAuth": true,
-            "publicNetworkAccess": "Disabled"
-        }
-    },
-    {
-      "type": "Microsoft.Web/sites",
-      "apiVersion": "2022-03-01",
-      "name": "[parameters('logicappName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
-      ],
-      "tags": {},
-      "kind": "functionapp,workflowapp",
-      "identity": {
-        "type": "SystemAssigned, UserAssigned",
-        "userAssignedIdentities": {
-          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]": {}
-        }
-      },
-      "properties": {
-        "name": "[parameters('logicappName')]",
-        "outboundVnetRouting": {
-          "allTraffic": false,
-          "applicationTraffic": true,
-          "contentShareTraffic": true,
-          "imagePullTraffic": false,
-          "backupRestoreTraffic": false
-        },
-        "siteConfig": {
-          "appSettings": [
-            {
-              "name": "FUNCTIONS_EXTENSION_VERSION",
-              "value": "~4"
-            },
-            {
-              "name": "FUNCTIONS_WORKER_RUNTIME",
-              "value": "dotnet"
-            },
-            {
-              "name": "WEBSITE_NODE_DEFAULT_VERSION",
-              "value": "~20"
-            },
-            {
-              "name": "AzureWebJobsStorage__credential",
-              "value": "managedidentity"
-            },
-            {
-              "name": "AzureWebJobsStorage__blobServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__queueServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__tableServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__managedIdentityResourceId",
-              "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
-            },
-            {
-              "name": "AzureFunctionsJobHost__extensionBundle__id",
-              "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
-            },
-            {
-              "name": "AzureFunctionsJobHost__extensionBundle__version",
-              "value": "[1.*, 2.0.0)"
-            },
-            {
-              "name": "APP_KIND",
-              "value": "workflowApp"
-            },
-            {
-              "name": "serviceBus_fullyQualifiedNamespace",
-              "value": "[concat(parameters('serviceBus-NamespaceName'), '.servicebus.windows.net')]",
-              "slotSetting": false
-            },
-            {
-              "name": "ServiceBusQueueName",
-              "value": "[parameters('queueName')]",
-              "slotSetting": false
-            },
-            {
-              "name": "FUNCTIONS_INPROC_NET8_ENABLED",
-              "value": 1
-            },
-            {
-              "name": "LOGIC_APPS_POWERSHELL_VERSION",
-              "value": 7.4
-            }
-          ],
-          "cors": {},
-          "use32BitWorkerProcess": false,
-          "ftpsState": "FtpsOnly",
-          "vnetPrivatePortsCount": 2,
-          "netFrameworkVersion": "v8.0"
-        },
-        "clientAffinityEnabled": false,
-        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('outboundSubnetName'))]",
-        "functionsRuntimeAdminIsolationEnabled": false,
-        "autoGeneratedDomainNameLabelScope": "TenantReuse",
-        "publicNetworkAccess": "Enabled",
-        "vnetContentShareEnabled": true,
-        "vnetRouteAllEnabled": true,
-        "httpsOnly": true,
-        "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
-      },
-      "resources": [
+        },  
         {
-          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
-          "apiVersion": "2022-09-01",
-          "name": "[concat(parameters('logicappName'), '/scm')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
-          ],
-          "properties": {
-            "allow": false
-          }
+            "type": "Microsoft.Web/customApis",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('customConnectorName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "displayName": "[parameters('customConnectorName')]",
+                "description": "Webhook.site custom connector",
+                "iconUri": "https://defaulticons.powerapps.com/defaulticons/api-dedicated.svg",
+
+                "apiType": "Rest",
+                "capabilities": [],
+
+                "backendService": {
+                "serviceUrl": "https://webhook.site"
+                },
+
+                "connectionParameters": {},
+
+                "supportedConnectionKinds": "V1,V2",
+
+                "swagger": {
+                "swagger": "2.0",
+                "info": {
+                    "title": "Default title",
+                    "description": "",
+                    "version": "1.0"
+                },
+                "host": "webhook.site",
+                "basePath": "[parameters('basePath')]",
+                "schemes": ["https"],
+                "consumes": [],
+                "produces": [],
+                "paths": {
+                    "/": {
+                        "get": {
+                            "responses": {
+                            "default": {
+                                "description": "default",
+                                "schema": {
+
+                                }
+                            }
+                            },
+                            "summary": "Get Invoke API",
+                            "operationId": "GetInvokeAPI",
+                            "parameters": []
+                        },
+                        "post": {
+                            "responses": {
+                            "default": {
+                                "description": "default",
+                                "schema": {
+
+                                }
+                            }
+                            },
+                            "parameters": [
+                            {
+                                "name": "body",
+                                "in": "body",
+                                "required": false,
+                                "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "hello": {
+                                    "type": "string",
+                                    "description": "hello"
+                                    }
+                                }
+                                }
+                            }
+                            ],
+                            "summary": "Post Invoke API",
+                            "operationId": "PostInvokeAPI"
+                        }
+                    }
+                },
+                "definitions": {},
+                "parameters": {},
+                "responses": {},
+                "security": [],
+                "tags": [],
+                "securityDefinitions": {}
+                }
+            }
         },
         {
-          "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
-          "apiVersion": "2022-09-01",
-          "name": "[concat(parameters('logicappName'), '/ftp')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
-          ],
-          "properties": {
-            "allow": false
-          }
-        }
-      ]
-    },
-    {
-      "apiVersion": "2024-11-01",
-      "name": "[parameters('hostingPlanName')]",
-      "type": "Microsoft.Web/serverfarms",
-      "location": "[parameters('location')]",
-      "kind": "",
-      "tags": {},
-      "dependsOn": [],
-      "properties": {
-        "name": "[parameters('hostingPlanName')]",
-        "workerSize": "3",
-        "workerSizeId": "3",
-        "numberOfWorkers": "1",
-        "maximumElasticWorkerCount": "20",
-        "zoneRedundant": false
-      },
-      "sku": {
-        "Tier": "WorkflowStandard",
-        "Name": "WS1"
-      }
-    },
-    {
-      "type": "Microsoft.Network/virtualNetworks",
-      "apiVersion": "2020-07-01",
-      "name": "[parameters('virtualNetworkName')]",
-      "location": "canadacentral",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "10.0.0.0/16"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('outboundSubnetName')]",
+            "type": "Microsoft.web/connections",
+            "apiVersion": "2018-07-01-preview",
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/', parameters('customConnectorName'))]",
+            "name": "[parameters('customConnectorName')]",
+            "kind": "V1",
+            "location": "[parameters('location')]",
             "properties": {
-              "addressPrefix": "10.0.0.0/24",
-               "serviceEndpoints": [
-                {
-                  "service": "Microsoft.Storage"
-                }
-              ],
-              "delegations": [
-                {
-                  "name": "delegation",
-                  "properties": {
-                    "serviceName": "Microsoft.Web/serverfarms"
-                  }
-                }
-              ]
+                "displayName": "[parameters('customConnectorName')]",
+                "authenticatedUser": {},
+                "overallStatus": "Connected",
+                "statuses": [
+                    {
+                        "status": "Connected"
+                    }
+                ],
+                "connectionState": "Enabled",
+                "parameterValues": {},
+                "customParameterValues": {},
+                "api": {
+                    "name": "[parameters('customConnectorName')]",
+                    "displayName": "[parameters('customConnectorName')]",
+                    "description": "",
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customConnectorName'))]",
+                    "type": "Microsoft.Web/customApis"
+                },
+                "testLinks": [],
+                "testRequests": []
             }
-          },
-          {
-            "name": "[parameters('servicebus-SubnetName')]",
-            "properties": {
-              "addressPrefix": "10.0.1.0/24"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2022-05-01",
-      "name": "[parameters('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-      ],
-      "tags": {},
-      "sku": {
-        "name": "Standard_LRS"
-      },
-      "kind": "StorageV2",
-      "properties": {
-        "supportsHttpsTrafficOnly": true,
-        "minimumTlsVersion": "TLS1_2",
-        "defaultToOAuthAuthentication": true,
-        "allowBlobPublicAccess": false,
-        "allowSharedKeyAccess": true,
-        "networkAcls": {
-          "ipv6Rules": [],
-          "resourceAccessRules": [],
-          "bypass": "AzureServices",
-          "virtualNetworkRules": [
-            {
-              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('outboundSubnetName'))]",
-              "action": "Allow",
-              "state": "Succeeded"
-            }
-          ],
-          "ipRules": [],
-          "defaultAction": "Deny"
-        },
-        "publicNetworkAccess": "Enabled"
-      }
-    },
-    {
-      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-      "apiVersion": "2018-11-30",
-      "name": "[parameters('userAssignedIdentityName')]",
-      "location": "[parameters('location')]",
-      "properties": {}
-    },
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2021-04-01",
-      "name": "StorageBlobDataOwnerRoleAssignmentTemplate",
-      "dependsOn": [
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-          "contentVersion": "1.0.0.0",
-          "parameters": {},
-          "variables": {},
-          "resources": [
-            {
-              "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
-              "type": "Microsoft.Authorization/roleAssignments",
-              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
-              "properties": {
-                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
-                "principalType": "ServicePrincipal"
-              }
-            },
-            {
-              "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
-              "type": "Microsoft.Authorization/roleAssignments",
-              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
-              "properties": {
-                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
-                "principalType": "ServicePrincipal"
-              }
-            },
-            {
-              "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
-              "type": "Microsoft.Authorization/roleAssignments",
-              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
-              "properties": {
-                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
-                "principalType": "ServicePrincipal"
-              }
-            },
-            {
-              "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
-              "type": "Microsoft.Authorization/roleAssignments",
-              "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('storageAccountName'))]",
-              "properties": {
-                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName')), '2018-11-30').principalId]",
-                "principalType": "ServicePrincipal"
-              }
-            }
-          ]
         }
-      }
-    }
-  ]
+    ]
 }
