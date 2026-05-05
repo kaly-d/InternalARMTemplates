@@ -5,7 +5,7 @@
 **Step 1:** Generate unique URL
 1. Navigate to this URL to generate a custom endpoint **webhook.site**
 2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef.
-3. Make a note of the **basePath** which is the **/** and **<ID>** from your URL. For example: **/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef**
+3. Make a note of the **basePath** which is the '**/**' and '**ID**' from your URL. For example: **/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef**
 
 **Step 2:** Deploy the above template
 
