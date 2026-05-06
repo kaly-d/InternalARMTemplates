@@ -86,24 +86,16 @@
       },
       "type": "Object"
     },
-    "virtualNetworkResourceGroup": {
-      "defaultValue": "",
+    "virtualNetworkName": {
       "type": "String"
     },
     "subnetName": {
       "type": "String"
     },
-    "virtualNetworkName": {
+    "storageAccountName": {
       "type": "String"
     },
     "logicappName": {
-      "type": "String"
-    },
-    "location": {
-      "defaultValue": "Canada Central",
-      "type": "String"
-    },
-    "storageAccountName": {
       "type": "String"
     },
     "hostingPlanName": {
@@ -474,7 +466,7 @@
           "resources": "[array(parameters('virtualNetwork'))]"
         }
       },
-      "resourceGroup": "[parameters('virtualNetworkResourceGroup')]",
+      "resourceGroup": "[resourceGroup().name]",,
       "condition": "[not(empty(parameters('virtualNetwork')))]"
     }
   ]
