@@ -43,9 +43,6 @@
         "defaultValue": "sb-private-endpoint",
         "type": "String"
     },
-    "guid":{
-      "type": "String"
-    },
     "serviceBus-NamespaceName":{
       "type": "String"
     },
