@@ -12,11 +12,12 @@
 
 **Step 2:** Deploy the above template
 
+⚠️ In the **basePath** parameter, replace the basePath with the value you stored from Step 1.
+
 What this does/deploys:
   - Logic App Custom Connector with 2 actions (1 GET, 1 POST) to invoke Public Endpoint API for testing
   - API Connection to Logic App Custom Connector
   - Logic App Consumption configured with both to invoke Public Endpoint
 
-In the **basePath** parameter, replace the basePath with the value you stored from Step 1.
 
 ***
