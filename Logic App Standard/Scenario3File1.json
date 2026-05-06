@@ -2,10 +2,14 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "defaultValue": "[resourceGroup().location]"
+      "type": "String"
+    },
     "sftpStorageAccountName": {
       "type": "string",
       "metadata": {
-        "description": "Storage Account Name"
+        "description": "The name of the Storage Account which will serve as the SFTP Server"
       }
     },
     "userName": {
@@ -27,24 +31,32 @@
         "description": "SSH Public Key for primary user. If not specified, Azure will generate a password which can be accessed securely"
       }
     },
-    "subnetName": {
-      "type": "String"
-    },
     "virtualNetworkName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
+      }  
     },
+    "subnetName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
+      }  
+    },
+    "storageAccountName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will be the Storage Account hosting the Logic App"
+      }
+    },    
     "logicappName": {
       "type": "String"
     },
-    "location": {
-      "defaultValue": "[resourceGroup().location]"
-      "type": "String"
-    },
-    "storageAccountName": {
-      "type": "String"
-    },
     "hostingPlanName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This will be the WS1 App Service Plan hosting the Logic App"
+      }
     },
     "userAssignedIdentityName": {
       "type": "String"
