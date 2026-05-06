@@ -2,23 +2,23 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "subnetName": {
+    "location": {
+      "defaultValue": "Canada Central",
       "type": "String"
     },
     "virtualNetworkName": {
       "type": "String"
     },
+    "subnetName": {
+      "type": "String"
+    },
     "logicappName": {
       "type": "String"
     },
-    "location": {
-      "defaultValue": "Canada Central",
+    "hostingPlanName": {
       "type": "String"
     },
     "storageAccountName": {
-      "type": "String"
-    },
-    "hostingPlanName": {
       "type": "String"
     },
     "userAssignedIdentityName": {
