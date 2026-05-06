@@ -265,7 +265,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-07-01",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "canadacentral",
+      "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
