@@ -207,12 +207,20 @@
           "type": "basicPublishingCredentialsPolicies",
           "apiVersion": "2022-09-01",
           "name": "scm",
-          "properties": { "allow": false }
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+          ],
+          "properties": {
+            "allow": false
+          }
         },
         {
           "type": "basicPublishingCredentialsPolicies",
           "apiVersion": "2022-09-01",
           "name": "ftp",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+          ],
           "properties": { "allow": false }
         }
       ]
