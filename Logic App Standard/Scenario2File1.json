@@ -14,7 +14,7 @@
         "name": "vnet",
         "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "type": "Microsoft.Network/virtualNetworks",
-        "location": "canadacentral",
+        "location": "[parameters('location')]",
         "properties": {
           "provisioningState": "Succeeded",
           "addressSpace": {
@@ -27,7 +27,6 @@
             {
               "name": "subnet",
               "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
-              "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
               "properties": {
                 "provisioningState": "Succeeded",
                 "addressPrefix": "10.0.0.0/24",
@@ -35,7 +34,6 @@
                   {
                     "name": "AppServiceLink",
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'), '/serviceAssociationLinks/AppServiceLink')]",
-                    "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
                     "type": "Microsoft.Network/virtualNetworks/subnets/serviceAssociationLinks",
                     "properties": {
                       "provisioningState": "Succeeded",
@@ -53,8 +51,7 @@
                     "provisioningState": "Succeeded",
                     "service": "Microsoft.Storage",
                     "locations": [
-                      "canadacentral",
-                      "canadaeast"
+                      "[parameters('location')]"
                     ]
                   }
                 ],
@@ -269,7 +266,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-07-01",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "canadacentral",
+      "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
