@@ -31,10 +31,12 @@
     "logicappName": {
       "type": "string"
     },
+     "endpointURL": {
+      "type": "string"
+    },   
     "userAssignedIdentityName": {
       "type": "string",
       "defaultValue": "uami"
-
     }
   },
   "variables": {
@@ -243,6 +245,11 @@
               "name": "AzureWebJobsStorage__managedIdentityResourceId",
               "value": "[variables('uamiId')]"
             },
+            {
+              "name": "endpointURL",
+              "value": "[parameters('endpointURL')]",
+              "slotSetting": false
+            },            
             {
               "name": "AzureFunctionsJobHost__extensionBundle__id",
               "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
