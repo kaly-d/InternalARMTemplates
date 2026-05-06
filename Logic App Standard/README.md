@@ -1,3 +1,5 @@
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
+
 **Scenario1File1.json**
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario1File1.json)
@@ -13,6 +15,8 @@ What this does/deploys:
 
 
 ***
+
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway
 
 **Scenario2File1.json**
 
@@ -30,6 +34,8 @@ What this does/deploys:
   - [Associates NAT Gateway with VNET/Subnet]
 
 ***
+
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway and Public IP
 
 **Scenario3File1.json**
 
@@ -49,6 +55,9 @@ What this does/deploys:
   - [Associates NAT Gateway with Public IP]
 
 ***
+
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
+
 
 **Scenario4File1.json**
 
@@ -70,6 +79,9 @@ What this does/deploys:
   - [Associates NAT Gateway with Public IP Prefix]
 
 ***
+
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+
 
 **Scenario5File1.json**
 
@@ -99,6 +111,8 @@ What this does/deploys:
 5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
 
 ***
+
+# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
 **Scenario6File1.json**
 
