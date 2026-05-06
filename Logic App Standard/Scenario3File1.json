@@ -17,7 +17,7 @@
     "homeDirectory": {
       "type": "string",
       "metadata": {
-        "description": "Home directory of primary user. Should be a container."
+        "description": "Home directory of primary user. This is your Azure Blob Storage Container name."
       }
     },
     "publicKey": {
