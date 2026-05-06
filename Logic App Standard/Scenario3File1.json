@@ -37,7 +37,7 @@
       "type": "String"
     },
     "location": {
-      "defaultValue": "Canada Central",
+      "defaultValue": "[resourceGroup().location]"
       "type": "String"
     },
     "storageAccountName": {
