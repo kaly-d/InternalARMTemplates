@@ -2,33 +2,42 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "outboundSubnetName": {
-      "type": "String"
-    },
-    "servicebus-SubnetName": {
-      "type": "String"
-    },
-    "virtualNetworkName": {
+    "location": {
+      "defaultValue": "Canada Central",
       "type": "String"
     },
     "logicappName": {
       "type": "String"
     },
-    "location": {
-      "defaultValue": "Canada Central",
-      "type": "String"
+    "hostingPlanName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will be the WS1 App Service Plan hosting the Logic App"
+      }
     },
     "storageAccountName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This will be the Storage Account hosting the Logic App"
+      }  
     },
-    "hostingPlanName": {
-      "type": "String"
+    "virtualNetworkName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
+      }  
     },
-    "userAssignedIdentityName": {
-      "type": "String"
+    "outboundSubnetName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
+      }  
     },
-    "serviceBus-NamespaceName":{
-      "type": "String"
+    "servicebus-SubnetName": {
+      "type": "String",
+      "metadata": {
+        "description": "This will the subnet that is connected to the Service Bus's Private Endpoint"
+      }     
     },
     "privateEndpointName": {
         "defaultValue": "sb-private-endpoint",
@@ -37,9 +46,15 @@
     "guid":{
       "type": "String"
     },
+    "serviceBus-NamespaceName":{
+      "type": "String"
+    },
     "queueName":{
       "type": "String"
     }
+    "userAssignedIdentityName": {
+      "type": "String"
+    },
   },
   "variables": {},
   "resources": [
@@ -113,8 +128,8 @@
         "properties": {
             "privateLinkServiceConnections": [
                 {
-                    "name": "[concat(parameters('privateEndpointName'), parameters('guid'))]",
-                    "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), concat('/privateLinkServiceConnections/', parameters('privateEndpointName'), parameters('guid')))]",
+                    "name": "[concat(parameters('privateEndpointName'))]",
+                    "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), concat('/privateLinkServiceConnections/', parameters('privateEndpointName')))]",
                     "properties": {
                         "privateLinkServiceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.ServiceBus/namespaces/', parameters('serviceBus-NamespaceName'))]",
                         "groupIds": [
