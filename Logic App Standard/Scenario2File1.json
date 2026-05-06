@@ -2,20 +2,23 @@
   "$schema": "https://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-        "publicIPPrefixes_nat_prefix1_externalid": {
-            "defaultValue": "myPublicIPPrefix",
-            "type": "String"
-        },
-    
+    "location": {
+      "defaultValue": "Canada Central",
+      "type": "String"
+    },
+    "natGatewayName": {
+      "type": "String"
+    },
+    "publicIPPrefixes_nat_prefix1_externalid": {
+      "defaultValue": "myPublicIPPrefix",
+      "type": "String"
+    },
     "publicIPAddresses_public_ip_name": {
       "defaultValue": "myPublicIPAddress",
       "type": "String",
       "metadata": {
         "description": "Name of the public IP address resource."
       }
-    },
-    "natGatewayName": {
-      "type": "String"
     },
     "sourceVirtualNetwork": {
       "defaultValue": "",
@@ -26,7 +29,7 @@
         "name": "vnet",
         "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "type": "Microsoft.Network/virtualNetworks",
-        "location": "canadacentral",
+        "location": "[parameters('location')]",
         "properties": {
           "provisioningState": "Succeeded",
           "addressSpace": {
@@ -39,7 +42,6 @@
             {
               "name": "subnet",
               "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'))]",
-              "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
               "properties": {
                 "provisioningState": "Succeeded",
                 "addressPrefix": "10.0.0.0/24",
@@ -47,7 +49,6 @@
                   {
                     "name": "AppServiceLink",
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'), '/serviceAssociationLinks/AppServiceLink')]",
-                    "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
                     "type": "Microsoft.Network/virtualNetworks/subnets/serviceAssociationLinks",
                     "properties": {
                       "provisioningState": "Succeeded",
@@ -65,8 +66,7 @@
                     "provisioningState": "Succeeded",
                     "service": "Microsoft.Storage",
                     "locations": [
-                      "canadacentral",
-                      "canadaeast"
+                      "[parameters('location')]"
                     ]
                   }
                 ],
@@ -74,7 +74,6 @@
                   {
                     "name": "delegation",
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'), '/subnets/', parameters('subnetName'), '/delegations/delegation')]",
-                    "etag": "W/\"3fd59064-39dd-4f7a-81f6-f3cfb4364c14\"",
                     "properties": {
                       "provisioningState": "Succeeded",
                       "serviceName": "Microsoft.Web/serverfarms",
@@ -101,27 +100,19 @@
       },
       "type": "Object"
     },
-    "virtualNetworkResourceGroup": {
-      "defaultValue": "",
-      "type": "String"
-    },
-    "subnetName": {
-      "type": "String"
-    },
     "virtualNetworkName": {
       "type": "String"
     },
-    "logicappName": {
-      "type": "String"
-    },
-    "location": {
-      "defaultValue": "Canada Central",
+    "subnetName": {
       "type": "String"
     },
     "storageAccountName": {
       "type": "String"
     },
     "hostingPlanName": {
+      "type": "String"
+    },
+    "logicappName": {
       "type": "String"
     },
     "userAssignedIdentityName": {
@@ -305,7 +296,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-07-01",
       "name": "[parameters('virtualNetworkName')]",
-      "location": "canadacentral",
+      "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -504,7 +495,7 @@
           "resources": "[array(parameters('virtualNetwork'))]"
         }
       },
-      "resourceGroup": "[parameters('virtualNetworkResourceGroup')]",
+      "resourceGroup": "[resourceGroup().name]",
       "condition": "[not(empty(parameters('virtualNetwork')))]"
     }
   ]
