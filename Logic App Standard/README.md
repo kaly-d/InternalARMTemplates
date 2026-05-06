@@ -22,6 +22,15 @@ What this does/deploys:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario2File1.json)
 
+**Step 1:** Generate unique URL
+
+1. Navigate to this URL to generate a custom endpoint webhook.site
+2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef. Make a note of this.
+
+**Step 2:** Deploy the above template
+
+⚠️ In the **endpointURL** parameter, enter the value you stored from Step 1.
+
 What this does/deploys:
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
