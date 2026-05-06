@@ -7,11 +7,17 @@
       "defaultValue": "[resourceGroup().location]"
     },
     "virtualNetworkName": {
-      "type": "string",
+      "type": "String",
+      "metadata": {
+        "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
+      },
       "defaultValue": "vnet"
     },
     "subnetName": {
-      "type": "string",
+      "type": "String",
+      "metadata": {
+        "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
+      },
       "defaultValue": "subnet"
     },
     "natGatewayName": {
@@ -23,10 +29,16 @@
       "defaultValue": "myPublicIPPrefix"
     },
     "storageAccountName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "This will be the Storage Account hosting the Logic App"
+      }  
     },
     "hostingPlanName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "This will be the WS1 App Service Plan hosting the Logic App"
+      }
     },
     "logicappName": {
       "type": "string"
