@@ -248,12 +248,6 @@
         }
       ]
     },
-
-    /* =========================
-       RBAC role assignments (NO nested deployment)
-       Scope = Storage Account
-       ========================= */
-
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
