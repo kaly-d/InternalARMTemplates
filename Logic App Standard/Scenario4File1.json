@@ -46,7 +46,7 @@
     "serviceBus-NamespaceName": {
       "type": "String"
     },
-    "queueName": {
+    "serviceBusQueueName": {
       "type": "String"
     },
     "userAssignedIdentityName": {
@@ -195,7 +195,7 @@
     {
       "type": "Microsoft.ServiceBus/namespaces/queues",
       "apiVersion": "2025-05-01-preview",
-      "name": "[format('{0}/{1}', parameters('serviceBus-NamespaceName'), parameters('queueName'))]",
+      "name": "[format('{0}/{1}', parameters('serviceBus-NamespaceName'), parameters('serviceBusQueueName'))]",
       "dependsOn": [
         "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
       ],
@@ -370,7 +370,7 @@
             },
             {
               "name": "ServiceBusQueueName",
-              "value": "[parameters('queueName')]",
+              "value": "[parameters('serviceBusQueueName')]",
               "slotSetting": false
             },
             {
