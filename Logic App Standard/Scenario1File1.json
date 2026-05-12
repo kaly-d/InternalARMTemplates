@@ -6,18 +6,29 @@
       "type": "String",
       "defaultValue": "[resourceGroup().location]"
     },
-    "virtualNetworkName": { "type": "String" },
-    "subnetName": { "type": "String" },
-    "logicappName": { "type": "String" },
-    "hostingPlanName": { "type": "String" },
-    "storageAccountName": { "type": "String" },
-    "userAssignedIdentityName": { "type": "String" }
+    "virtualNetworkName": {
+      "type": "String"
+    },
+    "subnetName": {
+      "type": "String"
+    },
+    "logicappName": {
+      "type": "String"
+    },
+    "hostingPlanName": {
+      "type": "String"
+    },
+    "storageAccountName": {
+      "type": "String"
+    },
+    "userAssignedIdentityName": {
+      "type": "String"
+    }
   },
   "variables": {
     "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
     "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
     "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
-
     "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
     "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
     "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]"
@@ -47,7 +58,9 @@
       "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
-          "addressPrefixes": [ "10.0.0.0/16" ]
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
         },
         "subnets": [
           {
@@ -55,7 +68,9 @@
             "properties": {
               "addressPrefix": "10.0.0.0/24",
               "serviceEndpoints": [
-                { "service": "Microsoft.Storage" }
+                {
+                  "service": "Microsoft.Storage"
+                }
               ],
               "delegations": [
                 {
@@ -78,7 +93,9 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
       ],
-      "sku": { "name": "Standard_LRS" },
+      "sku": {
+        "name": "Standard_LRS"
+      },
       "kind": "StorageV2",
       "properties": {
         "supportsHttpsTrafficOnly": true,
@@ -136,22 +153,58 @@
         },
         "siteConfig": {
           "appSettings": [
-            { "name": "FUNCTIONS_EXTENSION_VERSION", "value": "~4" },
-            { "name": "FUNCTIONS_WORKER_RUNTIME", "value": "dotnet" },
-            { "name": "WEBSITE_NODE_DEFAULT_VERSION", "value": "~20" },
-
-            { "name": "AzureWebJobsStorage__credential", "value": "managedidentity" },
-            { "name": "AzureWebJobsStorage__blobServiceUri", "value": "[variables('blobUri')]" },
-            { "name": "AzureWebJobsStorage__queueServiceUri", "value": "[variables('queueUri')]" },
-            { "name": "AzureWebJobsStorage__tableServiceUri", "value": "[variables('tableUri')]" },
-            { "name": "AzureWebJobsStorage__managedIdentityResourceId", "value": "[variables('uamiResourceId')]" },
-
-            { "name": "AzureFunctionsJobHost__extensionBundle__id", "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows" },
-            { "name": "AzureFunctionsJobHost__extensionBundle__version", "value": "[1.*, 2.0.0)" },
-
-            { "name": "APP_KIND", "value": "workflowApp" },
-            { "name": "FUNCTIONS_INPROC_NET8_ENABLED", "value": 1 },
-            { "name": "LOGIC_APPS_POWERSHELL_VERSION", "value": 7.4 }
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~4"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "~20"
+            },
+            {
+              "name": "AzureWebJobsStorage__credential",
+              "value": "managedidentity"
+            },
+            {
+              "name": "AzureWebJobsStorage__blobServiceUri",
+              "value": "[variables('blobUri')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__queueServiceUri",
+              "value": "[variables('queueUri')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__tableServiceUri",
+              "value": "[variables('tableUri')]"
+            },
+            {
+              "name": "AzureWebJobsStorage__managedIdentityResourceId",
+              "value": "[variables('uamiResourceId')]"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__id",
+              "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__version",
+              "value": "[1.*, 2.0.0)"
+            },
+            {
+              "name": "APP_KIND",
+              "value": "workflowApp"
+            },
+            {
+              "name": "FUNCTIONS_INPROC_NET8_ENABLED",
+              "value": 1
+            },
+            {
+              "name": "LOGIC_APPS_POWERSHELL_VERSION",
+              "value": 7.4
+            }
           ],
           "cors": {},
           "use32BitWorkerProcess": false,
@@ -177,7 +230,9 @@
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
           ],
-          "properties": { "allow": false }
+          "properties": {
+            "allow": false
+          }
         },
         {
           "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
@@ -186,7 +241,9 @@
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
           ],
-          "properties": { "allow": false }
+          "properties": {
+            "allow": false
+          }
         }
       ]
     },
