@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "connectionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Sentinel API connection resource"
+      }
+    },
+    "displayName": {
+      "type": "string",
+      "metadata": {
+        "description": "Friendly display name shown in Azure Portal"
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure region (must match Logic App region)"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('connectionName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "displayName": "[parameters('displayName')]",
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/azuresentinel')]"
+        },
+        "parameterValueType": "Alternative",
+        "parameterValueSet": {}
+      }
+    }
+  ],
+  "outputs": {
+    "connectionResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]"
+    }
+  }
+}
