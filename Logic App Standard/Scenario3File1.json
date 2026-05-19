@@ -59,7 +59,11 @@
       }
     },
     "userAssignedIdentityName": {
-      "type": "String"
+      "type": "string",
+      "defaultValue": "uami",
+      "metadata": {
+        "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
+      }
     }
   },
   "variables": {
