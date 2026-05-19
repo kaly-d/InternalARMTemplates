@@ -34,21 +34,27 @@
         "description": "This will be the Storage Account hosting the Logic App"
       }  
     },
+    "logicappName": {
+      "type": "string"
+    },
     "hostingPlanName": {
       "type": "string",
       "metadata": {
         "description": "This will be the WS1 App Service Plan hosting the Logic App"
       }
     },
-    "logicappName": {
-      "type": "string"
-    },
-     "endpointURL": {
-      "type": "string"
+    "endpointURL": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the test public endpoint to which your Logic App will make a sample outbound HTTP request"
+      }
     },   
     "userAssignedIdentityName": {
       "type": "string",
-      "defaultValue": "uami"
+      "defaultValue": "uami",
+      "metadata": {
+        "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
+      }
     }
   },
   "variables": {
