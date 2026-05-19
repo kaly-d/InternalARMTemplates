@@ -7,22 +7,37 @@
       "defaultValue": "[resourceGroup().location]"
     },
     "virtualNetworkName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
+      },
+      "defaultValue": "vnet"
     },
     "subnetName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
+      },
+      "defaultValue": "subnet"
     },
     "logicappName": {
       "type": "String"
     },
     "hostingPlanName": {
-      "type": "String"
+      "type": "string",
+      "metadata": {
+        "description": "This will be the WS1 App Service Plan hosting the Logic App"
+      }
     },
     "storageAccountName": {
       "type": "String"
     },
     "userAssignedIdentityName": {
-      "type": "String"
+      "type": "string",
+      "defaultValue": "uami",
+      "metadata": {
+        "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
+      }
     }
   },
   "variables": {
