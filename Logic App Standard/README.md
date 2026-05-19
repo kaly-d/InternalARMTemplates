@@ -109,6 +109,6 @@ What this does/deploys:
 **Step 2:** Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
-2. Download the **Scenario6File1Workflows.zip** file. This contains the workflow zip for this scenario.
+2. Download the **Scenario4File1Workflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
