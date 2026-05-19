@@ -41,16 +41,29 @@
     },
     "privateEndpointName": {
       "defaultValue": "sb-private-endpoint",
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This is the Private Endpoint that will be linked on the Service Bus's firewall/networking section"
+      }      
     },
     "serviceBus-NamespaceName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This is the Service Bus Namespace your Logic App will connect to"
+      }      
     },
     "serviceBusQueueName": {
-      "type": "String"
+      "type": "String",
+      "metadata": {
+        "description": "This is the name of the queue in the Service Bus Namespace your Logic App will connect to"
+      }      
     },
     "userAssignedIdentityName": {
-      "type": "String"
+      "type": "string",
+      "defaultValue": "uami",
+      "metadata": {
+        "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
+      }
     }
   },
   "variables": {
