@@ -1,5 +1,5 @@
 
-# Logic App Consumption connected to a Logic App Custom Connector
+# Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
 
 **Scenario1File1.json**
 
