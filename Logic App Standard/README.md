@@ -1,4 +1,4 @@
-# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
+# Scenario 1: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
 
 **Scenario1File1.json**
 
@@ -15,7 +15,7 @@ What this does/deploys:
 
 ***
 
-# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
+# Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
 
 
 **Scenario2File1.json**
@@ -55,7 +55,7 @@ What this does/deploys:
 
 ***
 
-# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+# Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
 
 
 **Scenario3File1.json**
@@ -87,7 +87,7 @@ What this does/deploys:
 
 ***
 
-# Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
+# Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
 **Scenario4File1.json**
 
