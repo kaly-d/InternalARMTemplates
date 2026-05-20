@@ -12,6 +12,9 @@
         "description": "Name of the Azure SQL Server."
       }
     },
+    "databaseName": {
+        "type": "String"
+    },
     "aadAdminLogin": {
       "type": "string",
       "metadata": {
@@ -45,6 +48,23 @@
           "sid": "[parameters('aadAdminObjectId')]"
         }
       }
-    }
+    },
+    {
+        "type": "Microsoft.Sql/servers/databases",
+        "apiVersion": "2022-08-01-preview",
+        "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+              "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+        ],
+        "sku": {
+            "name": "S0",
+            "tier": "Standard"
+        },
+        "properties": {
+            "collation": "SQL_Latin1_General_CP1_CI_AS",
+            "sampleName": "AdventureWorksLT"
+        }
+      }
   ]
 }
