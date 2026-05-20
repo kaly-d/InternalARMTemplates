@@ -78,6 +78,9 @@
       "apiVersion": "2021-11-01",
       "name": "[parameters('serverName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+      ],
       "identity": {
         "type": "SystemAssigned"
       },
@@ -98,11 +101,10 @@
       "apiVersion": "2022-08-01-preview",
       "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
       "location": "[parameters('location')]",
-      "dependsOn": 
-        [
-          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-          "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('subnetName')))]"
-        ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+        "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('subnetName')))]"
+      ],
       "sku": {
         "name": "S0",
         "tier": "Standard"
