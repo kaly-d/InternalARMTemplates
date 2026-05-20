@@ -98,9 +98,11 @@
       "apiVersion": "2022-08-01-preview",
       "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
-      ],
+      "dependsOn": 
+        [
+          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+          "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('subnetName')))]"
+        ],
       "sku": {
         "name": "S0",
         "tier": "Standard"
