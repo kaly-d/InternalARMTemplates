@@ -1,70 +1,72 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "location": {
-      "type": "String",
-      "description": "Some regions have capacity restrictions; try a few different ones if one fails"      
-    },
-    "serverName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the Azure SQL Server."
-      }
-    },
-    "databaseName": {
-        "type": "String"
-    },
-    "aadAdminLogin": {
-      "type": "string",
-      "metadata": {
-        "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
-      }
-    },
-    "aadAdminObjectId": {
-      "type": "string",
-      "metadata": {
-        "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
-      }
-    }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Sql/servers",
-      "apiVersion": "2021-11-01",
-      "name": "[parameters('serverName')]",
-      "location": "[parameters('location')]",
-      "identity": {
-        "type": "SystemAssigned"
-      },
-      "properties": {
-        "version": "12.0",
-        "publicNetworkAccess": "Enabled",
-        "minimalTlsVersion": "1.2",
-        "administrators": {
-          "administratorType": "ActiveDirectory",
-          "azureADOnlyAuthentication": true,
-          "login": "[parameters('aadAdminLogin')]",
-          "sid": "[parameters('aadAdminObjectId')]"
-        }
-      }
-    },
-    {
-        "type": "Microsoft.Sql/servers/databases",
-        "apiVersion": "2022-08-01-preview",
-        "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-              "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
-        ],
-        "sku": {
-            "name": "S0",
-            "tier": "Standard"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "String",
+            "metadata": {
+                "description": "Some regions have capacity restrictions; try a few different ones if one fails"
+            }
         },
-        "properties": {
-            "collation": "SQL_Latin1_General_CP1_CI_AS",
-            "sampleName": "AdventureWorksLT"
+        "serverName": {
+            "type": "String",
+            "metadata": {
+                "description": "Name of the Azure SQL Server."
+            }
+        },
+        "databaseName": {
+            "type": "String"
+        },
+        "aadAdminLogin": {
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
+            }
+        },
+        "aadAdminObjectId": {
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
+            }
         }
-      }
-  ]
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2021-11-01",
+            "name": "[parameters('serverName')]",
+            "location": "[parameters('location')]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "version": "12.0",
+                "publicNetworkAccess": "Enabled",
+                "minimalTlsVersion": "1.2",
+                "administrators": {
+                    "administratorType": "ActiveDirectory",
+                    "azureADOnlyAuthentication": true,
+                    "login": "[parameters('aadAdminLogin')]",
+                    "sid": "[parameters('aadAdminObjectId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2022-08-01-preview",
+            "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard"
+            },
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "sampleName": "AdventureWorksLT"
+            }
+        }
+    ]
 }
