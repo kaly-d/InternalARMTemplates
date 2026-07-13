@@ -76,7 +76,8 @@ What this does/deploys:
 
 **Step 2:** Finish setting up the SFTP server on the Storage Account and generating a password for the local user
 1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
-2. Click on SSH Password > Next > Save. Copy the generated password.
+2. Click on SSH Password > Next > Save.
+3. Make a note of the generated password.
 
 **Step 3:** Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
 1. In the Logic App Standard, navigate to **Environment Variables**, search for the **Sftp_password** app setting and paste the value you copied from **Step 2.**
