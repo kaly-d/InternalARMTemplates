@@ -253,7 +253,8 @@
             "name": "[variables('privateEndpointFileStorageName')]",
             "location": "[parameters('location')]",
           "dependsOn": [
-            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
           ],
             "properties": {
                 "subnet": {
@@ -279,7 +280,8 @@
         "name": "[variables('privateEndpointBlobStorageName')]",
         "location": "[parameters('location')]",
         "dependsOn": [
-          "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+          "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
         ],
           "properties": {
               "subnet": {
@@ -306,7 +308,8 @@
             "name": "[variables('privateEndpointQueueStorageName')]",
             "location": "[parameters('location')]",
           "dependsOn": [
-            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
           ],
             "properties": {
                 "subnet": {
@@ -332,7 +335,8 @@
             "name": "[variables('privateEndpointTableStorageName')]",
             "location": "[parameters('location')]",
           "dependsOn": [
-            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
           ],
             "properties": {
                 "subnet": {
