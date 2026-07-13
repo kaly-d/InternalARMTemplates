@@ -112,3 +112,11 @@ What this does/deploys:
 2. Download the **Scenario4File1Workflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
+
+***
+
+# Scenario 5: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity
+
+**Scenario5File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario5File1.json)
