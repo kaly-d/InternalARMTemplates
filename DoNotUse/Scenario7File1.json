@@ -52,12 +52,15 @@
     "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
     "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
     "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]",
+    "privateStorageFileDnsZoneName": "[concat('privatelink.file.', environment().suffixes.storage)]",
     "privateStorageBlobDnsZoneName": "[concat('privatelink.blob.', environment().suffixes.storage)]",
     "privateStorageQueueDnsZoneName": "[concat('privatelink.queue.', environment().suffixes.storage)]",
     "privateStorageTableDnsZoneName": "[concat('privatelink.table.', environment().suffixes.storage)]",
+    "privateEndpointFileStorageName": "[concat(parameters('storageAccountName'), '-file-private-endpoint')]",
     "privateEndpointBlobStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
     "privateEndpointQueueStorageName": "[concat(parameters('storageAccountName'), '-queue-private-endpoint')]",
     "privateEndpointTableStorageName": "[concat(parameters('storageAccountName'), '-table-private-endpoint')]",
+    "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
     "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
     "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
     "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]"
@@ -144,6 +147,15 @@
         "publicNetworkAccess": "Enabled"
       }
     },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('privateStorageFileDnsZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ]
+        },
     {
       "type": "Microsoft.Network/privateDnsZones",
       "apiVersion": "2020-06-01",
@@ -171,6 +183,22 @@
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
       ]
     },
+{
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(variables('privateStorageFileDnsZoneName'), '/', variables('virtualNetworkLinksSuffixFileStorageName'))]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones',variables('privateStorageFileDnsZoneName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+            ],
+            "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                }
+            }
+        },
     {
         "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
         "apiVersion": "2020-06-01",
@@ -219,6 +247,32 @@
               }
           }
     },
+{
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('privateEndpointFileStorageName')]",
+            "location": "[parameters('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+          ],
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('storageSubnetName') )]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "MyStorageFilePrivateLinkConnection",
+                      "properties": {
+                        "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+                        "groupIds": [
+                          "file"
+                        ]
+                      }
+                    }
+                ]
+            }
+        },
+    
     {
         "type": "Microsoft.Network/privateEndpoints",
         "apiVersion": "2020-06-01",
@@ -288,7 +342,7 @@
                     {
                         "name": "MyStorageTablePrivateLinkConnection",
                       "properties": {
-                        "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('contentStorageAccountName'))]",
+                        "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                         "groupIds": [
                           "table"
                         ]
