@@ -190,7 +190,7 @@
             "location": "global",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/privateDnsZones',variables('privateStorageFileDnsZoneName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
             ],
             "properties": {
                 "registrationEnabled": false,
@@ -257,7 +257,7 @@
           ],
             "properties": {
                 "subnet": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('storageSubnetName') )]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('storageSubnetName') )]"
                 },
                 "privateLinkServiceConnections": [
                     {
