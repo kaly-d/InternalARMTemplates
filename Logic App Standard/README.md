@@ -121,3 +121,18 @@ What this does/deploys:
 **Scenario5File1.json**
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario5File1.json)
+
+What this does/deploys:
+  - Virtual Network + 2 Subnets (1 for Logic App, 1 for Storage)
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+
+***
