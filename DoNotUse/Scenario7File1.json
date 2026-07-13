@@ -117,7 +117,7 @@
         "location": "[parameters('location')]",
         "dependsOn": [
           "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-          "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('subnetName')))]"
+          "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName')))]"
         ],
         "sku": {
           "name": "S0",
@@ -131,7 +131,7 @@
       {
         "type": "Microsoft.Sql/servers/virtualNetworkRules",
         "apiVersion": "2024-05-01-preview",
-        "name": "[concat(parameters('serverName'), '/allow-', parameters('virtualNetworkName'), '-', parameters('subnetName'))]",
+        "name": "[concat(parameters('serverName'), '/allow-', parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName'))]",
         "dependsOn": [
           "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
           "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
