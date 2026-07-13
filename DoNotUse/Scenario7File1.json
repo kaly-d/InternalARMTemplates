@@ -110,7 +110,7 @@
           {
             "name": "[parameters('storageSubnetName')]",
             "properties": {
-              "addressPrefix": "10.100.1.0/24",
+              "addressPrefix": "10.0.1.0/24",
               "privateLinkServiceNetworkPolicies": "Enabled",
               "privateEndpointNetworkPolicies": "Disabled"
             }
