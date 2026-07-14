@@ -86,7 +86,7 @@
       },
       "properties": {
         "version": "12.0",
-        "publicNetworkAccess": "Enabled",
+        "publicNetworkAccess": "Disabled",
         "minimalTlsVersion": "1.2",
         "administrators": {
           "administratorType": "ActiveDirectory",
@@ -103,7 +103,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-        "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('subnetName')))]"
+        "[resourceId('Microsoft.Network/privateEndpoints/privateDnsZoneGroups', variables('privateEndpointSqlName'), 'default')]"
       ],
       "sku": {
         "name": "S0",
@@ -112,19 +112,6 @@
       "properties": {
         "collation": "SQL_Latin1_General_CP1_CI_AS",
         "sampleName": "AdventureWorksLT"
-      }
-    },
-    {
-      "type": "Microsoft.Sql/servers/virtualNetworkRules",
-      "apiVersion": "2024-05-01-preview",
-      "name": "[concat(parameters('serverName'), '/allow-', parameters('virtualNetworkName'), '-', parameters('subnetName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "virtualNetworkSubnetId": "[variables('subnetResourceId')]",
-        "ignoreMissingVnetServiceEndpoint": false
       }
     },
     {
