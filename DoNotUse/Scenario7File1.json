@@ -168,8 +168,7 @@
             "name": "[variables('privateEndpointSqlName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('sqlSubnetName'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
             ],
             "properties": {
                 "subnet": {
