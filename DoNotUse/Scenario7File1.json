@@ -137,14 +137,6 @@
             }
         },
         {
-            "name": "[parameters('sqlSubnetName')]",
-            "properties": {
-                "addressPrefix": "10.0.2.0/24",
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
             "type": "Microsoft.Network/privateDnsZones",
             "apiVersion": "2020-06-01",
             "name": "[variables('privateSqlDnsZoneName')]",
@@ -266,6 +258,14 @@
                             "addressPrefix": "10.0.1.0/24",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('sqlSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     }
                 ]
