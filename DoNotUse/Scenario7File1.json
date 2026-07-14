@@ -30,14 +30,14 @@
         "virtualNetworkName": {
             "type": "String",
             "metadata": {
-                "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Storage Private Endpoint"
+                "description": "This will be the VNET that is connected to the Logic App's Outbound VNET configuration and also the Storage Private Endpoint"
             },
             "defaultValue": "vnet"
         },
         "logicAppSubnetName": {
             "type": "String",
             "metadata": {
-                "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
+                "description": "This will be the subnet that is connected to the Logic App's Outbound VNET configuration"
             },
             "defaultValue": "logicAppSubnet"
         },
