@@ -7,25 +7,25 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "serverName": {
-          "type": "String",
-          "metadata": {
-            "description": "Name of the Azure SQL Server."
-          }
+            "type": "String",
+            "metadata": {
+                "description": "Name of the Azure SQL Server."
+            }
         },
         "databaseName": {
-          "type": "String"
+            "type": "String"
         },
         "aadAdminLogin": {
-          "type": "String",
-          "metadata": {
-            "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
-          }
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
+            }
         },
         "aadAdminObjectId": {
-          "type": "String",
-          "metadata": {
-            "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
-          }
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
+            }
         },
         "virtualNetworkName": {
             "type": "String",
@@ -44,6 +44,10 @@
         "storageSubnetName": {
             "type": "String",
             "defaultValue": "storageSubnet"
+        },
+        "sqlSubnetName": {
+            "type": "String",
+            "defaultValue": "sqlSubnet"
         },
         "logicappName": {
             "type": "String"
@@ -69,10 +73,12 @@
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
         "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "sqlPrivateEndpointSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('sqlSubnetName'))]",
         "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
         "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
         "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]",
+        "privateSqlDnsZoneName": "privatelink.database.windows.net",
         "privateStorageFileDnsZoneName": "[concat('privatelink.file.', environment().suffixes.storage)]",
         "privateStorageBlobDnsZoneName": "[concat('privatelink.blob.', environment().suffixes.storage)]",
         "privateStorageQueueDnsZoneName": "[concat('privatelink.queue.', environment().suffixes.storage)]",
@@ -81,67 +87,135 @@
         "privateEndpointBlobStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
         "privateEndpointQueueStorageName": "[concat(parameters('storageAccountName'), '-queue-private-endpoint')]",
         "privateEndpointTableStorageName": "[concat(parameters('storageAccountName'), '-table-private-endpoint')]",
+        "privateEndpointSqlName": "[concat(parameters('serverName'), '-sql-private-endpoint')]",
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]"
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "virtualNetworkLinksSuffixSqlName": "[concat(variables('privateSqlDnsZoneName'), '-link')]"
     },
     "resources": [
         {
-          "type": "Microsoft.Sql/servers",
-          "apiVersion": "2021-11-01",
-          "name": "[parameters('serverName')]",
-          "location": "[parameters('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-          ],
-          "identity": {
-            "type": "SystemAssigned"
-          },
-          "properties": {
-            "version": "12.0",
-            "publicNetworkAccess": "Enabled",
-            "minimalTlsVersion": "1.2",
-            "administrators": {
-              "administratorType": "ActiveDirectory",
-              "azureADOnlyAuthentication": true,
-              "login": "[parameters('aadAdminLogin')]",
-              "sid": "[parameters('aadAdminObjectId')]"
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2021-11-01",
+            "name": "[parameters('serverName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "version": "12.0",
+                "publicNetworkAccess": "Disabled",
+                "minimalTlsVersion": "1.2",
+                "administrators": {
+                    "administratorType": "ActiveDirectory",
+                    "azureADOnlyAuthentication": true,
+                    "login": "[parameters('aadAdminLogin')]",
+                    "sid": "[parameters('aadAdminObjectId')]"
+                }
             }
-          }
-      },
-      {
-        "type": "Microsoft.Sql/servers/databases",
-        "apiVersion": "2022-08-01-preview",
-        "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-          "[resourceId('Microsoft.Sql/servers/virtualNetworkRules', parameters('serverName'), concat('allow-', parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName')))]"
-        ],
-        "sku": {
-          "name": "S0",
-          "tier": "Standard"
         },
-        "properties": {
-          "collation": "SQL_Latin1_General_CP1_CI_AS",
-          "sampleName": "AdventureWorksLT"
-        }
-      },
-      {
-        "type": "Microsoft.Sql/servers/virtualNetworkRules",
-        "apiVersion": "2024-05-01-preview",
-        "name": "[concat(parameters('serverName'), '/allow-', parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName'))]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-          "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-        ],
-        "properties": {
-          "virtualNetworkSubnetId": "[variables('subnetResourceId')]",
-          "ignoreMissingVnetServiceEndpoint": false
-        }
-      },
-      {
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2022-08-01-preview",
+            "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+                "[resourceId('Microsoft.Network/privateEndpoints/privateDnsZoneGroups', variables('privateEndpointSqlName'), 'default')]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard"
+            },
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "sampleName": "AdventureWorksLT"
+            }
+        },
+        {
+            "name": "[parameters('sqlSubnetName')]",
+            "properties": {
+                "addressPrefix": "10.0.2.0/24",
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('privateSqlDnsZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(variables('privateSqlDnsZoneName'), '/', variables('virtualNetworkLinksSuffixSqlName'))]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('privateEndpointSqlName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('sqlSubnetName'))]"
+            ],
+            "properties": {
+                "subnet": {
+                    "id": "[variables('sqlPrivateEndpointSubnetResourceId')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[concat(parameters('serverName'), '-sql-private-link-connection')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+                            "groupIds": [
+                                "sqlServer"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+            "apiVersion": "2021-05-01",
+            "name": "[concat(variables('privateEndpointSqlName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateEndpoints', variables('privateEndpointSqlName'))]",
+                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]"
+            ],
+            "properties": {
+                "privateDnsZoneConfigs": [
+                    {
+                        "name": "sqlDnsConfig",
+                        "properties": {
+                            "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2024-11-01",
             "name": "[parameters('hostingPlanName')]",
@@ -176,11 +250,6 @@
                             "addressPrefix": "10.0.0.0/24",
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
-                          "serviceEndpoints": [
-                            {
-                            "service": "Microsoft.Sql"
-                            }
-                          ],
                             "delegations": [
                                 {
                                     "name": "delegation",
