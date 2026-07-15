@@ -52,7 +52,7 @@ ALTER ROLE db_owner ADD MEMBER [your Logic App Standard Name];
 🔗 See here for a list of database roles: https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles
 
 
-**Step 3:** Enable Change Tracking on your SQL Database and individual tables to allow the Logic App to monitor for changes (required for the trigger)
+**Step 3:** Run the following SQL commands to enable Change Tracking on your SQL Database and individual tables to allow the Logic App to monitor for changes (required for the trigger)
 
 
 ALTER DATABASE [Your Database Name]
