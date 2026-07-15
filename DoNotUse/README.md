@@ -44,11 +44,13 @@ ENABLE CHANGE_TRACKING;
 
 **Step 2:** Run the following SQL commands to grant your Service Principal access to the database
 
-CREATE USER [Your Service Principal Name] FROM EXTERNAL PROVIDER; 
+CREATE USER [Your Logic App Standard Name] FROM EXTERNAL PROVIDER; 
 
-ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_owner ADD MEMBER [your Logic App Standard Name];
 
-ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
+
+🔗 See here for a list of database roles: https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles
+
 
 **Step 3:** Enable Change Tracking on your SQL Database and individual tables to allow the Logic App to monitor for changes (required for the trigger)
 
