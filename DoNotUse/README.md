@@ -29,10 +29,21 @@ ENABLE CHANGE_TRACKING;
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario7File1.json)
 
+**What this does/deploys:**
+  - Virtual Network + 3 Subnets (Logic App Outbound Subnet, Storage Private Endpoint Subnet, SQL Private Endpoint Subnet)
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Private Endpoint-enabled)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - SQL Server and SQL Database
+  - Private Endpoint-related artifacts: DNS Zone, DNS Zone Groups
 
 CREATE USER [your Service Principal Name] FROM EXTERNAL PROVIDER; 
 
 ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
+
 ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
 
 ALTER DATABASE [your database name]
