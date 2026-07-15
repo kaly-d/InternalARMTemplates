@@ -29,6 +29,8 @@ ENABLE CHANGE_TRACKING;
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario7File1.json)
 
+**Step 1:** Deploy the above template
+
 **What this does/deploys:**
   - Virtual Network + 3 Subnets (Logic App Outbound Subnet, Storage Private Endpoint Subnet, SQL Private Endpoint Subnet)
   - User-Assigned Managed Identity
@@ -37,8 +39,10 @@ ENABLE CHANGE_TRACKING;
   - [Grant UAMI permissions on Storage]
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
-  - SQL Server and SQL Database
+  - SQL Server and SQL Database with Entra ID authentication
   - Private Endpoint-related artifacts: DNS Zone, DNS Zone Groups
+
+**Step 2:** Run the following SQL commands to grant your Service Principal access to the database
 
 CREATE USER [your Service Principal Name] FROM EXTERNAL PROVIDER; 
 
@@ -46,10 +50,17 @@ ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
 
 ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
 
+**Step 3:** Enable Change Tracking on your SQL Database and individual tables to allow the Logic App to monitor for changes (required for the trigger)
+
+
 ALTER DATABASE [your database name]
+
 SET CHANGE_TRACKING = ON
 
+
 ALTER TABLE [dbo].[your table name]
+
 ENABLE CHANGE_TRACKING;
+
 
 ***
