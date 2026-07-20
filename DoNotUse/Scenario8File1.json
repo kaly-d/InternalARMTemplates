@@ -257,7 +257,7 @@
                             "sourceAddressPrefix": "[parameters('logicAppSubnetPrefix')]",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "80,443"
+                            "destinationPortRange": "443"
                         }
                     }
                 ]
