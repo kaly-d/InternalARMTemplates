@@ -169,7 +169,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
-            ]
+            ],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -257,7 +257,7 @@
                             "sourceAddressPrefix": "[parameters('logicAppSubnetPrefix')]",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "80"
+                            "destinationPortRange": "80,443"
                         }
                     }
                 ]
