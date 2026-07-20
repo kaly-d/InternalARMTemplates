@@ -71,10 +71,6 @@
                 "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
             }
         },
-        "vmSubnetName": {
-            "type": "string",
-            "defaultValue": "vmSubnet"
-        },
         "vmName": {
             "type": "string",
             "defaultValue": "vmkaly"
@@ -186,7 +182,10 @@
                         "properties": {
                             "addressPrefix": "[parameters('vmSubnetPrefix')]",
                             "privateEndpointNetworkPolicies": "Enabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
+                            }
                         }
                     }
                 ]
