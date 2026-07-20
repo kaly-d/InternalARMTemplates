@@ -270,8 +270,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmSubnetName'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
             ],
             "properties": {
                 "ipConfigurations": [
