@@ -66,3 +66,19 @@ ENABLE CHANGE_TRACKING;
 
 
 ***
+
+**Scenario8File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario8File1.json)
+
+**Step 1:** Deploy the above template
+
+***
+
+***
+
+**Scenario9File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario9File1.json)
+
+**Step 1:** Deploy the above template
