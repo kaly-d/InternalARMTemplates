@@ -40,17 +40,6 @@
         "vmSubnetPrefix": {
             "type": "string",
             "defaultValue": "10.0.2.0/24"
-        }
-        "logicAppSubnetName": {
-            "type": "String",
-            "metadata": {
-                "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
-            },
-            "defaultValue": "logicAppSubnet"
-        },
-        "storageSubnetName": {
-            "type": "String",
-            "defaultValue": "storageSubnet"
         },
         "logicappName": {
             "type": "String"
@@ -111,7 +100,7 @@
         },
         "autoShutdownTimeZone": {
             "type": "string",
-            "defaultValue": "Pacific Standard Time"
+            "defaultValue": "Pacific Standard Time",
             "metadata": {
                 "description": "The timezone the auto-shutdown of the VM will follow"
             }
