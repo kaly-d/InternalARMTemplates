@@ -64,10 +64,6 @@
             "type": "string",
             "defaultValue": "vmkaly"
         },
-        "vmComputerName": {
-            "type": "string",
-            "defaultValue": "vmkaly"
-        },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_B2ls_v2"
@@ -320,7 +316,7 @@
                     }
                 },
                 "osProfile": {
-                    "computerName": "[parameters('vmComputerName')]",
+                    "computerName": "[parameters('vmName')]",
                     "adminUsername": "[parameters('vmAdminUsername')]",
                     "adminPassword": "[parameters('vmAdminPassword')]"
                 },
