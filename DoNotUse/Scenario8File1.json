@@ -122,7 +122,7 @@
             "metadata": {
                 "description": "Send a notification before VM auto-shutdown."
             }
-            },
+        },
         "autoShutdownNotificationMinutes": {
             "type": "int",
             "defaultValue": 30,
@@ -374,7 +374,7 @@
                 },
                 "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
             }
-        }
+        },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2022-05-01",
