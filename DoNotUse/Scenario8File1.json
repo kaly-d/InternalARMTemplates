@@ -97,6 +97,42 @@
         },
         "vmPublicIpName": {
             "type": "string"
+        },
+        "enableAutoShutdown": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "autoShutdownTime": {
+            "type": "string",
+            "defaultValue": "1700",
+            "metadata": {
+                "description": "24-hour format HHmm when you want to shut down your VM"
+            }
+        },
+        "autoShutdownTimeZone": {
+            "type": "string",
+            "defaultValue": "Pacific Standard Time"
+            "metadata": {
+                "description": "The timezone the auto-shutdown of the VM will follow"
+            }
+        },
+        "autoShutdownNotificationEnabled": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Send a notification before VM auto-shutdown."
+            }
+            },
+        "autoShutdownNotificationMinutes": {
+            "type": "int",
+            "defaultValue": 30,
+            "metadata": {
+                "description": "Number of minutes before shutdown to send the notification. Ignored when notifications are disabled."
+            }
+        },
+        "autoShutdownNotificationLocale": {
+            "type": "string",
+            "defaultValue": "en"
         }
     },
     "variables": {
@@ -315,6 +351,30 @@
                 }
             }
         },
+        {
+            "condition": "[parameters('enableAutoShutdown')]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2018-09-15",
+            "name": "[concat('auto-shutdown-', parameters('vmName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            ],
+            "properties": {
+                "status": "Enabled",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[parameters('autoShutdownTime')]"
+                },
+                "timeZoneId": "[parameters('autoShutdownTimeZone')]",
+                "notificationSettings": {
+                    "status": "[if(parameters('autoShutdownNotificationEnabled'), 'Enabled', 'Disabled')]",
+                    "timeInMinutes": "[parameters('autoShutdownNotificationMinutes')]",
+                    "notificationLocale": "[parameters('autoShutdownNotificationLocale')]"
+                },
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            }
+        }
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2022-05-01",
