@@ -263,7 +263,7 @@
                             "protocol": "Tcp",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            "destinationAddresPrefix": "[parameters('vmSubnetPrefix')]",
+                            "destinationAddressPrefix": "[parameters('vmSubnetPrefix')]",
                             "destinationPortRange": "3389"
                         }
                     },
@@ -289,7 +289,7 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "sourceAddressPrefix": "168.63.129.16",
-                            "destinationAddresPrefix": "[parameters('vmSubnetPrefix')]",
+                            "destinationAddressPrefix": "[parameters('vmSubnetPrefix')]",
                             "destinationPortRanges": [
                                 "22",
                                 "3389"
