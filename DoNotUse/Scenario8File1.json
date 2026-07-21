@@ -269,6 +269,7 @@
             "name": "[parameters('vmNicName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
             ],
