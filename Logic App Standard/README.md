@@ -136,3 +136,27 @@ What this does/deploys:
   - [Associates Logic App Standard with VNET/subnet]
 
 ***
+
+# Scenario 6: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
+
+**Scenario8File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario6File1.json)
+
+**Step 1:** Deploy the above template
+
+What this does/deploys:
+  - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine)
+  - User-Assigned Managed Identity
+  - Windows Virtual Machine, with Networking-related components (NSG, NIC, Public IP)
+  - Azure Bastion [for connecting to Virtual Machine within Azure Portal)
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+
+***
+
+
+***
