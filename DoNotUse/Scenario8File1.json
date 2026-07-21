@@ -118,7 +118,26 @@
         "autoShutdownNotificationLocale": {
             "type": "string",
             "defaultValue": "en"
-        }
+        },
+        "enableBastion": {
+            "type": "Bool",
+            "defaultValue": true
+        },
+        "bastionName": {
+            "type": "String",
+            "defaultValue": "vnet-bastion"
+        },
+        "bastionDnsName": {
+            "type": "String",
+            "defaultValue": "[concat('bastion-', uniqueString(resourceGroup().id, parameters('virtualNetworkName')))]"
+        },
+        "bastionSkuName": {
+            "type": "String",
+            "defaultValue": "Developer",
+            "allowedValues": [
+                "Developer"
+            ]
+        }    
     },
     "variables": {
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
@@ -142,7 +161,8 @@
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]"
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "vnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
     },
     "resources": [
         {
@@ -243,14 +263,14 @@
                             "protocol": "Tcp",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "destinationAddresPrefix": "[parameters('vmSubnetPrefix')]",
                             "destinationPortRange": "3389"
                         }
                     },
                     {
                         "name": "Allow-LogicApp-To-VM",
                         "properties": {
-                            "priority": 110,
+                            "priority": 101,
                             "direction": "Inbound",
                             "access": "Allow",
                             "protocol": "Tcp",
@@ -258,6 +278,22 @@
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "443"
+                        }
+                    },
+                    {
+                        "name": "Allow-Bastion-To-VM",
+                        "properties": {
+                            "priority": 102,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "168.63.129.16",
+                            "destinationAddresPrefix": "[parameters('vmSubnetPrefix')]",
+                            "destinationPortRanges": [
+                                "22",
+                                "3389"
+                            ]
                         }
                     }
                 ]
@@ -362,6 +398,26 @@
                     "notificationLocale": "[parameters('autoShutdownNotificationLocale')]"
                 },
                 "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+            }
+        },
+        {
+            "condition": "[parameters('enableBastion')]",
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2025-07-01",
+            "name": "[parameters('bastionName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "sku": {
+            "name": "[parameters('bastionSkuName')]"
+            },
+            "properties": {
+                "dnsName": "[concat(parameters('bastionDnsName'), '.', parameters('location'), '.bastionglobal.azure.com')]",
+                "scaleUnits": 2,
+                "virtualNetwork": {
+                    "id": "[variables('vnetResourceId')]"
+                }
             }
         },
         {
