@@ -8,14 +8,14 @@
 <details>
   <summary>View detailed steps here</summary>
 
-  What this does/deploys:
-    - Virtual Network + Subnet
-    - User-Assigned Managed Identity
-    - App Service Plan (WS1 SKU)
-    - Storage Account (Selected networks to VNET/Subnet)
-    - [Grant UAMI permissions on Storage]
-    - Logic App Standard (hosted on WS1)
-    - [Associates Logic App Standard with VNET/subnet]
+#### What this does/deploys:
+- Virtual Network + Subnet
+- User-Assigned Managed Identity
+- App Service Plan (WS1 SKU)
+- Storage Account (Selected networks to VNET/Subnet)
+- [Grant UAMI permissions on Storage]
+- Logic App Standard (hosted on WS1)
+- [Associates Logic App Standard with VNET/subnet]
   
 </details>
 
