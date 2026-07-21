@@ -65,17 +65,6 @@ ALTER TABLE [Schema Name].[Your Table Name]
 ENABLE CHANGE_TRACKING;
 
 
-***
-
-# Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
-
-**Scenario8File1.json**
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario8File1.json)
-
-**Step 1:** Deploy the above template
-
-***
 
 # Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Linux VM
 
