@@ -344,7 +344,7 @@
             "condition": "[parameters('enableAutoShutdown')]",
             "type": "Microsoft.DevTestLab/schedules",
             "apiVersion": "2018-09-15",
-            "name": "[concat('auto-shutdown-', parameters('vmName'))]",
+            "name": "[concat('shutdown-computevm-', parameters('vmName'))]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
