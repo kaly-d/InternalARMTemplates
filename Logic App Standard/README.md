@@ -6,9 +6,8 @@
 
 
 <details>
-  <summary>View detailed steps here</summary>
+  <summary>What this does/deploys:</summary>
 
-#### What this does/deploys:
 - Virtual Network + Subnet
 - User-Assigned Managed Identity
 - App Service Plan (WS1 SKU)
@@ -30,19 +29,8 @@
 
 
 <details>
-  <summary>View detailed steps here</summary>
+  <summary>What this does/deploys:</summary>
 
-
-### Step 1: Generate unique URL
-
-1. Navigate to this URL to generate a custom endpoint webhook.site
-2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef. Make a note of this.
-
-### Step 2: Deploy the above template
-
-⚠️ In the **endpointURL** parameter, enter the value you stored from Step 1.
-
-#### What this does/deploys:
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
   - App Service Plan (WS1 SKU)
@@ -56,6 +44,20 @@
   - [Associates NAT Gateway with Public IP]
   - Deploy a Public IP Prefix
   - [Associates NAT Gateway with Public IP Prefix]
+
+</details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+### Step 1: Generate unique URL
+
+1. Navigate to this URL to generate a custom endpoint webhook.site
+2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef. Make a note of this.
+
+### Step 2: Deploy the above template
+
+⚠️ In the **endpointURL** parameter, enter the value you stored from Step 1.
 
 ### Step 3: Finish setting up the Logic App
 
@@ -76,12 +78,8 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario3File1.json)
 
 <details>
-  <summary>View detailed steps here</summary>
+  <summary>What this does/deploys:</summary>
 
-
-### Step 1: Deploy the above template
-
-#### What this does/deploys:
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
   - App Service Plan (WS1 SKU)
@@ -90,6 +88,13 @@
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
   - Storage Account #2 that acts as an SFTP Server
+
+</details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+### Step 1: Deploy the above template
 
 ### Step 2: Finish setting up the SFTP server on the Storage Account and generating a password for the local user
 1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
@@ -114,12 +119,8 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario4File1.json)
 
 <details>
-  <summary>View detailed steps here</summary>
-
-
-### Step 1: Deploy the above template
-
-#### What this does/deploys:
+  <summary>What this does/deploys:</summary>
+ 
   - Virtual Network + 2 Subnets (1 for Logic App, 1 for Service Bus)
   - User-Assigned Managed Identity
   - App Service Plan (WS1 SKU)
@@ -129,6 +130,13 @@
   - [Associates Logic App Standard with VNET/subnet]
   - Deploys a Service Bus Namespace and queue, set to Disabled Public Access
   - Deploys a Private Endpoint, Private DNS Zone, and attaches it to the Service Bus subnet.
+</details>
+
+
+<details>
+  <summary>View detailed steps here</summary>
+
+### Step 1: Deploy the above template
 
 ### Step 2: Finish setting up the Logic App
 
@@ -148,10 +156,8 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario5File1.json)
 
 <details>
-  <summary>View detailed steps here</summary>
+  <summary>What this does/deploys:</summary>
 
-
-#### What this does/deploys:
   - Virtual Network + 2 Subnets (1 for Logic App, 1 for Storage)
   - User-Assigned Managed Identity
   - App Service Plan (WS1 SKU)
@@ -175,12 +181,8 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario6File1.json)
 
 <details>
-  <summary>View detailed steps here</summary>
+  <summary>What this does/deploys:</summary>
 
-
-### Step 1: Deploy the above template
-
-#### What this does/deploys:
   - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine)
   - User-Assigned Managed Identity
   - Windows Virtual Machine, with Networking-related components (NSG, NIC, Public IP)
@@ -192,6 +194,8 @@
   - [Associates Logic App Standard with VNET/subnet]
 
 </details>
+
+
 
 ***
 
