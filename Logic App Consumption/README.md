@@ -6,7 +6,7 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Consumption%2FScenario1File1.json)
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
   
 What this does/deploys:
   - Logic App Custom Connector with 2 actions (1 GET, 1 POST) to invoke Public Endpoint API for testing
