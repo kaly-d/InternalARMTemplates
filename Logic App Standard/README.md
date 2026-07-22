@@ -6,7 +6,7 @@
 
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
 
 - Virtual Network + Subnet
 - User-Assigned Managed Identity
@@ -29,7 +29,7 @@
 
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
 
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
@@ -78,7 +78,7 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario3File1.json)
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
 
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
@@ -119,7 +119,7 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario4File1.json)
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
  
   - Virtual Network + 2 Subnets (1 for Logic App, 1 for Service Bus)
   - User-Assigned Managed Identity
@@ -156,7 +156,7 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario5File1.json)
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
 
   - Virtual Network + 2 Subnets (1 for Logic App, 1 for Storage)
   - User-Assigned Managed Identity
@@ -181,7 +181,7 @@
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario6File1.json)
 
 <details>
-  <summary>What this does/deploys:</summary>
+  <summary>What this does/deploys</summary>
 
   - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine)
   - User-Assigned Managed Identity
