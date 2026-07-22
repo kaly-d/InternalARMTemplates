@@ -186,9 +186,13 @@
   - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine)
   - User-Assigned Managed Identity
   - Windows Virtual Machine, with Networking-related components (NSG, NIC, Public IP)
-  - Azure Bastion [for connecting to Virtual Machine within Azure Portal)
+  - Azure Bastion (for connecting to Virtual Machine within Azure Portal)
   - App Service Plan (WS1 SKU)
-  - Storage Account (Selected networks to VNET/Subnet)
+  - Storage Account (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
   - [Grant UAMI permissions on Storage]
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
