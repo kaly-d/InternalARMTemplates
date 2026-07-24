@@ -176,7 +176,7 @@
 
 ## Scenario 6: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
 
-**Scenario8File1.json**
+**Scenario6File1.json**
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario6File1.json)
 
@@ -199,7 +199,31 @@
 
 </details>
 
-
-
 ***
+
+## Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+
+**Scenario7File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario7File1.json)
+
+<details>
+  <summary>What this does/deploys</summary>
+
+  - Virtual Network + 3 Subnets (1 for Logic App, 2 for Storage)
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - 2 Storage Accounts (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - Storage Account #2 that acts as an SFTP Server
+
+
+</details>
+
 
