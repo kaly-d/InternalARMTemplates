@@ -89,6 +89,7 @@
         "privateEndpointBlobStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
         "privateEndpointQueueStorageName": "[concat(parameters('storageAccountName'), '-queue-private-endpoint')]",
         "privateEndpointTableStorageName": "[concat(parameters('storageAccountName'), '-table-private-endpoint')]",
+        "privateEndpointSFTPStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
@@ -99,13 +100,27 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2023-05-01",
             "name": "[parameters('sftpStorageAccountName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
             "location": "[parameters('location')]",
             "sku": {
               "name": "Standard_LRS"
             },
             "kind": "StorageV2",
             "properties": {
-              "isHnsEnabled": true,
+              "supportsHttpsTrafficOnly": true,
+                                "minimumTlsVersion": "TLS1_2",
+                "defaultToOAuthAuthentication": true,
+                "allowBlobPublicAccess": false,
+                "allowSharedKeyAccess": true,
+                                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny"
+                },
+                "publicNetworkAccess": "Enabled"
+
+                "isHnsEnabled": true,
               "isLocalUserEnabled": true,
               "isSftpEnabled": true
             }
@@ -191,6 +206,14 @@
                         "name": "[parameters('storageSubnetName')]",
                         "properties": {
                             "addressPrefix": "10.0.1.0/24",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "privateEndpointNetworkPolicies": "Disabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('sftpStorageSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
                         }
@@ -421,6 +444,32 @@
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                             "groupIds": [
                                 "table"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('privateEndpointSFTPStorageName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]"
+            ],
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('sftpStorageSubnetName') )]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "MyStorageSFTPPrivateLinkConnection",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]",
+                            "groupIds": [
+                                "blob"
                             ]
                         }
                     }
