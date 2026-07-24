@@ -7,29 +7,29 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "sftpStorageAccountName": {
-          "type": "string",
-          "metadata": {
-            "description": "The name of the Storage Account which will serve as the SFTP Server"
-          }
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Storage Account which will serve as the SFTP Server"
+            }
         },
         "userName": {
-          "type": "string",
-          "metadata": {
-            "description": "Username of primary user"
-          }
+            "type": "string",
+            "metadata": {
+                "description": "Username of primary user"
+            }
         },
         "homeDirectory": {
-          "type": "string",
-          "metadata": {
-            "description": "Home directory of primary user. This is your Azure Blob Storage Container name."
-          }
+            "type": "string",
+            "metadata": {
+                "description": "Home directory of primary user. This is your Azure Blob Storage Container name."
+            }
         },
         "publicKey": {
-          "type": "string",
-          "defaultValue": "",
-          "metadata": {
-            "description": "SSH Public Key for primary user. If not specified, Azure will generate a password which can be accessed securely"
-          }
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "SSH Public Key for primary user. If not specified, Azure will generate a password which can be accessed securely"
+            }
         },
         "virtualNetworkName": {
             "type": "String",
@@ -96,7 +96,7 @@
         "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]"
     },
     "resources": [
-    {
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2023-05-01",
             "name": "[parameters('sftpStorageAccountName')]",
@@ -105,59 +105,58 @@
             ],
             "location": "[parameters('location')]",
             "sku": {
-              "name": "Standard_LRS"
+                "name": "Standard_LRS"
             },
             "kind": "StorageV2",
             "properties": {
-              "supportsHttpsTrafficOnly": true,
-                                "minimumTlsVersion": "TLS1_2",
+                "supportsHttpsTrafficOnly": true,
+                "minimumTlsVersion": "TLS1_2",
                 "defaultToOAuthAuthentication": true,
                 "allowBlobPublicAccess": false,
                 "allowSharedKeyAccess": true,
-                                "networkAcls": {
+                "networkAcls": {
                     "bypass": "AzureServices",
                     "defaultAction": "Deny"
                 },
-                "publicNetworkAccess": "Enabled"
-
+                "publicNetworkAccess": "Enabled",
                 "isHnsEnabled": true,
-              "isLocalUserEnabled": true,
-              "isSftpEnabled": true
+                "isLocalUserEnabled": true,
+                "isSftpEnabled": true
             }
-      },  
-      {
-        "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-        "apiVersion": "2023-05-01",
-        "name": "[format('{0}/default/{1}', parameters('sftpStorageAccountName'), parameters('homeDirectory'))]",
-        "properties": {
-          "publicAccess": "None"
         },
-        "dependsOn": [
-          "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]"
-        ]
-      },
-      {
-        "type": "Microsoft.Storage/storageAccounts/localUsers",
-        "apiVersion": "2023-05-01",
-        "name": "[format('{0}/{1}', parameters('sftpStorageAccountName'), parameters('userName'))]",
-        "properties": {
-          "permissionScopes": [
-            {
-              "permissions": "rcwdl",
-              "service": "blob",
-              "resourceName": "[parameters('homeDirectory')]"
-            }
-          ],
-          "homeDirectory": "[parameters('homeDirectory')]",
-          "sshAuthorizedKeys": "[if(empty(parameters('publicKey')), null(), createArray(createObject('description', format('{0} public key', parameters('userName')), 'key', parameters('publicKey'))))]",
-          "hasSharedKey": false,
-          "hasSshPassword": true
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2023-05-01",
+            "name": "[format('{0}/default/{1}', parameters('sftpStorageAccountName'), parameters('homeDirectory'))]",
+            "properties": {
+                "publicAccess": "None"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]"
+            ]
         },
-        "dependsOn": [
-          "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]"
-        ]
-      },
-      {
+        {
+            "type": "Microsoft.Storage/storageAccounts/localUsers",
+            "apiVersion": "2023-05-01",
+            "name": "[format('{0}/{1}', parameters('sftpStorageAccountName'), parameters('userName'))]",
+            "properties": {
+                "permissionScopes": [
+                    {
+                        "permissions": "rcwdl",
+                        "service": "blob",
+                        "resourceName": "[parameters('homeDirectory')]"
+                    }
+                ],
+                "homeDirectory": "[parameters('homeDirectory')]",
+                "sshAuthorizedKeys": "[if(empty(parameters('publicKey')), null(), createArray(createObject('description', format('{0} public key', parameters('userName')), 'key', parameters('publicKey'))))]",
+                "hasSharedKey": false,
+                "hasSshPassword": true
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('sftpStorageAccountName'))]"
+            ]
+        },
+        {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2024-11-01",
             "name": "[parameters('hostingPlanName')]",
@@ -570,75 +569,75 @@
                 },
                 "siteConfig": {
                     "appSettings": [
-            {
-              "name": "FUNCTIONS_EXTENSION_VERSION",
-              "value": "~4"
-            },
-            {
-              "name": "FUNCTIONS_WORKER_RUNTIME",
-              "value": "dotnet"
-            },
-            {
-              "name": "WEBSITE_NODE_DEFAULT_VERSION",
-              "value": "~22"
-            },
-            {
-              "name": "AzureWebJobsStorage__credential",
-              "value": "managedidentity"
-            },
-            {
-              "name": "AzureWebJobsStorage__blobServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__queueServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__tableServiceUri",
-              "value": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]"
-            },
-            {
-              "name": "AzureWebJobsStorage__managedIdentityResourceId",
-              "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
-            },
-            {
-              "name": "AzureFunctionsJobHost__extensionBundle__id",
-              "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
-            },
-            {
-              "name": "AzureFunctionsJobHost__extensionBundle__version",
-              "value": "[1.*, 2.0.0)"
-            },
-            {
-              "name": "APP_KIND",
-              "value": "workflowApp"
-            },
-            {
-              "name": "FUNCTIONS_INPROC_NET8_ENABLED",
-              "value": 1
-            },
-            {
-              "name": "LOGIC_APPS_POWERSHELL_VERSION",
-              "value": 7.4
-            },
-            {
-              "name": "Sftp_disableConnectionCache",
-              "value": "true"
-            },
-            {
-              "name": "Sftp_password",
-              "value": ""
-            },
-            {
-              "name": "Sftp_sshHostAddress",
-              "value": "[concat(parameters('sftpStorageAccountName'), '.blob.core.windows.net')]"
-            },
-            {
-              "name": "Sftp_username",
-              "value": "[concat(parameters('sftpStorageAccountName'), '.', parameters('homeDirectory'), '.', parameters('userName'))]"
-            }
-          ],
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~4"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~22"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage__credential",
+                            "value": "managedidentity"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage__blobServiceUri",
+                            "value": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage__queueServiceUri",
+                            "value": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage__tableServiceUri",
+                            "value": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage__managedIdentityResourceId",
+                            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
+                        },
+                        {
+                            "name": "AzureFunctionsJobHost__extensionBundle__id",
+                            "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
+                        },
+                        {
+                            "name": "AzureFunctionsJobHost__extensionBundle__version",
+                            "value": "[1.*, 2.0.0)"
+                        },
+                        {
+                            "name": "APP_KIND",
+                            "value": "workflowApp"
+                        },
+                        {
+                            "name": "FUNCTIONS_INPROC_NET8_ENABLED",
+                            "value": 1
+                        },
+                        {
+                            "name": "LOGIC_APPS_POWERSHELL_VERSION",
+                            "value": 7.4
+                        },
+                        {
+                            "name": "Sftp_disableConnectionCache",
+                            "value": "true"
+                        },
+                        {
+                            "name": "Sftp_password",
+                            "value": ""
+                        },
+                        {
+                            "name": "Sftp_sshHostAddress",
+                            "value": "[concat(parameters('sftpStorageAccountName'), '.blob.core.windows.net')]"
+                        },
+                        {
+                            "name": "Sftp_username",
+                            "value": "[concat(parameters('sftpStorageAccountName'), '.', parameters('homeDirectory'), '.', parameters('userName'))]"
+                        }
+                    ],
                     "cors": {},
                     "use32BitWorkerProcess": false,
                     "ftpsState": "FtpsOnly",
