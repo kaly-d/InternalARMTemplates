@@ -91,7 +91,8 @@
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]""serviceBusFqdn": "[concat(parameters('serviceBus-NamespaceName'), '.servicebus.windows.net')]"
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "serviceBusFqdn": "[concat(parameters('serviceBus-NamespaceName'), '.servicebus.windows.net')]"
     },
     "resources": [
         {
