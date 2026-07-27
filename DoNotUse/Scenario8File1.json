@@ -34,8 +34,8 @@
             }
         },
         "storageSubnetName": {
-            "type": "String",
-            "defaultValue": "storageSubnet"
+            "defaultValue": "storageSubnet",
+            "type": "String"
         },
         "servicebus-SubnetName": {
             "type": "String",
@@ -63,8 +63,8 @@
             }
         },
         "userAssignedIdentityName": {
-            "type": "string",
             "defaultValue": "uami",
+            "type": "String",
             "metadata": {
                 "description": "This will be the User-Assigned Identity that your Logic App will use to authenticate to Storage"
             }
@@ -100,8 +100,12 @@
             "apiVersion": "2024-11-01",
             "name": "[parameters('hostingPlanName')]",
             "location": "[parameters('location')]",
-            "kind": "",
             "tags": {},
+            "sku": {
+                "tier": "WorkflowStandard",
+                "name": "WS1"
+            },
+            "kind": "",
             "properties": {
                 "name": "[parameters('hostingPlanName')]",
                 "workerSize": "3",
@@ -109,10 +113,6 @@
                 "numberOfWorkers": "1",
                 "maximumElasticWorkerCount": "20",
                 "zoneRedundant": false
-            },
-            "sku": {
-                "tier": "WorkflowStandard",
-                "name": "WS1"
             }
         },
         {
@@ -154,7 +154,7 @@
                     {
                         "name": "[parameters('servicebus-SubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.1.0/24"
+                            "addressPrefix": "10.0.2.0/24"
                         }
                     }
                 ]
@@ -706,7 +706,6 @@
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[guid(variables('serviceBusScope'), resourceId('Microsoft.Web/sites', parameters('logicAppName')), 'SBDataOwner')]",
-            "scope": "[variables('serviceBusScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]",
                 "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
@@ -715,13 +714,13 @@
                 "principalId": "[reference(resourceId('Microsoft.Web/sites', parameters('logicAppName')), '2022-03-01', 'Full').identity.principalId]",
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/090c5cfd-751d-490a-894a-3ce6f1109419')]",
                 "principalType": "ServicePrincipal"
-            }
+            },
+            "scope": "[variables('serviceBusScope')]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
-            "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
@@ -730,13 +729,13 @@
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
                 "principalId": "[reference(variables('uamiResourceId'), '2018-11-30').principalId]",
                 "principalType": "ServicePrincipal"
-            }
+            },
+            "scope": "[variables('storageScope')]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
-            "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
@@ -745,13 +744,13 @@
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
                 "principalId": "[reference(variables('uamiResourceId'), '2018-11-30').principalId]",
                 "principalType": "ServicePrincipal"
-            }
+            },
+            "scope": "[variables('storageScope')]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
-            "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
@@ -760,13 +759,13 @@
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
                 "principalId": "[reference(variables('uamiResourceId'), '2018-11-30').principalId]",
                 "principalType": "ServicePrincipal"
-            }
+            },
+            "scope": "[variables('storageScope')]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
-            "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
@@ -775,7 +774,8 @@
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
                 "principalId": "[reference(variables('uamiResourceId'), '2018-11-30').principalId]",
                 "principalType": "ServicePrincipal"
-            }
+            },
+            "scope": "[variables('storageScope')]"
         }
     ]
 }
