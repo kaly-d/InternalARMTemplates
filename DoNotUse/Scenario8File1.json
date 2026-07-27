@@ -439,7 +439,7 @@
                 "typeHandlerVersion": "1.10",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Bypass -Command \"if (!(Test-Path ''C:\\', parameters('fileShareName'), ''')) { New-Item -Path ''C:\\', parameters('fileShareName'), ''' -ItemType Directory -Force }; if (!(Get-SmbShare -Name ''', parameters('fileShareName'), ''' -ErrorAction SilentlyContinue)) { New-SmbShare -Name ''', parameters('fileShareName'), ''' -Path ''C:\\', parameters('fileShareName'), ''' -FullAccess Everyone }\"')]"
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Bypass -Command \"if (!(Test-Path ''C:\\', parameters('fileShareName'), ''')) { New-Item -Path ''C:\\', parameters('fileShareName'), ''' -ItemType Directory -Force }; if (!(Get-SmbShare -Name ''', parameters('fileShareName'), ''' -ErrorAction SilentlyContinue)) { New-SmbShare -Name ''', parameters('fileShareName'), ''' -Path ''C:\\', parameters('fileShareName'), ''' -FullAccess Everyone }; if (!(Test-Path ''C:\\', parameters('fileShareName'), '\\test.txt'')) { New-Item -Path ''C:\\', parameters('fileShareName'), '\\test.txt'' -ItemType File -Force }\"')]"
                 }
             }
         },
