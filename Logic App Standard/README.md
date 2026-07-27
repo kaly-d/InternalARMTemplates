@@ -21,7 +21,7 @@
 ***
 
 ## Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
-
+servicebusWorkflows.zip
 
 **Scenario2File1.json**
 
@@ -141,7 +141,7 @@
 ### Step 2: Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
-2. Download the **Scenario4File1Workflows.zip** file. This contains the workflow zip for this scenario.
+2. Download the **servicebusWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
 
@@ -222,6 +222,35 @@
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
   - Storage Account #2 that acts as an SFTP Server
+
+
+</details>
+
+***
+
+## Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
+
+
+**Scenario8File1.json**
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FLogic%2520App%2520Standard%2FScenario8File1.json)
+
+<details>
+  <summary>What this does/deploys</summary>
+
+  - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Service Bus)
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - Deploys a Service Bus Namespace and queue, set to Disabled Public Access
+  - Deploys a Private Endpoint, Private DNS Zone, and attaches it to the Service Bus subnet.
 
 
 </details>
