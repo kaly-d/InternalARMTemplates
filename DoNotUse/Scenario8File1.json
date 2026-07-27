@@ -819,6 +819,14 @@
                         {
                             "name": "LOGIC_APPS_POWERSHELL_VERSION",
                             "value": 7.4
+                        },
+                        {
+                            "name": "FileSystem_mountPath",
+                            "value": "C:\\mounts\\FileSystem"
+                        },
+                        {
+                            "name": "FileSystem_password",
+                            "value": "[parameters('vmAdminPassword')]"
                         }
                     ],
                     "cors": {},
@@ -867,7 +875,8 @@
             "apiVersion": "2022-03-01",
             "name": "[concat(parameters('logicAppName'), '/azureStorageAccounts')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]",
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('vmName'), 'CreateFileShare')]"
             ],
             "properties": {
                 "FileSystem-Share": {
@@ -876,7 +885,7 @@
                     "endpoint": "[variables('fileServerFqdn')]",
                     "shareName": "[parameters('fileShareName')]",
                     "accessKey": "[parameters('vmAdminPassword')]",
-                    "mountPath": "C:\\mounts\\FileSystem-Share",
+                    "mountPath": "\\mounts\\FileSystem",
                     "protocol": "Smb"
                 }
             }
