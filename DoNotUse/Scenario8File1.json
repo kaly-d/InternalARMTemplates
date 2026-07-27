@@ -62,7 +62,7 @@
         },
         "vmName": {
             "type": "string",
-            "defaultValue": "vmkaly"
+            "defaultValue": "testvirtualmachine"
         },
         "vmSize": {
             "type": "string",
