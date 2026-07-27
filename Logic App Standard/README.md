@@ -279,8 +279,22 @@ servicebusWorkflows.zip
   - [Grant UAMI permissions on Storage]
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
-  - File Share on the Windows VM with corresponding mount on Logic App
+  - File Share (folder with test file) on the Windows VM with corresponding mount on Logic App
 
 </details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+### Step 1: Deploy the above template
+
+### Step 2: Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
+1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
+3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+4. Once the workflows have been deployed, test your workflows which will list the file in the file share.
+
+</details>
+
 
 ***
