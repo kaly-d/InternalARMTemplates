@@ -21,7 +21,6 @@
 ***
 
 ## Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
-servicebusWorkflows.zip
 
 **Scenario2File1.json**
 
@@ -61,7 +60,7 @@ servicebusWorkflows.zip
 
 ### Step 3: Finish setting up the Logic App
 
-1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **Scenario2File1Workflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message to the endpoint URL, and review the IP address used in the request belongs to the IP Prefix associated with the NAT Gateway 
@@ -103,7 +102,7 @@ servicebusWorkflows.zip
 
 ### Step 3: Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
 1. In the Logic App Standard, navigate to **Environment Variables**, search for the **Sftp_password** app setting and paste the value you copied from **Step 2.**
-2. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+2. On this GitHub repository, navigate to the **Workflows** folder.
 3. Download the **sftpWorkflows.zip** file. This contains the workflow zip for this scenario.
 4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
@@ -140,7 +139,7 @@ servicebusWorkflows.zip
 
 ### Step 2: Finish setting up the Logic App
 
-1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **servicebusWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
@@ -289,7 +288,7 @@ servicebusWorkflows.zip
 ### Step 1: Deploy the above template
 
 ### Step 2: Finish setting up the Logic App by deploying the workflows for end-to-end testing
-1. On this GitHub repository, navigate to the **Logic App Standard/workflows** folder.
+1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will list the file in the file share.
