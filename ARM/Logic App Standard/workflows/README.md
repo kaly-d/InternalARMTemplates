@@ -3,7 +3,7 @@ This is a Workflow Zip Repository, with multiple zip folders, containing pre-tem
 
 **Type of Zip files**
 1. Workflow**N**.zip
-All the workflows are identical and have just one trigger (When an HTTP request is received), with no actions. The N is for whichever number of workflows you want to deploy quickly.
+All the workflows are identical and have just one trigger (When an HTTP request is received), with no actions. The N is for whichever number of workflows you want to deploy quickly. Useful for scenarios where you need to deploy many workflows to an app.
 
 2. **scenario**Workflows.zip
 This corresponds to the workflows required to complete the end-to-end set up for the scenario-based ARM templates. 
