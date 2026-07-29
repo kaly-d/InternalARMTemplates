@@ -25,7 +25,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ## Logic App Standard
 
-## Scenario 1: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
+### Scenario 1: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
 
 **Scenario1File1.json**
 
@@ -47,7 +47,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
+### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
 
 **Scenario2File1.json**
 
@@ -76,16 +76,16 @@ Below are the templates that are created for various scenarios, categorized by t
 <details>
   <summary>View detailed steps here</summary>
 
-### Step 1: Generate unique URL
+#### Step 1: Generate unique URL
 
 1. Navigate to this URL to generate a custom endpoint webhook.site
 2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef. Make a note of this.
 
-### Step 2: Deploy the above template
+#### Step 2: Deploy the above template
 
 ⚠️ In the **endpointURL** parameter, enter the value you stored from Step 1.
 
-### Step 3: Finish setting up the Logic App
+#### Step 3: Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **Scenario2File1Workflows.zip** file. This contains the workflow zip for this scenario.
@@ -96,7 +96,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+### Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
 
 
 **Scenario3File1.json**
@@ -120,14 +120,14 @@ Below are the templates that are created for various scenarios, categorized by t
 <details>
   <summary>View detailed steps here</summary>
 
-### Step 1: Deploy the above template
+#### Step 1: Deploy the above template
 
-### Step 2: Finish setting up the SFTP server on the Storage Account and generating a password for the local user
+#### Step 2: Finish setting up the SFTP server on the Storage Account and generating a password for the local user
 1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
 2. Click on SSH Password > Next > Save.
 3. Make a note of the generated password.
 
-### Step 3: Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
+#### Step 3: Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
 1. In the Logic App Standard, navigate to **Environment Variables**, search for the **Sftp_password** app setting and paste the value you copied from **Step 2.**
 2. On this GitHub repository, navigate to the **Workflows** folder.
 3. Download the **sftpWorkflows.zip** file. This contains the workflow zip for this scenario.
@@ -138,7 +138,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
+### Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
 **Scenario4File1.json**
 
@@ -162,9 +162,9 @@ Below are the templates that are created for various scenarios, categorized by t
 <details>
   <summary>View detailed steps here</summary>
 
-### Step 1: Deploy the above template
+#### Step 1: Deploy the above template
 
-### Step 2: Finish setting up the Logic App
+#### Step 2: Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **servicebusWorkflows.zip** file. This contains the workflow zip for this scenario.
@@ -175,7 +175,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 5: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity
+### Scenario 5: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity
 
 **Scenario5File1.json**
 
@@ -200,7 +200,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 6: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
+### Scenario 6: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
 
 **Scenario6File1.json**
 
@@ -227,7 +227,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+### Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
 
 **Scenario7File1.json**
 
@@ -254,7 +254,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
+### Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
 
 **Scenario8File1.json**
@@ -283,7 +283,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App
+### Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App
 
 **Scenario9File1.json**
 
@@ -312,9 +312,9 @@ Below are the templates that are created for various scenarios, categorized by t
 <details>
   <summary>View detailed steps here</summary>
 
-### Step 1: Deploy the above template
+#### Step 1: Deploy the above template
 
-### Step 2: Finish setting up the Logic App by deploying the workflows for end-to-end testing
+#### Step 2: Finish setting up the Logic App by deploying the workflows for end-to-end testing
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
@@ -325,7 +325,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-## Scenario 10: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App (⚠️ with Auto-Shutdown feature)
+### Scenario 10: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App (⚠️ with Auto-Shutdown feature)
 
 **Scenario10File1.json**
 
@@ -355,9 +355,9 @@ Below are the templates that are created for various scenarios, categorized by t
 <details>
   <summary>View detailed steps here</summary>
 
-### Step 1: Deploy the above template
+#### Step 1: Deploy the above template
 
-### Step 2: Finish setting up the Logic App by deploying the workflows for end-to-end testing
+#### Step 2: Finish setting up the Logic App by deploying the workflows for end-to-end testing
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
@@ -370,7 +370,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ## Logic App Consumption
 
-# Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
+### Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
 
 **Scenario1File1.json**
 
@@ -389,12 +389,12 @@ What this does/deploys:
 <details>
   <summary>View detailed steps here</summary>
   
-**Step 1:** Generate unique URL
+#### Step 1: Generate unique URL
 1. Navigate to this URL to generate a custom endpoint **webhook.site**
 2. Your unique URL will look something like: https://webhook.site/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef.
 3. Make a note of the **basePath** which is the '**/**' and '**ID**' from your URL. For example: **/abcdefgh-ijkl-mnop-qrst-uvwxyzabcdef**
 
-**Step 2:** Deploy the above template
+#### Step 2: Deploy the above template
 
 ⚠️ In the **basePath** parameter, replace the basePath with the value you stored from Step 1.
 
