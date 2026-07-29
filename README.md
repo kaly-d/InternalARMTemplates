@@ -1,6 +1,3 @@
-# Introduction
-A collection of deployment templates for common testing, validation, and repro scenarios across various Azure services.
-
 # Quick Guide for Deployment Options
 
 ## ARM
