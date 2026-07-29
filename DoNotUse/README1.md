@@ -46,9 +46,9 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
 
-**Scenario2File1.json**
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario2File1.json)
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario2File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario2File1.json)  |
 
 
 <details>
@@ -96,9 +96,9 @@ Below are the templates that are created for various scenarios, categorized by t
 ### Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
 
 
-**Scenario3File1.json**
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario3File1.json)
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario3File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario3File1.json)  |
 
 <details>
   <summary>What this does/deploys</summary>
@@ -137,9 +137,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
-**Scenario4File1.json**
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario4File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario4File1.json)  |
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario4File1.json)
 
 <details>
   <summary>What this does/deploys</summary>
@@ -174,9 +175,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 5: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity
 
-**Scenario5File1.json**
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario5File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario5File1.json)  |
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario5File1.json)
 
 <details>
   <summary>What this does/deploys</summary>
@@ -199,9 +201,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 6: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM
 
-**Scenario6File1.json**
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario6File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario6File1.json)  |
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario6File1.json)
 
 <details>
   <summary>What this does/deploys</summary>
@@ -226,9 +229,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
 
-**Scenario7File1.json**
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario7File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario7File1.json)  |
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario7File1.json)
 
 <details>
   <summary>What this does/deploys</summary>
@@ -254,9 +258,10 @@ Below are the templates that are created for various scenarios, categorized by t
 ### Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
 
 
-**Scenario8File1.json**
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario8File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario8File1.json)  |
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario8File1.json)
 
 <details>
   <summary>What this does/deploys</summary>
@@ -282,9 +287,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App
 
-**Scenario9File1.json**
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario9File1.json)
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario9File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario9File1.json)  |
+| [Bicep](https://github.com/kaly-d/InternalARMTemplates/blob/main/Bicep/Logic%20App%20Standard/Scenario9File1.bicep) | |
 
 <details>
   <summary>What this does/deploys</summary>
@@ -324,9 +330,10 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ### Scenario 10: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App (⚠️ with Auto-Shutdown feature)
 
-**Scenario10File1.json**
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario10File1.json)
+| Deployment File | Quick Deploy |
+| ------------- | ------------- |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario10File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario10File1.json)  |
+| [Bicep](https://github.com/kaly-d/InternalARMTemplates/blob/main/Bicep/Logic%20App%20Standard/Scenario10File1.bicep) | |
 
 <details>
   <summary>What this does/deploys</summary>
