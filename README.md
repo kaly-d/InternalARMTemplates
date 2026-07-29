@@ -17,9 +17,6 @@ _az account set --subscription **Subscription Name or ID**_
 <br>
 _az deployment group create --name **DeploymentName** --resource-group **ResourceGroupName** --template-file **FileName**.bicep_
 
-
-# What's In This Repository?
-
 # Template Scenarios
 Below are the templates that are created for various scenarios, categorized by the Logic App resource type. Some templates will deploy non-Logic App resources to help with end-to-end testing.
 
