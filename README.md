@@ -1,15 +1,19 @@
 # Introduction
-
+A collection of deployment templates for common testing, validation, and repro scenarios across various Azure services.
 
 # Quick Guide for Deployment Options
 
 ## ARM
+
+**Option 1**: Directly deploy the template by clicking the Deploy to Azure button
+**Option 2**: In the Azure Portal, search for "Deploy a custom template", and paste the desired template file contents in the editor.
 
 ## Bicep
 
 # What's In This Repository?
 
 # Template Scenarios
+Below are the templates that are created for various scenarios, categorized by the Logic App resource type. Some templates will deploy non-Logic App resources to help with end-to-end testing.
 
 ## Logic App Standard
 
