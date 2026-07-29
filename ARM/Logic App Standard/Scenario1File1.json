@@ -13,7 +13,7 @@
       },
       "defaultValue": "vnet"
     },
-    "subnetName": {
+    "logicAppSubnetName": {
       "type": "String",
       "metadata": {
         "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
@@ -42,7 +42,7 @@
   },
   "variables": {
     "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-    "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+    "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
     "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
     "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
     "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
@@ -80,7 +80,7 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[parameters('logicAppSubnetName')]",
             "properties": {
               "addressPrefix": "10.0.0.0/24",
               "serviceEndpoints": [
