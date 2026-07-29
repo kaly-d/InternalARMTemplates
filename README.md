@@ -6,9 +6,20 @@ A collection of deployment templates for common testing, validation, and repro s
 ## ARM
 
 **Option 1**: Directly deploy the template by clicking the Deploy to Azure button
+<br>
 **Option 2**: In the Azure Portal, search for "Deploy a custom template", and paste the desired template file contents in the editor.
 
 ## Bicep
+
+1. Download the appropriate template .bicep file for your scenario
+2. On the Azure Portal, open the Cloud Shell
+3. Click on _Manage files_ > _Upload_ and select the .bicep file you just downloaded
+4. Run the following commands and replace the bolded fields:
+
+_az account set --subscription **Subscription Name or ID**_
+<br>
+_az deployment group create --name **DeploymentName** --resource-group **ResourceGroupName** --template-file **FileName**.bicep_
+
 
 # What's In This Repository?
 
