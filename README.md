@@ -378,7 +378,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
-| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario1File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Consumption%2FScenario1File1.json)  |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Consumption/Scenario1File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Consumption%2FScenario1File1.json)  |
 
 <details>
   <summary>What this does/deploys</summary>
