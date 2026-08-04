@@ -85,7 +85,7 @@ Below are the templates that are created for various scenarios, categorized by t
 #### Step 3: Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Workflows** folder.
-2. Download the **Scenario2File1Workflows.zip** file. This contains the workflow zip for this scenario.
+2. Download the **natgatewayWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message to the endpoint URL, and review the IP address used in the request belongs to the IP Prefix associated with the NAT Gateway 
 
