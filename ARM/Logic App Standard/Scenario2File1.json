@@ -34,7 +34,7 @@
         "description": "This will be the Storage Account hosting the Logic App"
       }  
     },
-    "logicappName": {
+    "logicAppName": {
       "type": "string"
     },
     "hostingPlanName": {
@@ -197,7 +197,7 @@
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2022-03-01",
-      "name": "[parameters('logicappName')]",
+      "name": "[parameters('logicAppName')]",
       "location": "[parameters('location')]",
       "kind": "functionapp,workflowapp",
       "dependsOn": [
@@ -285,7 +285,7 @@
           "apiVersion": "2022-09-01",
           "name": "scm",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+            "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]"
           ],
           "properties": {
             "allow": false
@@ -296,7 +296,7 @@
           "apiVersion": "2022-09-01",
           "name": "ftp",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+            "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]"
           ],
           "properties": {
             "allow": false
@@ -376,7 +376,7 @@
     },
     "logicAppName": {
       "type": "string",
-      "value": "[parameters('logicappName')]"
+      "value": "[parameters('logicAppName')]"
     }
   }
 }
