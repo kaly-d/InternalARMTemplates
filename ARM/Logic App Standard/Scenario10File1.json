@@ -3,8 +3,54 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "String",
-            "defaultValue": "[resourceGroup().location]"
+          "type": "string",
+          "defaultValue": "eastus",
+          "allowedValues": [
+            "westcentralus",
+            "southcentralus",
+            "centralus",
+            "qatarcentral",
+            "australiacentral",
+            "australiasoutheast",
+            "brazilsoutheast",
+            "canadacentral",
+            "centralindia",
+            "eastasia",
+            "eastus",
+            "francecentral",
+            "japaneast",
+            "koreacentral",
+            "northeurope",
+            "southafricanorth",
+            "switzerlandnorth",
+            "uaenorth",
+            "ukwest",
+            "westindia",
+            "australiacentral2",
+            "australiaeast",
+            "brazilsouth",
+            "canadaeast",
+            "eastus2",
+            "francesouth",
+            "germanywestcentral",
+            "japanwest",
+            "jioindiawest",
+            "koreasouth",
+            "northcentralus",
+            "norwayeast",
+            "southindia",
+            "southeastasia",
+            "swedencentral",
+            "switzerlandwest",
+            "uksouth",
+            "westeurope",
+            "westus",
+            "westus2",
+            "westus3"
+          ],
+          "metadata": {
+            "description": "Region where all regional resources will be deployed. This list is limited to regions that support Microsoft.DevTestLab/schedules for VM auto-shutdown."
+          }
         },
         "virtualNetworkName": {
             "type": "String",
@@ -432,7 +478,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2024-03-01",
             "name": "[concat(parameters('vmName'), '/CreateFileShare')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
             ],
