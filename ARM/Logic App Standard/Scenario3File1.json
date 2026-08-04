@@ -37,11 +37,19 @@
         "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
       }  
     },
+    "vnetAddressPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/16"
+    },
     "logicAppSubnetName": {
       "type": "String",
       "metadata": {
         "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
       }  
+    },
+    "logicAppSubnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24"
     },
     "storageAccountName": {
       "type": "String",
@@ -285,14 +293,14 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "10.0.0.0/16"
+            "[parameters('vnetAddressPrefix')]"
           ]
         },
         "subnets": [
           {
             "name": "[parameters('logicAppSubnetName')]",
             "properties": {
-              "addressPrefix": "10.0.0.0/24",
+              "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
                "serviceEndpoints": [
                 {
                   "service": "Microsoft.Storage"
