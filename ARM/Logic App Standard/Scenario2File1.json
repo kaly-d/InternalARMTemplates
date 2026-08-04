@@ -13,12 +13,20 @@
       },
       "defaultValue": "vnet"
     },
-    "subnetName": {
+    "vnetAddressPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/16"
+    },
+    "logicAppSubnetName": {
       "type": "String",
       "metadata": {
         "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
       },
       "defaultValue": "subnet"
+    },
+    "logicAppSubnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24"
     },
     "natGatewayName": {
       "type": "string",
@@ -58,7 +66,7 @@
     }
   },
   "variables": {
-    "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+    "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
     "storageId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
     "uamiId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
     "role_storageAccountContributor": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
@@ -118,14 +126,14 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "10.0.0.0/16"
+            "[parameters('vnetAddressPrefix')]"
           ]
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[parameters('logicAppSubnetName')]",
             "properties": {
-              "addressPrefix": "10.0.0.0/24",
+              "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
               "serviceEndpoints": [
                 {
                   "service": "Microsoft.Storage"
