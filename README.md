@@ -250,6 +250,24 @@ Below are the templates that are created for various scenarios, categorized by t
   - [Associates Logic App Standard with VNET/subnet]
   - Storage Account #2 that acts as an SFTP Server
 
+</details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+#### Step 1: Deploy the above template
+
+#### Step 2: Finish setting up the SFTP server on the Storage Account and generating a password for the local user
+1. Navigate to Storage Account #2 > Settings > SFTP. On the local user you created, under **Authentication Method**, click on **Configure**.
+2. Click on SSH Password > Next > Save.
+3. Make a note of the generated password.
+
+#### Step 3: Finish setting up the Logic App, storing the SFTP password, and deploying the workflows for end-to-end testing
+1. In the Logic App Standard, navigate to **Environment Variables**, search for the **Sftp_password** app setting and paste the value you copied from **Step 2.**
+2. On this GitHub repository, navigate to the **Workflows** folder.
+3. Download the **sftpWorkflows.zip** file. This contains the workflow zip for this scenario.
+4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
 
 </details>
 
