@@ -27,17 +27,29 @@
         "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
       }
     },
-    "outboundSubnetName": {
+    "vnetAddressPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/16"
+    },
+    "logicAppSubnetName": {
       "type": "String",
       "metadata": {
         "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
       }
     },
-    "servicebus-SubnetName": {
+    "logicAppSubnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24"
+    },
+    "serviceBusSubnetName": {
       "type": "String",
       "metadata": {
         "description": "This will the subnet that is connected to the Service Bus's Private Endpoint"
       }
+    },
+    "serviceBusSubnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.1.0/24"
     },
     "privateEndpointName": {
       "defaultValue": "sb-private-endpoint",
@@ -46,7 +58,7 @@
         "description": "This is the Private Endpoint that will be linked on the Service Bus's firewall/networking section"
       }      
     },
-    "serviceBus-NamespaceName": {
+    "serviceBusNamespaceName": {
       "type": "String",
       "metadata": {
         "description": "This is the Service Bus Namespace your Logic App will connect to"
@@ -70,17 +82,17 @@
     "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
     "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
 
-    "outboundSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('outboundSubnetName'))]",
-    "serviceBusSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('servicebus-SubnetName'))]",
+    "outboundSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
+    "serviceBusSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('serviceBusSubnetName'))]",
 
     "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-    "serviceBusScope": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]",
+    "serviceBusScope": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusNamespaceName'))]",
 
     "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
     "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
     "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]",
 
-    "serviceBusFqdn": "[concat(parameters('serviceBus-NamespaceName'), '.servicebus.windows.net')]"
+    "serviceBusFqdn": "[concat(parameters('serviceBusNamespaceName'), '.servicebus.windows.net')]"
   },
   "resources": [
     {
@@ -111,14 +123,14 @@
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "10.0.0.0/16"
+            "[parameters('vnetAddressPrefix')]"
           ]
         },
         "subnets": [
           {
-            "name": "[parameters('outboundSubnetName')]",
+            "name": "[parameters('logicAppSubnetName')]",
             "properties": {
-              "addressPrefix": "10.0.0.0/24",
+              "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
               "serviceEndpoints": [
                 {
                   "service": "Microsoft.Storage"
@@ -135,9 +147,9 @@
             }
           },
           {
-            "name": "[parameters('servicebus-SubnetName')]",
+            "name": "[parameters('serviceBusSubnetName')]",
             "properties": {
-              "addressPrefix": "10.0.1.0/24"
+              "addressPrefix": "[parameters('serviceBusSubnetPrefix')]",
             }
           }
         ]
@@ -190,7 +202,7 @@
     {
       "type": "Microsoft.ServiceBus/namespaces",
       "apiVersion": "2025-05-01-preview",
-      "name": "[parameters('serviceBus-NamespaceName')]",
+      "name": "[parameters('serviceBusNamespaceName')]",
       "location": "[parameters('location')]",
       "tags": {},
       "sku": {
@@ -208,9 +220,9 @@
     {
       "type": "Microsoft.ServiceBus/namespaces/queues",
       "apiVersion": "2025-05-01-preview",
-      "name": "[format('{0}/{1}', parameters('serviceBus-NamespaceName'), parameters('serviceBusQueueName'))]",
+      "name": "[format('{0}/{1}', parameters('serviceBusNamespaceName'), parameters('serviceBusQueueName'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
+        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusNamespaceName'))]"
       ],
       "properties": {
         "status": "Active",
@@ -255,7 +267,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
+        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusNamespaceName'))]"
       ],
       "properties": {
         "privateLinkServiceConnections": [
@@ -263,7 +275,7 @@
             "name": "[parameters('privateEndpointName')]",
             "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), '/privateLinkServiceConnections/', parameters('privateEndpointName'))]",
             "properties": {
-              "privateLinkServiceId": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]",
+              "privateLinkServiceId": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusNamespaceName'))]",
               "groupIds": [
                 "namespace"
               ],
@@ -444,7 +456,7 @@
       "scope": "[variables('serviceBusScope')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]",
-        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]"
+        "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusNamespaceName'))]"
       ],
       "properties": {
         "principalId": "[reference(resourceId('Microsoft.Web/sites', parameters('logicAppName')), '2022-03-01', 'Full').identity.principalId]",
