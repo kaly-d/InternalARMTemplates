@@ -27,21 +27,37 @@
                 "description": "This will the VNET that is connected to the Logic App's Outbound VNET configuration and also the Service Bus Private Endpoint"
             }
         },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
+        },
         "logicAppSubnetName": {
             "type": "String",
             "metadata": {
                 "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
             }
         },
+        "logicAppSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
+        },
         "storageSubnetName": {
             "defaultValue": "storageSubnet",
             "type": "String"
         },
-        "servicebus-SubnetName": {
+        "storageSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24"
+        },
+        "serviceBusSubnetName": {
             "type": "String",
             "metadata": {
                 "description": "This will the subnet that is connected to the Service Bus's Private Endpoint"
             }
+        },
+        "serviceBusSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.2.0/24"
         },
         "privateEndpointName": {
             "defaultValue": "sb-private-endpoint",
@@ -74,7 +90,7 @@
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
         "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
         "outboundSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
-        "serviceBusSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('servicebus-SubnetName'))]",
+        "serviceBusSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('serviceBusSubnetName'))]",
         "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "serviceBusScope": "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBus-NamespaceName'))]",
         "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
@@ -123,14 +139,14 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.0.0.0/16"
+                        "[parameters('vnetAddressPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "[parameters('logicAppSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.0.0/24",
+                            "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "delegations": [
@@ -146,15 +162,15 @@
                     {
                         "name": "[parameters('storageSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.1.0/24",
+                            "addressPrefix": "[parameters('storageSubnetPrefix')]",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
                         }
                     },
                     {
-                        "name": "[parameters('servicebus-SubnetName')]",
+                        "name": "[parameters('serviceBusSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.2.0/24"
+                            "addressPrefix": "[parameters('serviceBusSubnetPrefix')]",
                         }
                     }
                 ]
