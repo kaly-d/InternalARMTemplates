@@ -75,13 +75,16 @@
             "type": "secureString"
         },
         "vmNicName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nic"
         },
         "vmNsgName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "nsg"
         },
         "vmPublicIpName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "pip"
         },
         "enableAutoShutdown": {
             "type": "bool",
