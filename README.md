@@ -13,7 +13,7 @@
 3. Click on _Manage files_ > _Upload_ and select the .bicep file you just downloaded
 4. Run the following commands and replace the bolded fields:
 
-_az account set --subscription **Subscription Name or ID**_
+_az account set --subscription **SubscriptionNameOrID**_
 <br>
 _az deployment group create --name **DeploymentName** --resource-group **ResourceGroupName** --template-file **FileName**.bicep_
 
