@@ -38,6 +38,10 @@
             },
             "defaultValue": "vnet"
         },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
+        },
         "logicAppSubnetName": {
             "type": "String",
             "metadata": {
@@ -45,13 +49,25 @@
             },
             "defaultValue": "logicAppSubnet"
         },
+        "logicAppSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
+        },
         "storageSubnetName": {
             "type": "String",
             "defaultValue": "storageSubnet"
         },
+        "storageSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24"
+        },
         "sftpStorageSubnetName": {
             "type": "String",
             "defaultValue": "sftpStorageSubnet"
+        },
+        "sftpSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24"
         },
         "logicappName": {
             "type": "String"
@@ -181,14 +197,14 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.0.0.0/16"
+                        "[parameters('vnetAddressPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "[parameters('logicAppSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.0.0/24",
+                            "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "delegations": [
@@ -204,7 +220,7 @@
                     {
                         "name": "[parameters('storageSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.1.0/24",
+                            "addressPrefix": "[parameters('storageSubnetPrefix')]",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
                         }
@@ -212,7 +228,7 @@
                     {
                         "name": "[parameters('sftpStorageSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.2.0/24",
+                            "addressPrefix": "[parameters('sftpSubnetPrefix')]",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
                         }
