@@ -114,7 +114,7 @@
     "variables": {
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
-        "hostingPlanName": "[concat(parameters('logicAppName'), '-asp')]"
+        "hostingPlanName": "[concat(parameters('logicAppName'), '-asp')]",
         "vmSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmSubnetName'))]",
         "vmNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]",
         "vmPublicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
