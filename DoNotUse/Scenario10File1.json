@@ -6,6 +6,27 @@
             "type": "String",
             "defaultValue": "[resourceGroup().location]"
         },
+        "sqlServerName": {
+            "type": "String",
+            "metadata": {
+                "description": "Name of the Azure SQL Server."
+            }
+        },
+        "sqlDatabaseName": {
+            "type": "String"
+        },
+        "aadAdminLogin": {
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
+            }
+        },
+        "aadAdminObjectId": {
+            "type": "String",
+            "metadata": {
+                "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
+            }
+        },        
         "virtualNetworkName": {
             "type": "String",
             "metadata": {
@@ -137,6 +158,117 @@
         "vnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
     },
     "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2021-11-01",
+            "name": "[parameters('sqlServerName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "version": "12.0",
+                "publicNetworkAccess": "Disabled",
+                "minimalTlsVersion": "1.2",
+                "administrators": {
+                    "administratorType": "ActiveDirectory",
+                    "azureADOnlyAuthentication": true,
+                    "login": "[parameters('aadAdminLogin')]",
+                    "sid": "[parameters('aadAdminObjectId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2022-08-01-preview",
+            "name": "[concat(parameters('sqlServerName'), '/', parameters('sqlDatabaseName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
+                "[resourceId('Microsoft.Network/privateEndpoints/privateDnsZoneGroups', variables('privateEndpointSqlName'), 'default')]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard"
+            },
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "sampleName": "AdventureWorksLT"
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('privateSqlDnsZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(variables('privateSqlDnsZoneName'), '/', variables('virtualNetworkLinksSuffixSqlName'))]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('privateEndpointSqlName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+            ],
+            "properties": {
+                "subnet": {
+                    "id": "[variables('sqlPrivateEndpointSubnetResourceId')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[concat(parameters('sqlServerName'), '-sql-private-link-connection')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
+                            "groupIds": [
+                                "sqlServer"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+            "apiVersion": "2021-05-01",
+            "name": "[concat(variables('privateEndpointSqlName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateEndpoints', variables('privateEndpointSqlName'))]",
+                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]"
+            ],
+            "properties": {
+                "privateDnsZoneConfigs": [
+                    {
+                        "name": "sqlDnsConfig",
+                        "properties": {
+                            "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', variables('privateSqlDnsZoneName'))]"
+                        }
+                    }
+                ]
+            }
+        },
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2024-11-01",
