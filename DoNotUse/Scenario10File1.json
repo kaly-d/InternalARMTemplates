@@ -50,7 +50,7 @@
         },
         "sqlSubnetPrefix": {
             "type": "string",
-            "defaultValue": "10.0.2.0/24"
+            "defaultValue": "10.0.3.0/24"
         },
         "logicappName": {
             "type": "String"
