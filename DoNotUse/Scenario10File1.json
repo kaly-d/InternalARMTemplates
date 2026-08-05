@@ -44,7 +44,7 @@
             "type": "string",
             "defaultValue": "10.0.2.0/24"
         },
-        "logicappName": {
+        "logicAppName": {
             "type": "String"
         },
         "hostingPlanName": {
@@ -662,7 +662,7 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-03-01",
-            "name": "[parameters('logicappName')]",
+            "name": "[parameters('logicAppName')]",
             "location": "[parameters('location')]",
             "kind": "functionapp,workflowapp",
             "dependsOn": [
@@ -759,9 +759,9 @@
                 {
                     "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
                     "apiVersion": "2022-09-01",
-                    "name": "[concat(parameters('logicappName'), '/scm')]",
+                    "name": "[concat(parameters('logicAppName'), '/scm')]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+                        "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]"
                     ],
                     "properties": {
                         "allow": false
@@ -770,9 +770,9 @@
                 {
                     "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
                     "apiVersion": "2022-09-01",
-                    "name": "[concat(parameters('logicappName'), '/ftp')]",
+                    "name": "[concat(parameters('logicAppName'), '/ftp')]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('logicappName'))]"
+                        "[resourceId('Microsoft.Web/sites', parameters('logicAppName'))]"
                     ],
                     "properties": {
                         "allow": false
@@ -783,7 +783,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
+            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '17d1049b-9a84-46fb-8f53-869881c3d3ab')]",
             "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
@@ -798,7 +798,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
+            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
             "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
@@ -813,7 +813,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
+            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
             "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
@@ -828,7 +828,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicappName'), '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
+            "name": "[guid(subscription().id, resourceGroup().id, parameters('logicAppName'), '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]",
             "scope": "[variables('storageScope')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
