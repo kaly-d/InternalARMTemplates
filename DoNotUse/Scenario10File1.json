@@ -13,6 +13,10 @@
             },
             "defaultValue": "vnet"
         },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
+        },
         "logicAppSubnetName": {
             "type": "String",
             "metadata": {
@@ -20,9 +24,25 @@
             },
             "defaultValue": "logicAppSubnet"
         },
+        "logicAppSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
+        },
         "storageSubnetName": {
             "type": "String",
             "defaultValue": "storageSubnet"
+        },
+        "storageSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24"
+        },
+        "vmSubnetName": {
+            "type": "string",
+            "defaultValue": "vmSubnet"
+        },
+        "vmSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.2.0/24"
         },
         "logicappName": {
             "type": "String"
@@ -36,6 +56,51 @@
         "storageAccountName": {
             "type": "String"
         },
+        "vmName": {
+            "type": "string",
+            "defaultValue": "testvm"
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_B2ls_v2"
+        },
+        "vmAdminUsername": {
+            "type": "string"
+        },
+        "vmAdminPassword": {
+            "type": "secureString"
+        },
+        "vmNicName": {
+            "type": "string",
+            "defaultValue": "nic"
+        },
+        "vmNsgName": {
+            "type": "string",
+            "defaultValue": "nsg"
+        },
+        "vmPublicIpName": {
+            "type": "string",
+            "defaultValue": "pip"
+        },
+        "enableBastion": {
+            "type": "Bool",
+            "defaultValue": true
+        },
+        "bastionName": {
+            "type": "String",
+            "defaultValue": "vnet-bastion"
+        },
+        "bastionDnsName": {
+            "type": "String",
+            "defaultValue": "[concat('bastion-', uniqueString(resourceGroup().id, parameters('virtualNetworkName')))]"
+        },
+        "bastionSkuName": {
+            "type": "String",
+            "defaultValue": "Developer",
+            "allowedValues": [
+                "Developer"
+            ]
+        },
         "userAssignedIdentityName": {
             "type": "string",
             "defaultValue": "uami",
@@ -48,6 +113,9 @@
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
         "serverFarmResourceId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "vmSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmSubnetName'))]",
+        "vmNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]",
+        "vmPublicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
         "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
         "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
@@ -63,7 +131,8 @@
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]"
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "vnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
     },
     "resources": [
         {
@@ -91,14 +160,14 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.0.0.0/16"
+                        "[parameters('vnetAddressPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "[parameters('logicAppSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.0.0/24",
+                            "addressPrefix": "[parameters('logicAppSubnetPrefix')]",
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "delegations": [
@@ -114,12 +183,205 @@
                     {
                         "name": "[parameters('storageSubnetName')]",
                         "properties": {
-                            "addressPrefix": "10.0.1.0/24",
+                            "addressPrefix": "[parameters('storageSubnetPrefix')]",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "privateEndpointNetworkPolicies": "Disabled"
                         }
+                    },
+                    {
+                        "name": "[parameters('vmSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('vmSubnetPrefix')]",
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
+                            }
+                        }
                     }
                 ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2024-01-01",
+            "name": "[parameters('vmPublicIpName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2024-01-01",
+            "name": "[parameters('vmNsgName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow-RDP",
+                        "properties": {
+                            "priority": 100,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "[parameters('vmSubnetPrefix')]",
+                            "destinationPortRange": "3389"
+                        }
+                    },
+                    {
+                        "name": "Allow-LogicApp-To-VM",
+                        "properties": {
+                            "priority": 101,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "[parameters('logicAppSubnetPrefix')]",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443"
+                        }
+                    },
+                    {
+                        "name": "Allow-Bastion-To-VM",
+                        "properties": {
+                            "priority": 102,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "168.63.129.16",
+                            "destinationAddressPrefix": "[parameters('vmSubnetPrefix')]",
+                            "destinationPortRanges": [
+                                "22",
+                                "3389"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2024-01-01",
+            "name": "[parameters('vmNicName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('vmSubnetResourceId')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[variables('vmPublicIpResourceId')]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmNsgName'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('vmName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2022-datacenter-azure-edition",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        }
+                    }
+                },
+                "osProfile": {
+                    "computerName": "[parameters('vmName')]",
+                    "adminUsername": "[parameters('vmAdminUsername')]",
+                    "adminPassword": "[parameters('vmAdminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[variables('vmNicResourceId')]"
+                        }
+                    ]
+                },
+                "securityProfile": {
+                    "securityType": "TrustedLaunch",
+                    "uefiSettings": {
+                        "secureBootEnabled": true,
+                        "vTpmEnabled": true
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[parameters('enableBastion')]",
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2025-07-01",
+            "name": "[parameters('bastionName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "sku": {
+                "name": "[parameters('bastionSkuName')]"
+            },
+            "properties": {
+                "dnsName": "[concat(parameters('bastionDnsName'), '.', parameters('location'), '.bastionglobal.azure.com')]",
+                "scaleUnits": 2,
+                "virtualNetwork": {
+                    "id": "[variables('vnetResourceId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2024-03-01",
+            "name": "[concat(parameters('vmName'), '/EnableChangeTracking')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]",
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('serverName'), parameters('databaseName'))]",
+                "[resourceId('Microsoft.Network/privateEndpoints', variables('privateEndpointSqlName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.10",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "commandToExecute": "[concat('powershell -NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=''Stop'';','$serverName=''', parameters('serverName'), ''';','$databaseName=''', parameters('databaseName'), ''';','$uamiClientId=''', reference(variables('uamiResourceId'),'2023-01-31').clientId, ''';','$response=Invoke-RestMethod -Headers @{Metadata=''true''} -Method GET -Uri (''http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://database.windows.net/&client_id='' + $uamiClientId);','$token=$response.access_token;','$conn=New-Object System.Data.SqlClient.SqlConnection;','$conn.ConnectionString=''Server=tcp:'' + $serverName + ''.database.windows.net,1433;Database='' + $databaseName + '';Encrypt=True;TrustServerCertificate=False'';','$conn.AccessToken=$token;','$conn.Open();','$cmd=$conn.CreateCommand();','$cmd.CommandText=''IF NOT EXISTS (SELECT * FROM sys.change_tracking_databases WHERE database_id = DB_ID()) BEGIN ALTER DATABASE CURRENT SET CHANGE_TRACKING = ON (CHANGE_RETENTION = 2 DAYS, AUTO_CLEANUP = ON); END; IF NOT EXISTS (SELECT * FROM sys.change_tracking_tables WHERE object_id = OBJECT_ID(''''[SalesLT].[Customer]'''')) BEGIN ALTER TABLE [SalesLT].[Customer] ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON); END;'';','$cmd.ExecuteNonQuery();','$conn.Close();','Write-Output ''''Change Tracking configured'''';\"')]"
+                }
             }
         },
         {
@@ -411,52 +673,6 @@
                 ]
             }
         },
-{
-  "type": "Microsoft.Compute/virtualMachines/extensions",
-  "apiVersion": "2024-03-01",
-  "name": "[concat(parameters('vmName'), '/EnableChangeTracking')]",
-  "location": "[parameters('location')]",
-  "dependsOn": [
-    "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]",
-    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-    "[resourceId('Microsoft.Sql/servers/databases', parameters('serverName'), parameters('databaseName'))]",
-    "[resourceId('Microsoft.Network/privateEndpoints', variables('privateEndpointSqlName'))]"
-  ],
-  "properties": {
-    "publisher": "Microsoft.Compute",
-    "type": "CustomScriptExtension",
-    "typeHandlerVersion": "1.10",
-    "autoUpgradeMinorVersion": true,
-    "settings": {
-      "commandToExecute": "[concat(
-        'powershell -NoProfile -ExecutionPolicy Bypass -Command \"',
-        '$ErrorActionPreference=''Stop'';',
-
-        '$serverName=''', parameters('serverName'), ''';',
-        '$databaseName=''', parameters('databaseName'), ''';',
-        '$uamiClientId=''', reference(variables('uamiResourceId'),'2023-01-31').clientId, ''';',
-
-        '$uri=''http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://database.windows.net/&client_id='' + $uamiClientId;',
-        '$response=Invoke-RestMethod -Headers @{Metadata=''true''} -Method GET -Uri $uri;',
-        '$token=$response.access_token;',
-
-        '$conn=New-Object System.Data.SqlClient.SqlConnection;',
-        '$conn.ConnectionString=''Server=tcp:'' + $serverName + ''.database.windows.net,1433;Database='' + $databaseName + '';Encrypt=True;TrustServerCertificate=False'';',
-        '$conn.AccessToken=$token;',
-        '$conn.Open();',
-
-        '$cmd=$conn.CreateCommand();',
-        '$cmd.CommandText=''IF NOT EXISTS (SELECT * FROM sys.change_tracking_databases WHERE database_id = DB_ID()) BEGIN ALTER DATABASE CURRENT SET CHANGE_TRACKING = ON (CHANGE_RETENTION = 2 DAYS, AUTO_CLEANUP = ON); END; IF NOT EXISTS (SELECT * FROM sys.change_tracking_tables WHERE object_id = OBJECT_ID(''''[SalesLT].[Customer]'''')) BEGIN ALTER TABLE [SalesLT].[Customer] ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON); END;'';',
-
-        '$cmd.ExecuteNonQuery();',
-        '$conn.Close();',
-
-        'Write-Output ''Change Tracking successfully configured for database '' $databaseName '' and table [SalesLT].[Customer]'';',
-        '\"'
-      )]"
-    }
-  }
-},
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "apiVersion": "2018-11-30",
