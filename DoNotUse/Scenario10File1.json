@@ -46,7 +46,7 @@
         },
         "sqlSubnetName": {
             "type": "string",
-            "defaultValue": "vmSubnet"
+            "defaultValue": "sqlSubnet"
         },
         "sqlSubnetPrefix": {
             "type": "string",
