@@ -26,7 +26,7 @@
             "metadata": {
                 "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
             }
-        },        
+        },
         "virtualNetworkName": {
             "type": "String",
             "metadata": {
@@ -134,15 +134,19 @@
     },
     "variables": {
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
+        "uamiClientId": "[reference(variables('uamiResourceId'), '2023-01-31').clientId]",
+        "uamiPrincipalId": "[reference(variables('uamiResourceId'), '2023-01-31').principalId]",
         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
         "hostingPlanName": "[concat(parameters('logicAppName'), '-asp')]",
         "vmSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmSubnetName'))]",
         "vmNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]",
         "vmPublicIpResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vmPublicIpName'))]",
+        "sqlPrivateEndpointSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('sqlSubnetName'))]",
         "storageScope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
         "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
         "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]",
+        "privateSqlDnsZoneName": "privatelink.database.windows.net",
         "privateStorageFileDnsZoneName": "[concat('privatelink.file.', environment().suffixes.storage)]",
         "privateStorageBlobDnsZoneName": "[concat('privatelink.blob.', environment().suffixes.storage)]",
         "privateStorageQueueDnsZoneName": "[concat('privatelink.queue.', environment().suffixes.storage)]",
@@ -151,10 +155,12 @@
         "privateEndpointBlobStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
         "privateEndpointQueueStorageName": "[concat(parameters('storageAccountName'), '-queue-private-endpoint')]",
         "privateEndpointTableStorageName": "[concat(parameters('storageAccountName'), '-table-private-endpoint')]",
+        "privateEndpointSqlName": "[concat(parameters('sqlServerName'), '-sql-private-endpoint')]",
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDnsZoneName'), '-link')]",
+        "virtualNetworkLinksSuffixSqlName": "[concat(variables('privateSqlDnsZoneName'), '-link')]",
         "vnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
     },
     "resources": [
@@ -176,8 +182,8 @@
                 "administrators": {
                     "administratorType": "ActiveDirectory",
                     "azureADOnlyAuthentication": true,
-                    "login": "[parameters('aadAdminLogin')]",
-                    "sid": "[parameters('aadAdminObjectId')]"
+                    "login": "[parameters('userAssignedIdentityName')]",
+                    "sid": "[variables('uamiPrincipalId')]"
                 }
             }
         },
@@ -504,7 +510,7 @@
                     "id": "[variables('vnetResourceId')]"
                 }
             }
-        },  
+        },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2022-05-01",
