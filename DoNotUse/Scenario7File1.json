@@ -91,7 +91,7 @@
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
-        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDNSZoneName'), '-link')]",
+        "virtualNetworkLinksSuffixTableStorageName": "[concat(variables('privateStorageTableDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixSqlName": "[concat(variables('privateSqlDnsZoneName'), '-link')]"
     },
     "resources": [
