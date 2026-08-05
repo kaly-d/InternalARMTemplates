@@ -15,18 +15,6 @@
         "sqlDatabaseName": {
             "type": "String"
         },
-        "aadAdminLogin": {
-            "type": "String",
-            "metadata": {
-                "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
-            }
-        },
-        "aadAdminObjectId": {
-            "type": "String",
-            "metadata": {
-                "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
-            }
-        },
         "virtualNetworkName": {
             "type": "String",
             "metadata": {
@@ -134,8 +122,6 @@
     },
     "variables": {
         "uamiResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-        "uamiClientId": "[reference(variables('uamiResourceId'), '2023-01-31').clientId]",
-        "uamiPrincipalId": "[reference(variables('uamiResourceId'), '2023-01-31').principalId]",
         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('logicAppSubnetName'))]",
         "hostingPlanName": "[concat(parameters('logicAppName'), '-asp')]",
         "vmSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmSubnetName'))]",
@@ -183,7 +169,7 @@
                     "administratorType": "ActiveDirectory",
                     "azureADOnlyAuthentication": true,
                     "login": "[parameters('userAssignedIdentityName')]",
-                    "sid": "[variables('uamiPrincipalId')]"
+                    "sid": "[reference(variables('uamiResourceId'), '2023-01-31').principalId]"
                 }
             }
         },
