@@ -6,13 +6,13 @@
             "type": "String",
             "defaultValue": "[resourceGroup().location]"
         },
-        "serverName": {
+        "sqlServerName": {
             "type": "String",
             "metadata": {
                 "description": "Name of the Azure SQL Server."
             }
         },
-        "databaseName": {
+        "sqlDatabaseName": {
             "type": "String"
         },
         "aadAdminLogin": {
@@ -87,7 +87,7 @@
         "privateEndpointBlobStorageName": "[concat(parameters('storageAccountName'), '-blob-private-endpoint')]",
         "privateEndpointQueueStorageName": "[concat(parameters('storageAccountName'), '-queue-private-endpoint')]",
         "privateEndpointTableStorageName": "[concat(parameters('storageAccountName'), '-table-private-endpoint')]",
-        "privateEndpointSqlName": "[concat(parameters('serverName'), '-sql-private-endpoint')]",
+        "privateEndpointSqlName": "[concat(parameters('sqlServerName'), '-sql-private-endpoint')]",
         "virtualNetworkLinksSuffixFileStorageName": "[concat(variables('privateStorageFileDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixBlobStorageName": "[concat(variables('privateStorageBlobDnsZoneName'), '-link')]",
         "virtualNetworkLinksSuffixQueueStorageName": "[concat(variables('privateStorageQueueDnsZoneName'), '-link')]",
@@ -98,7 +98,7 @@
         {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2021-11-01",
-            "name": "[parameters('serverName')]",
+            "name": "[parameters('sqlServerName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
@@ -121,10 +121,10 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2022-08-01-preview",
-            "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+            "name": "[concat(parameters('sqlServerName'), '/', parameters('sqlDatabaseName'))]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+                "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
                 "[resourceId('Microsoft.Network/privateEndpoints/privateDnsZoneGroups', variables('privateEndpointSqlName'), 'default')]"
             ],
             "sku": {
@@ -168,7 +168,7 @@
             "name": "[variables('privateEndpointSqlName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
             ],
             "properties": {
                 "subnet": {
@@ -176,9 +176,9 @@
                 },
                 "privateLinkServiceConnections": [
                     {
-                        "name": "[concat(parameters('serverName'), '-sql-private-link-connection')]",
+                        "name": "[concat(parameters('sqlServerName'), '-sql-private-link-connection')]",
                         "properties": {
-                            "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+                            "privateLinkServiceId": "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
                             "groupIds": [
                                 "sqlServer"
                             ]
