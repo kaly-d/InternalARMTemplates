@@ -439,6 +439,12 @@
             "apiVersion": "2024-07-01",
             "name": "[parameters('virtualMachineName')]",
             "location": "[parameters('location')]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[variables('uamiResourceId')]": {}
+                }
+            }
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]"
             ],
