@@ -444,7 +444,7 @@
                 "userAssignedIdentities": {
                     "[variables('uamiResourceId')]": {}
                 }
-            }
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]"
             ],
