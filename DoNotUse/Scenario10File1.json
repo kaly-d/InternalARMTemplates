@@ -905,7 +905,7 @@
                         },
                         {
                             "name": "sql-ServerFQDN",
-                            "value": "[concat('https://', parameters('sqlServerName'), '.database.windows.net')]"
+                            "value": "[concat(parameters('sqlServerName'), '.database.windows.net')]"
                         },
                         {
                             "name": "sql-UAMI_ClientID",
