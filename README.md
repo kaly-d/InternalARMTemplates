@@ -11,7 +11,7 @@
 1. Download the appropriate template .bicep file for your scenario
 2. On the Azure Portal, open the Cloud Shell
 3. Click on _Manage files_ > _Upload_ and select the .bicep file you just downloaded
-4. Run the following commands and replace the bolded fields:
+4. Run the following commands and replace the parameter names:
 
 ```bash
 az account set --subscription SubscriptionNameOrID
