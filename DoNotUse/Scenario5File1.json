@@ -94,7 +94,7 @@
       },
       "properties": {
         "version": "12.0",
-        "publicNetworkAccess": "Disabled",
+        "publicNetworkAccess": "Enabled",
         "minimalTlsVersion": "1.2",
         "administrators": {
           "administratorType": "ActiveDirectory",
@@ -102,6 +102,18 @@
           "login": "[parameters('aadAdminLogin')]",
           "sid": "[parameters('aadAdminObjectId')]"
         }
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/virtualNetworkRules",
+      "apiVersion": "2025-02-01-preview",
+      "name": "[concat(parameters('serverName'), '-', parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName'))]",
+      "dependsOn": [
+          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+      ],
+      "properties": {
+          "virtualNetworkSubnetId": "[variables('subnetResourceId')]",
+          "ignoreMissingVnetServiceEndpoint": false
       }
     },
     {
