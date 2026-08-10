@@ -423,7 +423,7 @@ Below are the templates that are created for various scenarios, categorized by t
 1. Navigate to the SQL Server > Networking.
 2. Whitelist your Client IP on the SQL Firewall
 
-#### Step 4: Assign the User-Identity permissions on the SQL Database
+#### Step 3: Assign the User-Identity permissions on the SQL Database
 
 1. On the SQL Database, go to **Query editor** and run the following commands.
 
@@ -434,14 +434,10 @@ ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
 ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
 ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
 ```
-
-
-
 ```SQL
 ALTER DATABASE [your database name]
 SET CHANGE_TRACKING = ON
 ```
-
 ```SQL
 ALTER TABLE [SalesLT].[Customer]
 ENABLE CHANGE_TRACKING;
