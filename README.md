@@ -1,14 +1,14 @@
-# Quick Guide for Deployment Options
+# ⚡ Quick Guide for Deployment Options
 
 In this repository, there are ARM and Bicep deployment options for some/all template scenarios.
 
-## ARM
+## 📄 ARM
 
 **Option 1**: Directly deploy the template by clicking the Deploy to Azure button
 <br>
 **Option 2**: In the Azure Portal, search for "Deploy a custom template", and paste the desired template file contents in the editor.
 
-## Bicep
+## 💪 Bicep
 
 1. Download the appropriate template .bicep file for your scenario
 2. On the Azure Portal, open the Cloud Shell
@@ -20,7 +20,7 @@ az account set --subscription SubscriptionNameOrID
 az deployment group create --name DeploymentName --resource-group ResourceGroupName --template-file FileName.bicep
 ```
 
-# Template Scenarios
+# 📖 Template Scenarios
 Below are the templates that are created for various scenarios, categorized by the Logic App resource type. Some templates will deploy non-Logic App resources to help with end-to-end testing.
 
 ## Logic App Standard
