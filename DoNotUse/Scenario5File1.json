@@ -74,7 +74,7 @@
     "blobUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net')]",
     "queueUri": "[concat('https://', parameters('storageAccountName'), '.queue.core.windows.net')]",
     "tableUri": "[concat('https://', parameters('storageAccountName'), '.table.core.windows.net')]",
-    "hostingPlanName" : "[concat(parameters('logicAppName), '-asp']"
+    "hostingPlanName" : "[concat(parameters('logicAppName), '-asp')]"
   },
   "resources": [
     {
