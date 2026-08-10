@@ -18,6 +18,18 @@
     "databaseName": {
       "type": "String"
     },
+    "aadAdminLogin": {
+      "type": "String",
+      "metadata": {
+        "description": "Azure AD admin UPN or display name. This is your UPN, like user@example.com"
+      }
+    },
+    "aadAdminObjectId": {
+      "type": "String",
+      "metadata": {
+        "description": "Azure AD admin Object ID (GUID). Navigate to Azure Portal > Users > [Your ID] > and copy the Object ID"
+      }
+    },
     "virtualNetworkName": {
       "type": "String",
       "metadata": {
@@ -83,8 +95,8 @@
         "administrators": {
           "administratorType": "ActiveDirectory",
           "azureADOnlyAuthentication": true,
-          "login": "[parameters('userAssignedIdentityName')]",
-          "sid": "[reference(variables('uamiResourceId'), '2023-01-31').principalId]"
+          "login": "[parameters('aadAdminLogin')]",
+          "sid": "[parameters('aadAdminObjectId')]"
         }
       }
     },
