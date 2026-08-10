@@ -390,6 +390,72 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
+### Scenario 11: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+
+| Deployment File | Quick Deploy |
+| :-------------: | :-------------: |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario7File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario7File1.json)  |
+
+
+<details>
+  <summary>What this does/deploys</summary>
+
+  - Virtual Network + Subnet
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (and whitelists subnets via selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - SQL (and whitelists subnets via selected networks to VNET/Subnet)
+  - SQL Database (Pre-configured data)
+
+</details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+#### Step 1: Deploy the above template
+
+#### Step 2: Finish setting up the SQL server
+
+1. Navigate to the SQL Server > Networking.
+2. Whitelist your Client IP on the SQL Firewall
+
+#### Step 4: Assign the User-Identity permissions on the SQL Database
+
+1. On the SQL Database, go to **Query editor** and run the following commands.
+
+```SQL
+CREATE USER [your Service Principal Name] 
+FROM EXTERNAL PROVIDER; 
+ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
+```
+
+
+
+```SQL
+ALTER DATABASE [your database name]
+SET CHANGE_TRACKING = ON
+```
+
+```SQL
+ALTER TABLE [SalesLT].[Customer]
+ENABLE CHANGE_TRACKING;
+```
+
+#### Step 4: Finish setting up the Logic App and deploying the workflows for end-to-end testing
+1. On this GitHub repository, navigate to the **Workflows** folder.
+2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
+3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively.
+
+</details>
+
+***
+
 ## Logic App Consumption
 
 ### Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
