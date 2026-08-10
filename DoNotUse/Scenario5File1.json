@@ -189,7 +189,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2022-05-01",
-      "name": "[toLower(concat(parameters('logicAppName'), parameters('storageAccountName')))]"
+      "name": "[toLower(concat(parameters('logicAppName'), parameters('storageAccountName')))]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
