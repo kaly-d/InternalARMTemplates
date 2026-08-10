@@ -1,5 +1,7 @@
 # Quick Guide for Deployment Options
 
+In this repository, there are ARM and Bicep deployment options for some/all template scenarios.
+
 ## ARM
 
 **Option 1**: Directly deploy the template by clicking the Deploy to Azure button
