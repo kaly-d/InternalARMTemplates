@@ -391,7 +391,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-### Scenario 11: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
+### Scenario 11: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a SQL Server with Public Access set to Selected networks and IPs
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
