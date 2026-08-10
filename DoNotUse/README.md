@@ -14,6 +14,8 @@
   - SQL Database (Pre-configured data)
 
 
+Whitelist your Client IP on the SQL Firewall
+
 CREATE USER [your Service Principal Name] 
 <br>
 FROM EXTERNAL PROVIDER; 
@@ -33,6 +35,9 @@ SET CHANGE_TRACKING = ON
 ALTER TABLE [dbo].[your table name]
 <br>
 ENABLE CHANGE_TRACKING;
+
+
+Deploy the sqlWorkflows.zip file
 
 ***
 
