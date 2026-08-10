@@ -120,8 +120,7 @@
       "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-        "[resourceId('Microsoft.Network/privateEndpoints/privateDnsZoneGroups', variables('privateEndpointSqlName'), 'default')]"
+        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
       ],
       "sku": {
         "name": "S0",
