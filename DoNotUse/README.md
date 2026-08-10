@@ -6,21 +6,32 @@
   - Virtual Network + Subnet
   - User-Assigned Managed Identity
   - App Service Plan (WS1 SKU)
-  - Storage Account (Selected networks to VNET/Subnet)
+  - Storage Account (and whitelists subnets via selected networks to VNET/Subnet)
   - [Grant UAMI permissions on Storage]
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
-  - 
+  - SQL (and whitelists subnets via selected networks to VNET/Subnet)
+  - SQL Database (Pre-configured data)
+
 
 CREATE USER [your Service Principal Name] 
+<br>
 FROM EXTERNAL PROVIDER; 
+<br>
 ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
+<br>
 ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
+<br>
+ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
 
+<br>
 ALTER DATABASE [your database name]
+<br>
 SET CHANGE_TRACKING = ON
 
+<br>
 ALTER TABLE [dbo].[your table name]
+<br>
 ENABLE CHANGE_TRACKING;
 
 ***
