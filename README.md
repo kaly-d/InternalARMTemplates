@@ -13,9 +13,10 @@
 3. Click on _Manage files_ > _Upload_ and select the .bicep file you just downloaded
 4. Run the following commands and replace the bolded fields:
 
-_az account set --subscription **SubscriptionNameOrID**_
-<br>
-_az deployment group create --name **DeploymentName** --resource-group **ResourceGroupName** --template-file **FileName**.bicep_
+```bash
+az account set --subscription SubscriptionNameOrID
+az deployment group create --name DeploymentName --resource-group ResourceGroupName --template-file FileName.bicep
+```
 
 # Template Scenarios
 Below are the templates that are created for various scenarios, categorized by the Logic App resource type. Some templates will deploy non-Logic App resources to help with end-to-end testing.
