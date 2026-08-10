@@ -9,13 +9,13 @@
         "description": "Some regions have capacity restrictions; try a few different ones if one fails"
       }
     },
-    "serverName": {
+    "sqlServerName": {
       "type": "String",
       "metadata": {
         "description": "Name of the Azure SQL Server."
       }
     },
-    "databaseName": {
+    "sqlDatabaseName": {
       "type": "String"
     },
     "aadAdminLogin": {
@@ -80,7 +80,7 @@
     {
       "type": "Microsoft.Sql/servers",
       "apiVersion": "2021-11-01",
-      "name": "[parameters('serverName')]",
+      "name": "[parameters('sqlServerName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
@@ -103,9 +103,9 @@
     {
       "type": "Microsoft.Sql/servers/virtualNetworkRules",
       "apiVersion": "2025-02-01-preview",
-      "name": "[concat(parameters('serverName'), '/rule')]",
+      "name": "[concat(parameters('sqlServerName'), '/rule')]",
       "dependsOn": [
-          "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
+          "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
           "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
       ],
       "properties": {
@@ -116,10 +116,10 @@
     {
       "type": "Microsoft.Sql/servers/databases",
       "apiVersion": "2022-08-01-preview",
-      "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+      "name": "[concat(parameters('sqlServerName'), '/', parameters('sqlDatabaseName'))]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+        "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
       ],
       "sku": {
         "name": "S0",
@@ -299,6 +299,18 @@
             {
               "name": "FUNCTIONS_INPROC_NET8_ENABLED",
               "value": 1
+            },
+            {
+                "name": "sql-DatabaseName",
+                "value": "[parameters('sqlDatabaseName')]"                       
+            },
+            {
+                "name": "sql-ServerFQDN",
+                "value": "[concat(parameters('sqlServerName'), '.database.windows.net')]"
+            },
+            {
+                "name": "sql-UAMI_ClientID",
+                "value": "[reference(variables('uamiResourceId'), '2023-01-31').clientId]"
             },
             {
               "name": "LOGIC_APPS_POWERSHELL_VERSION",
