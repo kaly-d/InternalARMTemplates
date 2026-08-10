@@ -23,7 +23,7 @@ az deployment group create --name DeploymentName --resource-group ResourceGroupN
 # 📖 Template Scenarios
 Below are the templates that are created for various scenarios, categorized by the Logic App resource type. Some templates will deploy non-Logic App resources to help with end-to-end testing.
 
-## Logic App Standard
+## ① Logic App Standard
 
 ### Scenario 1: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity
 
@@ -455,7 +455,7 @@ ENABLE CHANGE_TRACKING;
 
 ***
 
-## Logic App Consumption
+## ② Logic App Consumption
 
 ### Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
 
