@@ -106,7 +106,7 @@
       "name": "[concat(parameters('virtualNetworkName'), '-', parameters('logicAppSubnetName'), '/rule')]",
       "dependsOn": [
           "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-          "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]
+          "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
       ],
       "properties": {
           "virtualNetworkSubnetId": "[variables('logicAppSubnetResourceId')]",
