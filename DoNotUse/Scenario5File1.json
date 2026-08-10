@@ -56,7 +56,8 @@
       "type": "String"
     },
     "storageAccountName": {
-      "type": "String"
+      "type": "String",
+      "defaultValue": "[substring(replace(newGuid(), '-', ''), 0, 8)]"
     },
     "userAssignedIdentityName": {
       "type": "string",
@@ -188,7 +189,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2022-05-01",
-      "name": "[parameters('storageAccountName')]",
+      "name": "[toLower(concat(parameters('logicAppName'), parameters('storageAccountName')))]"
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
