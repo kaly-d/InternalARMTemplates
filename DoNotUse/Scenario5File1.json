@@ -34,7 +34,7 @@
       "metadata": {
         "description": "This will the subnet that is connected to the Logic App's Outbound VNET configuration"
       },
-      "defaultValue": "subnet"
+      "defaultValue": "logicAppSubnet"
     },
     "logicAppSubnetPrefix": {
       "type": "string",
