@@ -58,3 +58,64 @@ ENABLE CHANGE_TRACKING;
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FDoNotUse%2FScenario10File1.json)
 
 **Step 1:** Deploy the above template
+
+
+
+***
+
+### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
+🧱
+
+| Deployment File | Quick Deploy | What this Deploys |
+| :-------------: | :-------------: | :-------------: |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario2File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario2File1.json)  | <details>
+  <summary>What this does/deploys</summary>
+  - Virtual Network + Subnet
+  - User-Assigned Managed Identity
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Selected networks to VNET/Subnet)
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - NAT Gateway
+  - [Associates NAT Gateway with VNET/Subnet]
+  - Deploy a Public IP
+  - [Associates NAT Gateway with Public IP]
+  - Deploy a Public IP Prefix
+  - [Associates NAT Gateway with Public IP Prefix]
+</details> |
+
+
+<table>
+  <tr>
+    <th>Deployment File</th>
+    <th>Quick Deploy</th>
+    <th>What this Deploys</th>
+  </tr>
+  <tr>
+    <td> <a href="https://github.com/kaly-d/InternalARMTemplates/blob/main/ARMApp%20Standard/Scenario2File1.json"> ARM</a> </td>
+    <td> <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%25202FScenario2File1.json)">
+      <img src="https://aka.ms/deploytoazurebutton">
+    </a>
+    </td>
+    <td>
+      <details>
+        <summary>What this does/deploys</summary>
+          <br>- Virtual Network + Subnet
+          <br>- User-Assigned Managed Identity
+          <br>- App Service Plan (WS1 SKU)
+          <br>- Storage Account (Selected networks to VNET/Subnet)
+          <br>- [Grant UAMI permissions on Storage]
+          <br>- Logic App Standard (hosted on WS1)
+          <br>- [Associates Logic App Standard with VNET/subnet]
+          <br>- NAT Gateway
+          <br>- [Associates NAT Gateway with VNET/Subnet]
+          <br>- Deploy a Public IP
+          <br>- [Associates NAT Gateway with Public IP]
+          <br>- Deploy a Public IP Prefix
+          <br>- [Associates NAT Gateway with Public IP Prefix]
+      </details>
+    </td>
+  </tr>
+</table>
+
