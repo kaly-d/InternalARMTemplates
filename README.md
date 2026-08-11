@@ -55,7 +55,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
-🧱
+🧱 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -105,7 +105,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
-🧱
+🧱 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -147,7 +147,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
-🧱 | 🔒
+🧱 | 🔒 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -242,7 +242,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
-🔒
+🔒 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -319,7 +319,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App
-🔒
+🔒 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -363,7 +363,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 10: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App (⚠️ with Auto-Shutdown feature)
-🔒
+🔒 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -408,7 +408,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 11: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a SQL Server with Public Access set to Selected networks and IPs
-🧱
+🧱 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -476,7 +476,7 @@ ENABLE CHANGE_TRACKING;
 ***
 
 ### Scenario 12: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows SQL VM and Private Endpoint-enabled SQL Server/Database
-🔒
+🔒 | 📦
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
