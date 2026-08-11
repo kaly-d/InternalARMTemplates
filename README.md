@@ -434,7 +434,7 @@ Below are the templates that are created for various scenarios, categorized by t
 1. Navigate to the SQL Server > Networking.
 2. Whitelist your Client IP on the SQL Firewall
 
-#### Step 3: Assign the User-Identity permissions on the SQL Database
+#### Step 3: Assign the User-Identity permissions on the SQL Database and enable Change Tracking for the Database and Table
 
 1. On the SQL Database, go to **Query editor** and run the following commands.
 
@@ -502,36 +502,7 @@ ENABLE CHANGE_TRACKING;
 
 #### Step 1: Deploy the above template
 
-#### Step 2: Finish setting up the SQL server
-
-1. Navigate to the SQL Server > Networking.
-2. Whitelist your Client IP on the SQL Firewall
-
-#### Step 3: Assign the User-Identity permissions on the SQL Database
-
-1. On the SQL Database, go to **Query editor** and run the following commands.
-
-```SQL
-CREATE USER [your Service Principal Name] 
-FROM EXTERNAL PROVIDER; 
-ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
-ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
-ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
-```
-
-🔗 See here for a list of database roles: [Database Roles](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles)
-
-
-```SQL
-ALTER DATABASE [your database name]
-SET CHANGE_TRACKING = ON
-```
-```SQL
-ALTER TABLE [SalesLT].[Customer]
-ENABLE CHANGE_TRACKING;
-```
-
-#### Step 4: Finish setting up the Logic App and deploying the workflows for end-to-end testing
+#### Step 2: Finish setting up the Logic App and deploying the workflows for end-to-end testing
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
