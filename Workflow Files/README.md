@@ -18,6 +18,8 @@ This corresponds to the workflows required to complete the end-to-end set up for
 3. Click on _Manage files_ > _Upload_ and select the zip file you just downloaded
 4. Run the following commands and replace the bolded fields:
 
-_az account set --subscription **Subscription Name or ID**_
+```bash
+az account set --subscription SUBSCRIPTION-NAME-OR-ID
+az webapp deploy --resource-group RESOURCE-GROUP --name LOGIC-APP-NAME --src-path FILENAME.zip --type=zip --clean false
+```
 
-_az webapp deploy --resource-group **ResourceGroupName** --name **LogicAppName** --src-path **FileName**.zip --type=zip --clean false_
