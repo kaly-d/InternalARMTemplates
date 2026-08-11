@@ -63,28 +63,6 @@ ENABLE CHANGE_TRACKING;
 
 ***
 
-### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
-🧱
-
-| Deployment File | Quick Deploy | What this Deploys |
-| :-------------: | :-------------: | :-------------: |
-| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario2File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario2File1.json)  | <details>
-  <summary>What this does/deploys</summary>
-  - Virtual Network + Subnet
-  - User-Assigned Managed Identity
-  - App Service Plan (WS1 SKU)
-  - Storage Account (Selected networks to VNET/Subnet)
-  - [Grant UAMI permissions on Storage]
-  - Logic App Standard (hosted on WS1)
-  - [Associates Logic App Standard with VNET/subnet]
-  - NAT Gateway
-  - [Associates NAT Gateway with VNET/Subnet]
-  - Deploy a Public IP
-  - [Associates NAT Gateway with Public IP]
-  - Deploy a Public IP Prefix
-  - [Associates NAT Gateway with Public IP Prefix]
-</details> |
-
 
 <table>
   <tr>
