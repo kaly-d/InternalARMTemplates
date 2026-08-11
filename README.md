@@ -1,8 +1,8 @@
 # ☰ Table of Contents
 
 - What's in this Repository?
-- Quick Guide for Deployment Options by Language
-- Template Scenarios
+- [Quick Guide for Deployment Options by Language](#-quick-guide-for-deployment-language-options)
+- [Template Scenarios](#-template-scenarios)
 
 # ⚡ Quick Guide for Deployment Options by Language
 
