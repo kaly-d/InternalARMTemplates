@@ -419,7 +419,7 @@ Below are the templates that are created for various scenarios, categorized by t
   - [Grant UAMI permissions on Storage]
   - Logic App Standard (hosted on WS1)
   - [Associates Logic App Standard with VNET/subnet]
-  - SQL (and whitelists subnets via selected networks to VNET/Subnet)
+  - SQL Server (and whitelists subnets via selected networks to VNET/Subnet)
   - SQL Database (Pre-configured data)
 
 </details>
@@ -468,6 +468,78 @@ ENABLE CHANGE_TRACKING;
 
 ***
 
+### Scenario 12: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows SQL VM and Private Endpoint-enabled SQL Server/Database
+🔒
+
+| Deployment File | Quick Deploy |
+| :-------------: | :-------------: |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/Logic%20App%20Standard/Scenario12File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FLogic%2520App%2520Standard%2FScenario12File1.json)  |
+
+
+<details>
+  <summary>What this does/deploys</summary>
+
+  - Virtual Network + 4 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine, 1 for SQL)
+  - User-Assigned Managed Identity
+  - Windows Virtual Machine, with Networking-related components (NSG, NIC, Public IP)
+  - Azure Bastion (for connecting to Virtual Machine within Azure Portal)
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+  - SQL Server (with Private Endpoint-related components)
+  - SQL Database (Pre-configured data)
+
+</details>
+
+<details>
+  <summary>View detailed steps here</summary>
+
+#### Step 1: Deploy the above template
+
+#### Step 2: Finish setting up the SQL server
+
+1. Navigate to the SQL Server > Networking.
+2. Whitelist your Client IP on the SQL Firewall
+
+#### Step 3: Assign the User-Identity permissions on the SQL Database
+
+1. On the SQL Database, go to **Query editor** and run the following commands.
+
+```SQL
+CREATE USER [your Service Principal Name] 
+FROM EXTERNAL PROVIDER; 
+ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
+```
+
+🔗 See here for a list of database roles: [Database Roles](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles)
+
+
+```SQL
+ALTER DATABASE [your database name]
+SET CHANGE_TRACKING = ON
+```
+```SQL
+ALTER TABLE [SalesLT].[Customer]
+ENABLE CHANGE_TRACKING;
+```
+
+#### Step 4: Finish setting up the Logic App and deploying the workflows for end-to-end testing
+1. On this GitHub repository, navigate to the **Workflows** folder.
+2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
+3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively.
+
+</details>
+
+***
 ## ② Logic App Consumption
 
 ### Scenario 1: Logic App Consumption connected to a Logic App Custom Connector
