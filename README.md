@@ -16,8 +16,8 @@ In this repository, there are ARM and Bicep deployment options for some/all temp
 4. Run the following commands and replace the parameter names:
 
 ```bash
-az account set --subscription SUBSCRIPTIONNAMEORID
-az deployment group create --name DEPLOYMENTNAME --resource-group RESOURCEGROUPNAME --template-file FILENAME.bicep
+az account set --subscription SUBSCRIPTION-NAME-OR-ID
+az deployment group create --name DEPLOYMENT-NAME --resource-group RESOURCE-GROUP-NAME --template-file FILE-NAME.bicep
 ```
 
 # 📖 Template Scenarios
