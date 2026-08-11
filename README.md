@@ -445,6 +445,10 @@ ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
 ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
 ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
 ```
+
+🔗 See here for a list of database roles: [Database Roles](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles)
+
+
 ```SQL
 ALTER DATABASE [your database name]
 SET CHANGE_TRACKING = ON
