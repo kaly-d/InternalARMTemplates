@@ -1,3 +1,9 @@
+# ☰ Table of Contents
+
+- What's in this Repository?
+- Quick Guide for Deployment Language Options
+- Template Scenarios
+
 # ⚡ Quick Guide for Deployment Language Options
 
 In this repository, there are ARM and Bicep deployment options for some/all template scenarios.
