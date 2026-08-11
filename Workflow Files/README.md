@@ -20,6 +20,6 @@ This corresponds to the workflows required to complete the end-to-end set up for
 
 ```bash
 az account set --subscription SUBSCRIPTION-NAME-OR-ID
-az webapp deploy --resource-group RESOURCE-GROUP-NAME --name LOGIC-APP-NAME --src-path FILENAME.zip --type=zip --clean false
+az webapp deploy --resource-group RESOURCE-GROUP-NAME --name LOGIC-APP-NAME --src-path FILE-NAME.zip --type=zip --clean false
 ```
 
