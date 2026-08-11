@@ -16,8 +16,8 @@ In this repository, there are ARM and Bicep deployment options for some/all temp
 4. Run the following commands and replace the parameter names:
 
 ```bash
-az account set --subscription SubscriptionNameOrID
-az deployment group create --name DeploymentName --resource-group ResourceGroupName --template-file FileName.bicep
+az account set --subscription SUBSCRIPTIONNAMEORID
+az deployment group create --name DEPLOYMENTNAME --resource-group RESOURCEGROUPNAME --template-file FILENAME.bicep
 ```
 
 # 📖 Template Scenarios
@@ -439,18 +439,19 @@ Below are the templates that are created for various scenarios, categorized by t
 1. On the SQL Database, go to **Query editor** and run the following commands.
 
 ```SQL
-CREATE USER [your Service Principal Name] 
+CREATE USER [YOUR-SERVICE-PRINCIPAL-NAME] 
 FROM EXTERNAL PROVIDER; 
-ALTER ROLE db_datareader ADD MEMBER [your Service Principal Name];
-ALTER ROLE db_datawriter ADD MEMBER [your Service Principal Name];
-ALTER ROLE db_owner ADD MEMBER [your Service Principal Name];
+ALTER ROLE db_datareader ADD MEMBER [YOUR-SERVICE-PRINCIPAL-NAME];
+ALTER ROLE db_datawriter ADD MEMBER [YOUR-SERVICE-PRINCIPAL-NAME];
+ALTER ROLE db_owner ADD MEMBER [YOUR-SERVICE-PRINCIPAL-NAME];
 ```
 
 🔗 See here for a list of database roles: [Database Roles](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver17#fixed-database-roles)
 
+2. Run the following commands to enable tracking on the database and the table. In this lab, the SQL table is pre-defined since the database is pre-populated. 
 
 ```SQL
-ALTER DATABASE [your database name]
+ALTER DATABASE [YOUR-DATABASE-NAME]
 SET CHANGE_TRACKING = ON
 ```
 ```SQL
@@ -462,7 +463,7 @@ ENABLE CHANGE_TRACKING;
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively.
+4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively. The table and row information is also pre-configured in the workflows, so no additional edits to the workflows are required.
 
 </details>
 
