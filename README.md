@@ -2,7 +2,7 @@
 
 - [What's In This Repository?](#-whats-in-this-repository)
 - [Quick Guide for Deployment Options by Language](#-quick-guide-for-deployment-options-by-language)
-- [Template Scenarios](#-template-scenarios)
+- **[Template Scenarios](#-template-scenarios)**
 
 # 📦 What's In This Repository?
 
