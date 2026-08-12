@@ -19,8 +19,8 @@
 │   ├── 📄 Scenario1File1.bicep
 │   └── 📄 ...
 📁 Workflow Files
-├── 📦 Workflows_n_.zip
-└── 📦 _scenario_Workflows.zip
+├── 📦 WorkflowsN.zip
+└── 📦 scenarioWorkflows.zip
 └── 📄 README.md
 ```
 
