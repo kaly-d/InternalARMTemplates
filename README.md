@@ -10,14 +10,14 @@
 📁 ARM
 ├── 📁 Logic App Standard
 │   ├── 📄 Scenario1File1.json
-│   └── 📄 Scenario_n_File_n_.json
+│   └── 📄 ...
 ├── 📁 Logic App Consumption
 │   ├── 📄 Scenario1File1.json
-│   └── 📄 Scenario_n_File_n_.json
+│   └── 📄 ...
 📁 Bicep
 ├── 📁 Logic App Standard
 │   ├── 📄 Scenario1File1.bicep
-│   └── 📄 Scenario_n_File_n_.bicep
+│   └── 📄 ...
 └── 📁 Workflow Files
 |   ├── 📦 Workflows_n_.zip
 |   ├── 📦 _scenario_Workflows.zip
