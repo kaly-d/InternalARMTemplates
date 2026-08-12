@@ -1,6 +1,10 @@
 **About**
 
-This is a Workflow Zip Repository, with multiple zip folders, containing pre-templatized workflow artifacts zip files. This mimics the wwwroot directory in your Logic App Standard project's directory: **site/wwwroot**. The below CLI commands will deploy only add or replace the files in the zip folder on your Logic App's directory. Any file that is _not_ in the zip folder will remain as is. This is controlled by the _--clean false_ parameter. 
+This is a Workflow Zip Repository, with multiple zip folders, containing pre-templatized workflow artifacts zip files. This mimics the wwwroot directory in your Logic App Standard project's directory: **site/wwwroot**. 
+
+As a general note, the below CLI commands will only add (or replace files with the same name) the files in the zip folder on your Logic App's directory. Any file that is _not_ in the zip folder will remain as is. This is controlled by the _--clean false_ parameter. 
+
+(Since the Logic App resource is getting created as part of this lab, the Logic App will not have any pre-existing files at the time of running this command.)
 
 **Type of Zip files**
 1. Workflow**N**.zip
