@@ -201,7 +201,8 @@ Below are the templates that are created for various scenarios, categorized by t
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **servicebusWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
+
+☑️ Once the workflows have been deployed, test your workflows which will send a message and trigger on a message respectively.
 
 </details>
 
