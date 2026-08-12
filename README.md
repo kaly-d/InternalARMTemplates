@@ -1,6 +1,6 @@
 # ☰ Table of Contents
 
-- What's In This Repository?
+- [What's In This Repository?](#-whats-in-this-repository)
 - [Quick Guide for Deployment Options by Language](#-quick-guide-for-deployment-language-options)
 - [Template Scenarios](#-template-scenarios)
 
