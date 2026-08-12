@@ -20,7 +20,7 @@
 │   └── 📄 ...
 📁 Workflow Files
 ├── 📦 WorkflowsN.zip
-└── 📦 scenarioWorkflows.zip
+├── 📦 scenarioWorkflows.zip
 └── 📄 README.md
 ```
 
