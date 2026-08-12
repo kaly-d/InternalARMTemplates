@@ -118,7 +118,8 @@ Below are the templates that are created for various scenarios, categorized by t
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **natgatewayWorkflows.zip** file. This contains the workflow zip for this .
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will send a message to the endpoint URL, and review the IP address used in the request belongs to the IP Prefix associated with the NAT Gateway 
+
+☑️ Once the workflows have been deployed, test your workflows which will send a message to the endpoint URL, and review the IP address used in the request belongs to the IP Prefix associated with the NAT Gateway 
 
 </details>
 
@@ -160,7 +161,8 @@ Below are the templates that are created for various scenarios, categorized by t
 2. On this GitHub repository, navigate to the **Workflows** folder.
 3. Download the **sftpWorkflows.zip** file. This contains the workflow zip for this scenario.
 4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
+
+☑️ Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
 
 </details>
 
@@ -302,7 +304,8 @@ Below are the templates that are created for various scenarios, categorized by t
 2. On this GitHub repository, navigate to the **Workflows** folder.
 3. Download the **sftpWorkflows.zip** file. This contains the workflow zip for this scenario.
 4. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-5. Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
+
+☑️ Once the workflows have been deployed, test your workflows which will create and trigger on a file respectively.
 
 </details>
 
@@ -375,7 +378,8 @@ Below are the templates that are created for various scenarios, categorized by t
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will list the file in the file share.
+
+☑️ Once the workflows have been deployed, test your workflows which will list the file in the file share.
 
 </details>
 
@@ -420,7 +424,8 @@ Below are the templates that are created for various scenarios, categorized by t
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **fileshareWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will list the file in the file share.
+
+☑️ Once the workflows have been deployed, test your workflows which will list the file in the file share.
 
 </details>
 
@@ -489,7 +494,8 @@ ENABLE CHANGE_TRACKING;
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively. The table and row information is also pre-configured in the workflows, so no additional edits to the workflows are required.
+
+☑️ Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively. The table and row information is also pre-configured in the workflows, so no additional edits to the workflows are required.
 
 </details>
 
@@ -533,7 +539,8 @@ ENABLE CHANGE_TRACKING;
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **sqlWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
-4. Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively.
+
+☑️ Once the workflows have been deployed, test your workflows which will create and trigger on a SQL Database row respectively.
 
 </details>
 
@@ -567,6 +574,8 @@ ENABLE CHANGE_TRACKING;
 #### Step 2: Deploy the above template
 
 ⚠️ In the **basePath** parameter, replace the basePath with the value you stored from Step 1.
+
+☑️ Your Logic App is ready for testing/running
 
 </details>
 
