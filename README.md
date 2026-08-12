@@ -102,7 +102,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Generate unique URL
 
@@ -146,7 +146,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -190,7 +190,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -288,7 +288,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -367,7 +367,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -412,7 +412,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -451,7 +451,7 @@ Below are the templates that are created for various scenarios, categorized by t
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -525,7 +525,7 @@ ENABLE CHANGE_TRACKING;
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
 
 #### Step 1: Deploy the above template
 
@@ -557,7 +557,7 @@ ENABLE CHANGE_TRACKING;
 </details>
 
 <details>
-  <summary>📚 See Deployment Instructions</summary>
+  <summary>📚 See Additional Deployment Instructions</summary>
   
 #### Step 1: Generate unique URL
 1. Navigate to this URL to generate a custom endpoint **webhook.site**
