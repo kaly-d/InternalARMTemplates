@@ -18,10 +18,10 @@
 ├── 📁 Logic App Standard
 │   ├── 📄 Scenario1File1.bicep
 │   └── 📄 ...
-└── 📁 Workflow Files
-|   ├── 📦 Workflows_n_.zip
-|   ├── 📦 _scenario_Workflows.zip
-│   └── 📄 README.md
+📁 Workflow Files
+├── 📦 Workflows_n_.zip
+└── 📦 _scenario_Workflows.zip
+└── 📄 README.md
 ```
 
 # ⚡ Quick Guide for Deployment Options by Language
