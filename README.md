@@ -1,8 +1,28 @@
 # ☰ Table of Contents
 
-- What's in this Repository?
+- What's In This Repository?
 - [Quick Guide for Deployment Options by Language](#-quick-guide-for-deployment-language-options)
 - [Template Scenarios](#-template-scenarios)
+
+# 📦 What's In This Repository?
+
+```text
+📁 ARM
+├── 📁 Logic App Standard
+│   ├── 📄 Scenario1File1.json
+│   └── 📄 Scenario_n_File_n_.json
+├── 📁 Logic App Consumption
+│   ├── 📄 Scenario1File1.json
+│   └── 📄 Scenario_n_File_n_.json
+📁 Bicep
+├── 📁 Logic App Standard
+│   ├── 📄 Scenario1File1.bicep
+│   └── 📄 Scenario_n_File_n_.bicep
+└── 📁 Workflow Files
+|   ├── 📦 Workflows_n_.zip
+|   ├── 📦 _scenario_Workflows.zip
+│   └── 📄 README.md
+```
 
 # ⚡ Quick Guide for Deployment Options by Language
 
@@ -55,7 +75,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 2: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a NAT Gateway, Public IP, and Public IP Prefix
-🧱 | 📦
+🧱 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -96,7 +116,7 @@ Below are the templates that are created for various scenarios, categorized by t
 #### Step 3: Finish setting up the Logic App
 
 1. On this GitHub repository, navigate to the **Workflows** folder.
-2. Download the **natgatewayWorkflows.zip** file. This contains the workflow zip for this scenario.
+2. Download the **natgatewayWorkflows.zip** file. This contains the workflow zip for this .
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 4. Once the workflows have been deployed, test your workflows which will send a message to the endpoint URL, and review the IP address used in the request belongs to the IP Prefix associated with the NAT Gateway 
 
@@ -105,7 +125,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 3: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
-🧱 | 📦
+🧱 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -147,7 +167,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 4: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
-🧱 | 🔒 | 📦
+🧱 | 🔒 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -242,7 +262,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 7: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with an SFTP-enabled Storage Account
-🔒 | 📦
+🔒 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -319,7 +339,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App
-🔒 | 📦
+🔒 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -363,7 +383,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 10: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM, and File Share mounted/integrated with Logic App (⚠️ with Auto-Shutdown feature)
-🔒 | 📦
+🔒 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -408,7 +428,7 @@ Below are the templates that are created for various scenarios, categorized by t
 ***
 
 ### Scenario 11: Logic App Standard hosted on VNET-enabled Storage Account with User-Assigned Managed Identity, integrated with a SQL Server with Public Access set to Selected networks and IPs
-🧱 | 📦
+🧱 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
@@ -476,7 +496,7 @@ ENABLE CHANGE_TRACKING;
 ***
 
 ### Scenario 12: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows SQL VM and Private Endpoint-enabled SQL Server/Database
-🔒 | 📦
+🔒 | 🗂️
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
