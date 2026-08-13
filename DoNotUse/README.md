@@ -38,3 +38,12 @@
   </tr>
 </table>
 
+# Scenario 2: Logic App Consumption with HTTP Trigger
+
+az account set --subscription "<subscription-name-or-id>"
+terraform init
+terraform validate
+terraform plan -out=tfplan
+> Enter the parameter names here
+terraform apply "tfplan"
+
