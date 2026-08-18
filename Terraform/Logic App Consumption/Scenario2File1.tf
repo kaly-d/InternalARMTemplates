@@ -56,7 +56,7 @@ resource "azurerm_logic_app_workflow" "logicapp" {
 }
 
 resource "azurerm_logic_app_trigger_http_request" "example" {
-  name         = "some-http-trigger123"
+  name         = "some-http-trigger"
   logic_app_id = azurerm_logic_app_workflow.logicapp.id
 
   schema = <<SCHEMA
