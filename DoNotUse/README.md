@@ -40,21 +40,15 @@
 
 # Scenario 2: Logic App Consumption with HTTP Trigger
 
-az account set --subscription "<subscription-name-or-id>"
-
-```terraform
+```bash
+az account set --subscription SUBSCRIPTION-NAME-OR-ID
 terraform init
-```
-
-```terraform
 terraform validate
-```
-
-```terraform
 terraform plan -out=tfplan
 ```
+
 Enter the parameter names here when prompted.
 
-```terraform
+```bash
 terraform apply "tfplan"
 ```
