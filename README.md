@@ -26,7 +26,7 @@
 
 # ⚡ Quick Guide for Deployment Options by Language
 
-In this repository, there are ARM and Bicep deployment options for some/all template scenarios.
+In this repository, there are ARM, Terraform, and Bicep deployment options for some/all template scenarios.
 
 ## 📄 ARM
 
@@ -44,6 +44,25 @@ In this repository, there are ARM and Bicep deployment options for some/all temp
 ```bash
 az account set --subscription SUBSCRIPTION-NAME-OR-ID
 az deployment group create --name DEPLOYMENT-NAME --resource-group RESOURCE-GROUP-NAME --template-file FILE-NAME.bicep
+```
+##  Terraform
+
+1. Download the appropriate template .tf file for your scenario
+2. On the Azure Portal, open the Cloud Shell
+3. Click on _Manage files_ > _Upload_ and select the .tf file you just downloaded
+4. Run the following commands and replace the parameter names:
+
+```bash
+az account set --subscription SUBSCRIPTION-NAME-OR-ID
+terraform init
+terraform validate
+terraform plan -out=tfplan
+```
+
+Enter the parameter names here when prompted.
+
+```bash
+terraform apply "tfplan"
 ```
 
 # 📖 Template Scenarios
