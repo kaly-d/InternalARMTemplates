@@ -45,7 +45,7 @@ In this repository, there are ARM, Terraform, and Bicep deployment options for s
 az account set --subscription SUBSCRIPTION-NAME-OR-ID
 az deployment group create --name DEPLOYMENT-NAME --resource-group RESOURCE-GROUP-NAME --template-file FILE-NAME.bicep
 ```
-##  Terraform
+## 𝕋 Terraform
 
 1. Download the appropriate template .tf file for your scenario
 2. On the Azure Portal, open the Cloud Shell
