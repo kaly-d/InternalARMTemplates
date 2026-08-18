@@ -581,3 +581,19 @@ ENABLE CHANGE_TRACKING;
 </details>
 
 ***
+### Scenario 2: Logic App Consumption with HTTP Trigger
+🌐
+
+| Deployment File | Quick Deploy |
+| :-------------: | :-------------: |
+| [Terraform](https://github.com/kaly-d/InternalARMTemplates/blob/main/Terraform/Logic%20App%20Consumption/Scenario2File1.tf)  | N/A |
+
+<details>
+  <summary>🔎 What's Included In This Deployment</summary>
+  
+  - New Resource Group
+  - Logic App Consumption configured with both to invoke Public Endpoint
+
+</details>
+
+***
