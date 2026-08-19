@@ -605,7 +605,7 @@ ENABLE CHANGE_TRACKING;
 
 | Deployment File | Quick Deploy |
 | :-------------: | :-------------: |
-| [Terraform](https://github.com/kaly-d/InternalARMTemplates/blob/main/Terraform/Logic%20App%20Consumption/Scenario2File1.tf)  | [See Terraform Deploy Instructions](https://github.com/kaly-d/InternalARMTemplates/blob/main/README.md#-terraform) |
+| [Terraform](https://github.com/kaly-d/InternalARMTemplates/blob/main/Terraform/Logic%20App%20Consumption/Scenario2File1.tf)  | [See Terraform Deploy Instructions](https://github.com/kaly-d/InternalARMTemplates/blob/main/README.md#%F0%9D%95%8B-terraform) | 
 
 <details>
   <summary>🔎 What's Included In This Deployment</summary>
