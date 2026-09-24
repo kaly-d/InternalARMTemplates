@@ -48,9 +48,9 @@
         "storageAccountName": {
             "type": "String"
         },
- "fileShareName": {
-      "type": "String"
-    },
+        "fileShareName": {
+            "type": "String"
+        },
         "userAssignedIdentityName": {
             "defaultValue": "uami",
             "type": "String",
@@ -162,16 +162,14 @@
                 "publicNetworkAccess": "Enabled"
             }
         },
-{
-{
-        "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
-        "apiVersion": "2021-04-01",
-        "name": "[concat(parameters('storageAccountName'), '/default/', toLower(parameters('fileShareName')))]",
-        "dependsOn": [
-          "[parameters('storageAccountName')]"
-        ]
-      },
-},
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+            "apiVersion": "2021-04-01",
+            "name": "[concat(parameters('storageAccountName'), '/default/', toLower(parameters('fileShareName')))]",
+            "dependsOn": [
+                "[parameters('storageAccountName')]"
+            ]
+        },
         {
             "type": "Microsoft.Network/privateDnsZones",
             "apiVersion": "2020-06-01",
@@ -522,14 +520,14 @@
                             "name": "LOGIC_APPS_POWERSHELL_VERSION",
                             "value": 7.4
                         },
-{
-"name":"WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
-},
-{
-"name":"WEBSITE_CONTENTSHARE",
-"value":"[toLower(parameters('fileShareName'))]"
-}
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(parameters('fileShareName'))]"
+                        }
                     ],
                     "cors": {},
                     "use32BitWorkerProcess": false,
