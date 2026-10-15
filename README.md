@@ -331,7 +331,7 @@ Below are the templates that are created for various scenarios, categorized by t
 
 ***
 
-### Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Service Bus Namespace
+### Scenario 8: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with Private Endpoint-enabled Premium-tier Service Bus Namespace
 🔒
 
 | Deployment File | Quick Deploy |
