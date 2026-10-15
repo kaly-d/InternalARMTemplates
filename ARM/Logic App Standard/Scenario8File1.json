@@ -170,7 +170,7 @@
                     {
                         "name": "[parameters('serviceBusSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('serviceBusSubnetPrefix')]",
+                            "addressPrefix": "[parameters('serviceBusSubnetPrefix')]"
                         }
                     }
                 ]
