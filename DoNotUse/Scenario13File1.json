@@ -80,7 +80,7 @@
         },
         "vmNsgName": {
             "type": "string",
-            "defaultValue": "nsg"
+            "defaultValue": "networkSecurityGroup"
         },
         "vmPublicIpName": {
             "type": "string",
@@ -728,7 +728,8 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('vmNicName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned, UserAssigned",
