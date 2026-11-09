@@ -2,6 +2,7 @@
 
 # Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Linux VM
 
+#Scenario 13: Logic App Standard hosted on Private-Endpoint enabled Storage Account with User_Assigned mI and Windows VM and MSMQ
 ***
 
 
