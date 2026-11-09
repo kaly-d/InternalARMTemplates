@@ -729,7 +729,7 @@
                 "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('vmNicName'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('vmNicName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned, UserAssigned",
