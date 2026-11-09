@@ -2,7 +2,6 @@
 
 # Scenario 9: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Linux VM
 
-#Scenario 13: Logic App Standard hosted on Private-Endpoint enabled Storage Account with User_Assigned mI and Windows VM and MSMQ
 ***
 
 
@@ -53,3 +52,49 @@ Enter the parameter names here when prompted.
 ```bash
 terraform apply "tfplan"
 ```
+***
+#Scenario 13: Logic App Standard hosted on Private-Endpoint enabled Storage Account with User_Assigned mI and Windows VM and MSMQ
+
+### Scenario 13: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM hosting MSMQ Server, integrated with Logic App
+🔒 | 🗂️
+
+| Deployment File | Quick Deploy |
+| :-------------: | :-------------: |
+| [ARM](https://github.com/kaly-d/InternalARMTemplates/blob/main/ARM/DoNotUse/Scenario13File1.json)  | [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkaly-d%2FInternalARMTemplates%2Frefs%2Fheads%2Fmain%2FARM%2FDoNotUse%2FScenario13File1.json)  |
+
+
+<details>
+  <summary>🔎 What's Included In This Deployment</summary>
+
+  - Virtual Network + 3 Subnets (1 for Logic App, 1 for Storage, 1 for Virtual Machine)
+  - User-Assigned Managed Identity
+  - Windows Virtual Machine, with Networking-related components (NSG, NIC, Public IP)
+  - Azure Bastion (for connecting to Virtual Machine within Azure Portal)
+  - App Service Plan (WS1 SKU)
+  - Storage Account (Public Access Disabled)
+  - Private DNS Zones for File, Blob, Queue, and Table Services
+  - Virtual Network Links for VNET and Private DNS Zones
+  - Private Endpoints for File, Blob, Queue, and Table Services
+  - Private DNS Zone Groups for File, Blob, Queue, and Table Services
+  - [Grant UAMI permissions on Storage]
+  - Logic App Standard (hosted on WS1)
+  - [Associates Logic App Standard with VNET/subnet]
+
+</details>
+
+<details>
+  <summary>📚 See Additional Deployment Instructions</summary>
+
+#### Step 1: Deploy the above template
+
+#### Step X: Finish setting up the Logic App by deploying the workflows for end-to-end testing
+1. On this GitHub repository, navigate to the **Workflows** folder.
+2. Download the **msmqWorkflows.zip** file. This contains the workflow zip for this scenario.
+3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
+
+☑️ Once the workflows have been deployed, test your workflows which will list the file in the file share.
+
+</details>
+
+
+***
