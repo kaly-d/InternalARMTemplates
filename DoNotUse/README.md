@@ -117,9 +117,44 @@ Write-Host "Installation complete."
 dotnet --list-runtimes
 ```
 
-2. 
-3. 
+2. Install MSMQ
+```powershell
 
+```
+
+3. Download and extract broker package
+```powershell
+
+```
+
+4. Create a Windows Service and start MSMQ and MSMQBroker
+```powershell
+
+```
+
+5. Open firewall port for broker
+```powershell
+
+```
+
+6. Check host health
+```powershell
+
+```
+
+7. Create a Private Queue
+```powershell
+```
+
+#### Step 4: Provide access to the subscriber
+1. On the VM, navigate to
+	Computer Management > Services and Applications > Message Queuing > Private Queues > Queue properties > Security > Add SYSTEM (Check names)
+2. Grant
+```text
+Receive Message
+Peek message
+Get Properties
+```
 #### Step X: Finish setting up the Logic App by deploying the workflows for end-to-end testing
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **msmqWorkflows.zip** file. This contains the workflow zip for this scenario.
