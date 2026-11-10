@@ -53,7 +53,6 @@ Enter the parameter names here when prompted.
 terraform apply "tfplan"
 ```
 ***
-#Scenario 13: Logic App Standard hosted on Private-Endpoint enabled Storage Account with User_Assigned mI and Windows VM and MSMQ
 
 ### Scenario 13: Logic App Standard hosted on Private Endpoint-enabled Storage Account with User-Assigned Managed Identity, integrated with a Windows VM hosting MSMQ Server, integrated with Logic App
 🔒 | 🗂️
@@ -155,12 +154,12 @@ Receive Message
 Peek message
 Get Properties
 ```
-#### Step X: Finish setting up the Logic App by deploying the workflows for end-to-end testing
+#### Step 5: Finish setting up the Logic App by deploying the workflows for end-to-end testing
 1. On this GitHub repository, navigate to the **Workflows** folder.
 2. Download the **msmqWorkflows.zip** file. This contains the workflow zip for this scenario.
 3. In the same folder, see the **README.md** for instructions on deploying the zip file to your Logic App, using AZ CLI.
 
-☑️ Once the workflows have been deployed, test your workflows which will list the file in the file share.
+☑️ Once the workflows have been deployed, test your workflows by sending and receiving an MSMQ message.
 
 </details>
 
