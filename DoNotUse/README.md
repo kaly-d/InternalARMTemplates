@@ -149,7 +149,7 @@ dotnet --list-runtimes
 
 #### Step 4: Provide access to the subscriber
 1. On the VM, navigate to
-	Computer Management > Services and Applications > Message Queuing > Private Queues > Queue properties > Security > Add SYSTEM (Check names)
+	Computer Management > Services and Applications > Message Queuing > Private Queues > Queue properties > Security > Group or user names: > Everyone
 2. Grant
 ```text
 Receive Message
