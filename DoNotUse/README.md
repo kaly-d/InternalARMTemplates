@@ -89,7 +89,7 @@ terraform apply "tfplan"
 #### Step 2: Add/Confirm Bastion Connectivity
 1. Review the Network settings of the VM, and ensure there is an allow rule to Bastion/VM. For example:
 ```text
-**Priority**: 103
+<b>Priority</b>: 103
 **Name**: Allow-Bastion-To-VM
 **Port**: 22,3389
 **Protocol**: Any
